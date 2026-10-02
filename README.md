@@ -14,10 +14,10 @@ go build -o icas . && ./icas # single binary: templates, assets and content are 
 | Flag / env | Purpose |
 |---|---|
 | `-addr` / `ICAS_ADDR` or `PORT` | Listen address (default `:8090`) |
-| `-data` / `ICAS_DATA_DIR` | Where submissions, messages and subscribers are stored as JSON Lines (default `data/`) |
+| `-data` / `ICAS_DATA_DIR` | Where submissions, uploaded papers, messages and subscribers are stored (default `data/`, see [Stored data](#stored-data)) |
 | `-base-url` / `ICAS_BASE_URL` | Public origin for canonical links and `sitemap.xml` |
 | `-trust-proxy` / `ICAS_TRUST_PROXY=1` | Honour `X-Forwarded-*` headers when running behind a reverse proxy |
-| `ICAS_ADMIN_USER`, `ICAS_ADMIN_PASSWORD` | Turn on `/admin`, which lists records and offers CSV exports (including an anonymized export for double-blind review) |
+| `ICAS_ADMIN_USER`, `ICAS_ADMIN_PASSWORD` | Turn on `/admin`, which lists records and offers CSV exports (including an anonymized export for double-blind review), each paper as a PDF and all papers as one ZIP |
 
 ## Test
 
@@ -41,6 +41,19 @@ The tests render every page, follow every internal link and asset, and exercise 
 | `web/templates` | HTML templates (layout, partials, one file per page) |
 | `web/static` | CSS, JavaScript, images and downloadable files |
 | `tools/make_assets.py` | Generator for the promotional kit, CFP flyer, slide template and social preview image |
+
+## Stored data
+
+Everything visitors send is kept in the data directory (`-data`, default `data/`). Git ignores it, so it is never pushed. On Linux and macOS it is created with owner-only permissions.
+
+| Path | Contents |
+|---|---|
+| `submissions.jsonl` | One proposal per line: the proposal, the speaker details, the paper's original file name, size and SHA-256, and the sender's IP address and browser |
+| `papers/<ID>.pdf` | The paper of each proposal, named after its submission ID (e.g. `ICAS2027-W001.pdf`), so the file name reveals nothing about the authors |
+| `contacts.jsonl` | Contact form messages |
+| `subscribers.jsonl` | Newsletter sign-ups |
+
+Papers must be PDF files of at most 10 MB (`maxPaperBytes` in `internal/server/papers.go`). Back up the whole directory regularly; on a container platform, put it on a persistent volume.
 
 ## Editing content
 
