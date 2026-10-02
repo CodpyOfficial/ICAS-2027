@@ -1,0 +1,38 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <p class="lead">The speakers of each paper with workshop lead a 90-minute workshop in the afternoon, following their 25-minute morning presentation. Each workshop is for 25 or 50 participants and is assisted by at least one teaching assistant. Participants bring their own laptops, meeting the hardware requirements published for each workshop; the speakers prepare the equipment and environment.</p>
+      <div class="callout callout-accent">
+        {{icon "id-card"}}
+        <div><p><strong>Workshop seats are limited</strong> and are registered separately from the conference registration.</p>
+        <a class="btn btn-accent btn-sm" href="/registration/workshops">Workshop registration</a></div>
+      </div>
+
+      <h2>Overview</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Workshop</th><th scope="col">Time</th><th scope="col">Room</th><th scope="col">Seats</th><th scope="col">Level</th></tr></thead>
+          <tbody>
+            {{- range .Site.Workshops}}
+            <tr>
+              <th scope="row"><a href="#{{lower .Code}}">{{.Code}}</a></th>
+              <td>{{if .Title}}{{.Title}}{{else}}<span class="tba">Selected after review</span>{{end}}{{if .Status}} <span class="badge badge-closed">{{.Status}}</span>{{end}}</td>
+              <td>{{tba .Time}}</td>
+              <td>{{tba .Room}}</td>
+              <td>{{tba .Capacity}}</td>
+              <td>{{tba .Level}}</td>
+            </tr>
+            {{- end}}
+          </tbody>
+        </table>
+      </div>
+
+      {{- range .Site.Workshops}}
+      {{template "session-card" .}}
+      {{- end}}
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

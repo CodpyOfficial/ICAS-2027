@@ -1,0 +1,92 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <div class="callout callout-accent">
+        {{icon "monitor"}}
+        <div>
+          <p><strong>The official ICAS slide template is mandatory.</strong> All speakers of accepted papers, with or without workshop, must prepare their presentation slides with the official {{.Site.Conference.FullTitle}} template, keeping its layout, colours, emblem and footer.</p>
+          <a class="btn btn-accent btn-sm" href="{{asset "files/ICAS-slide-template.pptx"}}" download>{{icon "download"}} Download the official template (PPTX)</a>
+        </div>
+      </div>
+
+      <div class="tabs" data-tabs>
+        <div role="tablist" aria-label="Presentation type">
+          <button role="tab" id="tab-with-workshop" aria-controls="panel-with-workshop" aria-selected="true" type="button">Papers with workshop</button>
+          <button role="tab" id="tab-without-workshop" aria-controls="panel-without-workshop" aria-selected="false" type="button">Papers without workshop</button>
+          <button role="tab" id="tab-demo" aria-controls="panel-demo" aria-selected="false" type="button">Live demonstrations</button>
+        </div>
+
+        <section role="tabpanel" id="panel-with-workshop" aria-labelledby="tab-with-workshop">
+          <h2>Papers with workshop</h2>
+          <div class="key-figures">
+            <div class="key-figure"><strong>25 min</strong><span>morning presentation</span></div>
+            <div class="key-figure"><strong>90 min</strong><span>afternoon workshop</span></div>
+            <div class="key-figure"><strong>25/50</strong><span>participants</span></div>
+            <div class="key-figure"><strong>≥ 1 TA</strong><span>per workshop</span></div>
+          </div>
+          <h3>Morning presentation (25 minutes)</h3>
+          <ul>
+            <li>Prepare your slides with the <strong>official ICAS slide template</strong> (mandatory).</li>
+            <li>Introduce your work and show what participants will build in the afternoon.</li>
+            <li>Follow the breakdown you gave in your proposal and keep time for questions.</li>
+          </ul>
+          <h3>Afternoon workshop (90 minutes)</h3>
+          <ul>
+            <li>The workshop is for <strong>25 or 50 participants</strong>, as chosen in your proposal. If it needs equipment, prepare <strong>10 sets for 25 participants or 20 sets for 50 participants</strong>.</li>
+            <li>You are responsible for preparing <strong>all necessary equipment and environment set-ups</strong>; attendees bring their own laptops.</li>
+            <li>Provide the <strong>laptop hardware requirements</strong> (CPU, memory, GPU, disk space, operating system) for participants; they are published on the workshop pages.</li>
+            <li>Bring <strong>at least one teaching assistant (TA)</strong> to help participants with set-up issues and the practical exercises.</li>
+            <li>Send participants installation instructions in advance, and bring offline copies of large downloads, containers or images.</li>
+            <li>Organize the session around clear milestones so that everyone reaches a working result, and plan a fallback for participants whose set-up fails.</li>
+          </ul>
+          <h3>Checklist</h3>
+          <ul class="track-points">
+            <li>{{icon "check"}}<span>Slides prepared with the official ICAS template</span></li>
+            <li>{{icon "check"}}<span>Laptop hardware requirements and installation guide shared with registered participants</span></li>
+            <li>{{icon "check"}}<span>Equipment sets ready (10 for 25 participants, 20 for 50), with spares, cables and power adapters</span></li>
+            <li>{{icon "check"}}<span>Teaching assistant(s) confirmed and briefed on the milestones</span></li>
+            <li>{{icon "check"}}<span>Environment tested on the target operating systems</span></li>
+            <li>{{icon "check"}}<span>Offline copies of dependencies and datasets</span></li>
+            <li>{{icon "check"}}<span>Milestone solutions ready, so late joiners can catch up</span></li>
+          </ul>
+        </section>
+
+        <section role="tabpanel" id="panel-without-workshop" aria-labelledby="tab-without-workshop">
+          <h2>Papers without workshop</h2>
+          <p>Each speaker is allocated an estimated <strong>15 minutes</strong>, in sessions that run concurrently with the afternoon workshops.</p>
+          <h3>Preparing your slides</h3>
+          <ul>
+            <li>Use the <strong>official ICAS slide template</strong> (mandatory), with fonts of 18 pt or larger and high-contrast figures.</li>
+            <li>Keep each slide focused: a few words per slide, one message per figure.</li>
+            <li>Embed fonts and bring a PDF backup on a USB stick.</li>
+          </ul>
+          <h3>On the day</h3>
+          <ul>
+            <li>Arrive at your session room at least 15 minutes before the session starts and introduce yourself to the session chair.</li>
+            <li>Load and test your slides during the break before your session.</li>
+            <li>Respect your time slot so the session stays in sync with the parallel workshops.</li>
+          </ul>
+        </section>
+
+        <section role="tabpanel" id="panel-demo" aria-labelledby="tab-demo">
+          <h2>Live demonstrations</h2>
+          <ul>
+            <li>Presenters must be at their station during their demo sessions.</li>
+            <li>Bring all equipment you need; describe special requirements (space, power, network, safety perimeter) in advance.</li>
+            <li>A small poster or screen summarizing the work helps visitors.</li>
+          </ul>
+          {{template "tba-note" "Station size, power and network details will be confirmed with the accepted demonstrations."}}
+        </section>
+      </div>
+
+      <h2 id="template">Official slide template</h2>
+      <p>The template contains the title, content, section, figure and closing slides. Duplicate the slides you need and replace the sample text; do not change the layout, colours, emblem or footer.</p>
+      <ul class="download-list">
+        <li><a class="download" href="{{asset "files/ICAS-slide-template.pptx"}}" download><span class="download-icon">{{icon "monitor"}}</span><span><strong>Official ICAS slide template</strong><small>16:9 PowerPoint template with the {{.Site.Conference.FullTitle}} branding — mandatory for all presentations</small></span><span class="badge badge-accent">Mandatory</span></a></li>
+      </ul>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

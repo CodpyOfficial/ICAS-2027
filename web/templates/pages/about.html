@@ -1,0 +1,53 @@
+{{define "content"}}{{$c := .Site.Conference}}{{$ho := track "with-workshop"}}{{$th := track "without-workshop"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <p class="lead">The {{$c.Name}} ({{$c.Acronym}}) is a forum for researchers, engineers and practitioners working on the theory, design and deployment of systems that perceive, decide and act on their own — from robots and vehicles to self-adaptive software.</p>
+      <p>{{$c.FullTitle}} will be held {{if $c.Location}}in <strong>{{$c.Location}}</strong>{{else}}at a venue to be announced{{end}}{{if $c.Dates}}, <strong>{{$c.Dates}}</strong>{{end}}. Its program pairs research talks with practice: alongside the sessions for papers without workshop, the speakers of papers with workshop run interactive workshops in which participants build and experiment on their own laptops.</p>
+
+      <div class="key-figures">
+        <div class="key-figure"><strong>{{.Site.TotalSlots}}</strong><span>speaking slots</span></div>
+        <div class="key-figure"><strong>{{$ho.Slots}}</strong><span>papers with workshop</span></div>
+        <div class="key-figure"><strong>{{$th.Slots}}</strong><span>papers without workshop</span></div>
+        <div class="key-figure"><strong>40%</strong><span>of workshop fees as speaker feedback</span></div>
+        <div class="key-figure"><strong>{{len .Site.Topics}}</strong><span>topic areas</span></div>
+      </div>
+
+      <h2>The program</h2>
+      <ul class="track-points">
+        <li>{{icon "laptop"}}<span><strong>Papers with workshop</strong> — a 25-minute presentation in the morning and a 90-minute workshop for 25 or 50 participants in the afternoon, assisted by teaching assistants.</span></li>
+        <li>{{icon "book"}}<span><strong>Papers without workshop</strong> — talks of about 15 minutes in sessions running alongside the workshops.</span></li>
+        <li>{{icon "mic"}}<span><strong>Keynotes</strong> by leaders in autonomous systems.</span></li>
+        <li>{{icon "layers"}}<span><strong>Special sessions, tutorials and live demonstrations</strong> on focused and emerging topics.</span></li>
+        <li>{{icon "briefcase"}}<span><strong>Industry forum, student competition, mentoring</strong> and community events.</span></li>
+        <li>{{icon "coffee"}}<span><strong>Social events</strong> to meet colleagues from academia and industry.</span></li>
+      </ul>
+
+      <h2>Conference theme</h2>
+      <p>The theme spans the full autonomy stack and puts implementation first: robotics, vehicles, embedded computing, perception, simulation and applications lead the list. Submissions aligned with these areas are warmly welcomed, though not strictly limited to them.</p>
+      <div class="topic-compact">{{template "topics" .}}</div>
+
+      <h2>Why ICAS?</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>For speakers</h3>
+          <p>Speakers of papers with workshop turn their work into an experience participants can reproduce, and receive 40% of the workshop registration fees as feedback. Speakers of papers without workshop present to an audience that builds real systems.</p>
+        </div>
+        <div class="card">
+          <h3>For participants</h3>
+          <p>Learn the latest research, then sit down with the people who built the tools and try them yourself, guided step by step through milestone-based workshops.</p>
+        </div>
+      </div>
+
+      <h2>Organization</h2>
+      <p>{{$c.FullTitle}} is organized by the <a href="/committee">{{$c.Acronym}} Organizing Committee</a>. Proposals are evaluated by the <a href="/committee/technical-program">Technical Program Committee</a> through double-blind peer review.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="/about/welcome">Welcome message</a>
+        <a class="btn btn-outline" href="/call-for-papers">Call for Papers</a>
+        <a class="btn btn-outline" href="/about/history">Conference history</a>
+      </div>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

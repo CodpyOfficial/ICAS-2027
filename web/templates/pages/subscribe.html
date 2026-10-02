@@ -1,0 +1,51 @@
+{{define "content"}}{{$f := .Form}}
+<div class="page-body">
+  <div class="container page-grid">
+    <div>
+      <div class="media-split">
+        <div>
+          <p class="lead">Keep in touch with the {{.Site.Conference.Acronym}} community. Subscribe to the {{.Site.Conference.FullTitle}} newsletter for deadline reminders, program announcements and registration news.</p>
+          <p><strong>Keep up with the latest news!</strong> You can unsubscribe at any time.</p>
+        </div>
+        <img class="mascot" src="{{asset "img/mascot-paper.webp"}}" alt="" width="220" height="220">
+      </div>
+      {{template "form-alerts" .}}
+      <form class="form" action="/subscribe" method="post">
+        {{template "hp" .}}
+        <div class="fieldset">
+          <div class="field-row">
+            {{template "fld" (dict "F" $f "Name" "first_name" "Label" "First name" "Req" true "Max" 100 "Auto" "given-name")}}
+            {{template "fld" (dict "F" $f "Name" "last_name" "Label" "Last name" "Req" true "Max" 100 "Auto" "family-name")}}
+          </div>
+          {{template "fld" (dict "F" $f "Name" "email" "Label" "Email address" "Type" "email" "Req" true "Max" 200 "Auto" "email")}}
+          <div class="field-row">
+            {{template "fld" (dict "F" $f "Name" "organization" "Label" "Company / institution" "Max" 200 "Auto" "organization")}}
+            {{template "fld" (dict "F" $f "Name" "country" "Label" "Country" "Max" 100 "Auto" "country-name")}}
+          </div>
+          <div class="field">
+            <span class="label">Work field</span>
+            <div class="checks">
+              {{- range workFields}}
+              <label class="check"><input type="radio" name="work_field" value="{{.}}"{{if checked $f "work_field" .}} checked{{end}}><span>{{.}}</span></label>
+              {{- end}}
+            </div>
+            {{- with fieldErr $f "work_field"}}<span class="field-error">{{.}}</span>{{end}}
+          </div>
+          <div class="field">
+            <span class="label">I am interested in</span>
+            <div class="checks">
+              {{- range interests}}
+              <label class="check"><input type="checkbox" name="interests" value="{{.}}"{{if checked $f "interests" .}} checked{{end}}><span>{{.}}</span></label>
+              {{- end}}
+            </div>
+          </div>
+          {{template "check" (dict "F" $f "Name" "consent" "Label" "I agree to receive emails about the conference from the organizers. I can unsubscribe at any time." "Req" true)}}
+          <p class="hint">We use your details only to send {{.Site.Conference.Acronym}} updates. See our <a href="/policies#privacy">privacy policy</a>.</p>
+          <button class="btn btn-accent" type="submit">{{icon "bell"}} Subscribe</button>
+        </div>
+      </form>
+    </div>
+    <aside class="sidebar">{{template "dates-card" .}}</aside>
+  </div>
+</div>
+{{end}}

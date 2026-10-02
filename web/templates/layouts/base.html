@@ -1,0 +1,41 @@
+{{define "base"}}{{$c := .Site.Conference}}<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{if .Page.Home}}{{$c.FullTitle}} | {{$c.Name}}{{else}}{{.Page.Title}} | {{$c.FullTitle}}{{end}}</title>
+  <meta name="description" content="{{if .Page.Home}}{{$c.Description}}{{else}}{{.Page.MetaDescription}}{{end}}">
+  {{- if .Page.NoIndex}}
+  <meta name="robots" content="noindex, nofollow">
+  {{- end}}
+  <link rel="canonical" href="{{.CanonicalURL}}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{$c.FullTitle}} – {{$c.Name}}">
+  <meta property="og:title" content="{{if .Page.Home}}{{$c.FullTitle}} – {{$c.Name}}{{else}}{{.Page.Title}} – {{$c.FullTitle}}{{end}}">
+  <meta property="og:description" content="{{if .Page.Home}}{{$c.Description}}{{else}}{{.Page.MetaDescription}}{{end}}">
+  <meta property="og:url" content="{{.CanonicalURL}}">
+  <meta property="og:image" content="{{.BaseURL}}/static/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#142c55">
+  <link rel="icon" href="{{asset "img/icas-emblem.svg"}}" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="apple-touch-icon" href="{{asset "img/apple-touch-icon.png"}}">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&amp;family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap">
+  <link rel="stylesheet" href="{{asset "css/site.css"}}">
+  <script src="{{asset "js/site.js"}}" defer></script>
+</head>
+<body class="{{if .Page.Home}}is-home{{else}}page-{{.Page.Template}}{{end}}">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  {{template "header" .}}
+  <main id="main" tabindex="-1">
+    {{if not .Page.Home}}{{template "banner" .}}{{end}}
+    {{template "content" .}}
+  </main>
+  {{template "footer" .}}
+  <a class="back-to-top" href="#top" aria-label="Back to top">{{icon "arrow-up"}}</a>
+</body>
+</html>
+{{end}}

@@ -1,0 +1,25 @@
+{{define "content"}}{{$c := .Site.Conference}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <div class="media-split">
+        <div>
+          <p class="lead">Dear colleagues and friends,</p>
+          <p>On behalf of the organizing committee, it is our pleasure to invite you to <strong>{{$c.FullTitle}}</strong>, the {{$c.Name}}{{if $c.Location}}, to be held in {{$c.Location}}{{end}}{{if $c.Dates}} on {{$c.Dates}}{{end}}.</p>
+        </div>
+        <img class="mascot" src="{{asset "img/mascot-paper.webp"}}" alt="The ICAS bear mascot holding a paper" width="260" height="260">
+      </div>
+      <p>Autonomous systems — robots, vehicles, drones, software agents and the infrastructure around them — are moving from research labs into factories, farms, hospitals, warehouses and cities. Making them capable, safe and trustworthy requires progress in perception, planning, control, learning, verification and human–autonomy interaction. It also requires people who can turn that progress into working systems.</p>
+      <p>{{$c.Acronym}} is designed around both needs, with a particular emphasis on practice. <strong>Papers without workshop</strong> present new research in focused talks. <strong>Papers with workshop</strong> go one step further: after a 25-minute morning presentation, the speakers, supported by teaching assistants, lead an afternoon workshop in which participants build, run and experiment on their own laptops. In recognition of the effort an engaging workshop requires, its speakers receive 40% of the workshop registration fees as feedback.</p>
+      <p>We warmly invite you to submit a proposal, to join a workshop, and to meet colleagues from academia and industry who share your interest in autonomy. All proposals are reviewed double-blind by the Technical Program Committee for depth, feasibility, engagement and relevance.</p>
+      <p>We look forward to welcoming you{{if $c.City}} in {{$c.City}}{{end}}.</p>
+      <p><strong>The {{$c.FullTitle}} Organizing Committee</strong></p>
+      <div class="btn-row">
+        <a class="btn btn-accent" href="/call-for-papers">Read the Call for Papers</a>
+        <a class="btn btn-outline" href="/committee">Meet the committee</a>
+      </div>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

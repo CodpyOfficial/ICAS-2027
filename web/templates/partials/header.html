@@ -1,0 +1,86 @@
+{{define "header"}}{{$c := .Site.Conference}}
+<header class="site-header" id="top">
+  <div class="container topbar">
+    <a class="brand" href="/" aria-label="{{$c.FullTitle}} home">
+      <img src="{{asset "img/icas-emblem.svg"}}" alt="" width="64" height="64">
+      <span class="brand-text">
+        <span class="brand-acronym">{{$c.Acronym}} <span>{{$c.Year}}</span></span>
+        <span class="brand-name">{{$c.Name}}</span>
+      </span>
+    </a>
+    <div class="topbar-meta">
+      <span class="meta-place">{{orText $c.Location "Venue to be announced"}}</span>
+      <span class="meta-dates">{{orText $c.Dates "Dates to be announced"}}</span>
+    </div>
+    <div class="topbar-actions">
+      {{template "social" .Site.Social}}
+      <a class="btn btn-accent" href="/contact">Contact</a>
+      <a class="btn btn-primary" href="/subscribe">Keep me updated!</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">{{icon "menu"}}<span class="nav-toggle-label">Menu</span></button>
+  </div>
+  <nav class="site-nav" id="site-nav" aria-label="Main">
+    <ul class="menu container">
+      {{- range $i, $item := .Nav}}
+      <li class="{{if .Children}}has-sub{{end}}{{if .Active}} is-active{{end}}{{if ge $i 5}} align-right{{end}}">
+        <a class="menu-link" href="{{.Path}}"{{if eq .Path $.Page.Path}} aria-current="page"{{end}}>{{.Label}}</a>
+        {{- if .Children}}
+        <button class="sub-toggle" type="button" aria-expanded="false" aria-label="Show {{.Label}} menu">{{icon "chevron-down"}}</button>
+        <ul class="submenu">
+          {{- range .Children}}
+          {{- if .Divider}}<li class="sub-divider" aria-hidden="true"></li>{{end}}
+          <li{{if .Children}} class="has-flyout"{{end}}>
+            <a href="{{.Path}}"{{if eq .Path $.Page.Path}} aria-current="page"{{end}}>{{.Label}}{{if .Note}} <span class="badge badge-soon sub-note">{{.Note}}</span>{{end}}{{if .Children}}{{icon "chevron-right" "flyout-caret"}}{{end}}</a>
+            {{- if .Children}}
+            <ul class="flyout">
+              {{- range .Children}}
+              <li><a href="{{.Path}}"{{if eq .Path $.Page.Path}} aria-current="page"{{end}}>{{.Label}}</a></li>
+              {{- end}}
+            </ul>
+            {{- end}}
+          </li>
+          {{- end}}
+        </ul>
+        {{- end}}
+      </li>
+      {{- end}}
+      <li class="mobile-actions">
+        <a class="btn btn-accent btn-sm" href="/contact">Contact</a>
+        <a class="btn btn-primary btn-sm" href="/subscribe">Keep me updated!</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+{{end}}
+
+{{define "social"}}{{if .}}
+<ul class="social-links">
+  {{- range .}}
+  <li><a href="{{.URL}}" target="_blank" rel="noopener" aria-label="{{orText .Label (socialLabel .Network)}}">{{icon .Network}}</a></li>
+  {{- end}}
+</ul>
+{{- end}}{{end}}
+
+{{define "banner"}}
+<section class="page-banner">
+  <div class="container banner-inner">
+    <span class="banner-mark" aria-hidden="true"></span>
+    <div>
+      {{- if .Crumbs}}
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol>
+          {{- range .Crumbs}}
+          <li>{{if .Path}}<a href="{{.Path}}">{{.Label}}</a>{{else}}<span aria-current="page">{{.Label}}</span>{{end}}</li>
+          {{- end}}
+        </ol>
+      </nav>
+      {{- end}}
+      <h1>{{.Page.Title}}</h1>
+      {{- with .Page.Lead}}
+      <p class="banner-lead">{{.}}</p>
+      {{- end}}
+    </div>
+  </div>
+  <svg class="banner-curve" viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 56V30C240 4 480-2 720 14s480 38 720 12v30z" fill="#ffffff"/></svg>
+</section>
+{{end}}

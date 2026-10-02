@@ -1,0 +1,44 @@
+{{/*
+  Form field partials. Call with dict:
+    F        *formState (required)
+    Name     field name (required)
+    Label    visible label (required)
+    Kind     "textarea" or empty for <input>
+    Type     input type (default text)
+    Req      true when required
+    TrackOnly true for fields shown only for one track (JS toggles "required")
+    Hint     help text
+    Words    word limit (textarea; shows a live counter)
+    Max      maxlength
+    Rows     textarea rows
+    Auto     autocomplete token
+    Place    placeholder
+*/}}
+{{define "fld"}}{{$err := fieldErr .F .Name}}
+<div class="field{{if $err}} has-error{{end}}">
+  <label for="f-{{.Name}}">{{.Label}}{{if .Req}} <span class="req" aria-hidden="true">*</span>{{end}}</label>
+  {{- with .Hint}}
+  <span class="hint" id="f-{{$.Name}}-hint">{{.}}</span>
+  {{- end}}
+  {{- if eq .Kind "textarea"}}
+  <textarea class="textarea" id="f-{{.Name}}" name="{{.Name}}"{{if .Req}}{{if .TrackOnly}} data-required{{else}} required{{end}}{{end}}{{with .Words}} data-max-words="{{.}}"{{end}}{{with .Max}} maxlength="{{.}}"{{end}}{{with .Rows}} rows="{{.}}"{{end}}{{with .Place}} placeholder="{{.}}"{{end}} aria-describedby="{{if .Hint}}f-{{.Name}}-hint {{end}}{{if .Words}}f-{{.Name}}-count {{end}}{{if $err}}f-{{.Name}}-err{{end}}"{{if $err}} aria-invalid="true"{{end}}>{{field .F .Name}}</textarea>
+  {{- with .Words}}
+  <span class="counter" id="f-{{$.Name}}-count" aria-live="polite">Maximum {{.}} words</span>
+  {{- end}}
+  {{- else}}
+  <input class="input" type="{{or .Type "text"}}" id="f-{{.Name}}" name="{{.Name}}" value="{{field .F .Name}}"{{if .Req}}{{if .TrackOnly}} data-required{{else}} required{{end}}{{end}}{{with .Max}} maxlength="{{.}}"{{end}}{{with .Auto}} autocomplete="{{.}}"{{end}}{{with .Place}} placeholder="{{.}}"{{end}} aria-describedby="{{if .Hint}}f-{{.Name}}-hint {{end}}{{if $err}}f-{{.Name}}-err{{end}}"{{if $err}} aria-invalid="true"{{end}}>
+  {{- end}}
+  {{- with $err}}
+  <span class="field-error" id="f-{{$.Name}}-err">{{.}}</span>
+  {{- end}}
+</div>
+{{end}}
+
+{{define "check"}}{{$err := fieldErr .F .Name}}
+<div class="field{{if $err}} has-error{{end}}">
+  <label class="check"><input type="checkbox" name="{{.Name}}" value="yes"{{if field .F .Name}} checked{{end}}{{if .Req}} required{{end}}{{if $err}} aria-invalid="true" aria-describedby="f-{{.Name}}-err"{{end}}><span>{{.Label}}</span></label>
+  {{- with $err}}
+  <span class="field-error" id="f-{{$.Name}}-err">{{.}}</span>
+  {{- end}}
+</div>
+{{end}}

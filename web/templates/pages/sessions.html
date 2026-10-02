@@ -1,0 +1,32 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <p class="lead">Eight papers without workshop are presented in sessions that run concurrently with the afternoon workshops, with an estimated 15 minutes per speaker.</p>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Title</th><th scope="col">Speaker</th><th scope="col">Time</th><th scope="col">Room</th></tr></thead>
+          <tbody>
+            {{- range .Site.Talks}}
+            <tr>
+              <th scope="row">{{.Code}}</th>
+              <td>{{if .Title}}{{.Title}}{{else}}<span class="tba">Selected after review</span>{{end}}</td>
+              <td>{{if .Speaker}}{{.Speaker}}{{with .Affiliation}}<br><small class="muted">{{.}}</small>{{end}}{{else}}{{tba ""}}{{end}}</td>
+              <td>{{tba .Time}}</td>
+              <td>{{tba .Room}}</td>
+            </tr>
+            {{- end}}
+          </tbody>
+        </table>
+      </div>
+      <h2>Session format</h2>
+      <ul>
+        <li>About 15 minutes per speaker, including questions.</li>
+        <li>Sessions are chaired; speakers meet their chair before the session starts.</li>
+        <li>See the <a href="/authors/presentation-guidelines">presentation guidelines</a> for slide recommendations.</li>
+      </ul>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

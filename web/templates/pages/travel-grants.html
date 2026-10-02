@@ -1,0 +1,28 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <p class="lead">{{.Site.Conference.Acronym}} aims to support students who present their work at the conference.</p>
+      {{template "tba-note" "Eligibility, grant amounts, the application form and deadlines will be published here."}}
+      <h2>What to prepare</h2>
+      <p>Applications for student travel support typically ask for:</p>
+      <ul>
+        <li>Proof of full-time student status</li>
+        <li>The submission ID of your accepted contribution</li>
+        <li>A short statement of motivation and an estimate of travel costs</li>
+        <li>A supporting note from your supervisor</li>
+      </ul>
+      <h2>Other ways to take part</h2>
+      <ul>
+        <li><a href="/program/events/student-design-competition">Student Design Competition</a></li>
+        <li><a href="/program/events/mentoring-program">Mentoring Program</a></li>
+        <li><a href="/registration">Student registration rates</a></li>
+      </ul>
+      <div class="btn-row">
+        <a class="btn btn-accent" href="/subscribe">Notify me when applications open</a>
+      </div>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

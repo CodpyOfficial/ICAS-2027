@@ -1,0 +1,53 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <p class="lead">All submissions must be submitted in <strong>English</strong> and include the following details.</p>
+      <ol class="steps">
+        {{- range .Site.Requirements}}
+        <li>
+          <strong>{{.Title}}</strong>{{if eq .Applies "with-workshop"}} <span class="badge badge-accent">With workshop</span>{{end}}
+          <p class="mb-0">{{.Text}}</p>
+          {{- if .Items}}
+          <ul>{{range .Items}}<li>{{.}}</li>{{end}}</ul>
+          {{- end}}
+        </li>
+        {{- end}}
+      </ol>
+
+      <h2>Checklist by track</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Item</th><th scope="col">Paper with Workshop</th><th scope="col">Paper without Workshop</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Title &amp; abstract (max 300 words)</th><td><span class="tick">&#10003;</span></td><td><span class="tick">&#10003;</span></td></tr>
+            <tr><th scope="row">Session track</th><td><span class="tick">&#10003;</span></td><td><span class="tick">&#10003;</span></td></tr>
+            <tr><th scope="row">Outline &amp; schedule</th><td>25-min session breakdown + 90-min workshop milestones</td><td>15-min presentation structure</td></tr>
+            <tr><th scope="row">Prerequisites &amp; toolchain</th><td>Software, target OS, hardware, skill level</td><td><span class="dash">&ndash;</span></td></tr>
+            <tr><th scope="row">Workshop size</th><td>25 or 50 participants; 10 or 20 equipment sets (if needed)</td><td><span class="dash">&ndash;</span></td></tr>
+            <tr><th scope="row">Laptop hardware requirements</th><td>CPU, memory, GPU, disk space, OS for participants</td><td><span class="dash">&ndash;</span></td></tr>
+            <tr><th scope="row">Teaching assistant</th><td>At least one TA</td><td><span class="dash">&ndash;</span></td></tr>
+            <tr><th scope="row">Interactive demo video (2–5 min)</th><td>Public or unlisted link</td><td><span class="dash">&ndash;</span></td></tr>
+            <tr><th scope="row">Speaker bio (max 150 words)</th><td>+ speaking experience, project links</td><td>+ speaking experience, project links</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Keeping the review double-blind</h2>
+      <ul>
+        <li>Do not put speaker names, affiliations or self-identifying links in the title, abstract or outline.</li>
+        <li>Refer to your own prior work in the third person.</li>
+        <li>Speaker details, bio and project links are entered in a separate section of the submission form.</li>
+      </ul>
+
+      <h2>Demo video tips (papers with workshop)</h2>
+      <ul>
+        <li>Keep it between 2 and 5 minutes and show the working prototype, the workflow or the outcome participants will build.</li>
+        <li>Use a publicly viewable or unlisted link (YouTube, Vimeo, Loom or Google Drive) and check that it opens without signing in.</li>
+      </ul>
+      {{template "cfp-cta" .}}
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

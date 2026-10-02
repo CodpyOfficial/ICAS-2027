@@ -1,0 +1,34 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container">
+    <div class="sitemap-grid">
+      {{- range .Nav}}
+      <section class="card">
+        <h2><a href="{{.Path}}">{{.Label}}</a></h2>
+        {{- if .Children}}
+        <ul class="side-links">
+          {{- range .Children}}
+          <li>
+            <a href="{{.Path}}">{{icon "chevron-right"}} {{.Label}}</a>
+            {{- if .Children}}
+            <ul class="side-sub">{{range .Children}}<li><a href="{{.Path}}">{{.Label}}</a></li>{{end}}</ul>
+            {{- end}}
+          </li>
+          {{- end}}
+        </ul>
+        {{- end}}
+      </section>
+      {{- end}}
+      <section class="card">
+        <h2>More</h2>
+        <ul class="side-links">
+          <li><a href="/subscribe">{{icon "chevron-right"}} Keep me updated</a></li>
+          <li><a href="/policies#privacy">{{icon "chevron-right"}} Privacy policy</a></li>
+          <li><a href="/policies#code-of-conduct">{{icon "chevron-right"}} Code of conduct</a></li>
+          <li><a href="/sitemap.xml">{{icon "chevron-right"}} XML sitemap</a></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</div>
+{{end}}

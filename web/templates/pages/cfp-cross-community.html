@@ -1,0 +1,37 @@
+{{define "content"}}{{$call := call "special-sessions"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      {{template "call-status" $call}}
+      <p class="lead">Autonomous systems sit at the crossroads of many fields. Cross-community special sessions bring researchers from neighbouring communities to {{.Site.Conference.FullTitle}} around a shared problem.</p>
+
+      <h2>What makes a session cross-community</h2>
+      <ul>
+        <li>The session is organized jointly by members of <strong>at least two different research communities</strong> — for example robotics, control, machine learning, transportation, aerospace, human–computer interaction, safety engineering or law and policy.</li>
+        <li>The topic genuinely needs both perspectives, and the speakers reflect that mix.</li>
+        <li>Organizers ideally have experience running sessions or workshops in each of the communities involved.</li>
+      </ul>
+
+      <h2>Example themes</h2>
+      <div class="grid-2">
+        <div class="card"><h3>{{icon "car"}} Autonomy &amp; transportation</h3><p>Connected and automated mobility, traffic management and infrastructure.</p></div>
+        <div class="card"><h3>{{icon "shield-check"}} Autonomy &amp; safety engineering</h3><p>Assurance cases, hazard analysis and certification of learning-enabled components.</p></div>
+        <div class="card"><h3>{{icon "user-check"}} Autonomy &amp; human factors</h3><p>Trust calibration, explainability and shared control.</p></div>
+        <div class="card"><h3>{{icon "scale"}} Autonomy &amp; policy</h3><p>Accountability, standards, regulation and labour impact.</p></div>
+      </div>
+
+      <h2>Proposal contents</h2>
+      <ol class="steps">
+        <li><strong>Title and abstract</strong> of the session.</li>
+        <li><strong>Rationale</strong> — why the topic needs more than one community, and why now.</li>
+        <li><strong>Proposed speakers and talks</strong>, showing the mix of communities.</li>
+        <li><strong>Short biographies</strong> of the organizers and the communities they represent.</li>
+        <li><strong>A note of support</strong> from each partner community or event, if available.</li>
+      </ol>
+      <p>Proposals are evaluated with the same criteria as <a href="/call-for-papers/special-sessions">special sessions</a>; dates follow the special session call.</p>
+      {{template "call-submit" $call}}
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

@@ -1,0 +1,25 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      {{- range .Site.FAQ}}
+      <h2>{{.Title}}</h2>
+      <div class="accordion">
+        {{- range .Items}}
+        <details>
+          <summary>{{.Q}}</summary>
+          <div class="answer"><p>{{.A}}</p></div>
+        </details>
+        {{- end}}
+      </div>
+      {{- end}}
+      <div class="callout">
+        {{icon "help"}}
+        <div><p><strong>Still have a question?</strong> The organizers are happy to help.</p>
+        <a class="btn btn-primary btn-sm" href="/contact">Contact us</a></div>
+      </div>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

@@ -1,0 +1,79 @@
+{{define "content"}}{{$c := .Site.Conference}}{{$sp := .Site.Sponsorship}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <h2>Position your company at the heart of the autonomy community</h2>
+      <p class="lead">{{$sp.Intro}}</p>
+      <div class="btn-row no-print">
+        <a class="btn btn-accent" href="/contact?topic=Sponsorship+%26+exhibition">{{icon "mail"}} Contact us</a>
+        <button class="btn btn-outline" type="button" data-print>{{icon "printer"}} Print / save as PDF</button>
+      </div>
+
+      <h2>Our audience</h2>
+      <div class="stat-cards">
+        {{- range $sp.Audience}}
+        <div class="stat-card"><span class="track-icon">{{icon .Icon}}</span><strong>{{.Value}}</strong><span>{{.Label}}</span></div>
+        {{- end}}
+      </div>
+
+      <h2>Sponsorship packages</h2>
+      <p class="muted">Indicative package structure. Prices and final benefits will be confirmed in the sponsorship prospectus.</p>
+      <div class="table-wrap">
+        <table class="table package-table">
+          <thead>
+            <tr>
+              <th scope="col">Benefit</th>
+              {{- range $sp.Packages}}<th scope="col">{{.Name}}<br><small>{{orText .Price "Price TBA"}}</small></th>{{end}}
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="good-for"><th scope="row">Good for</th>{{range $sp.Packages}}<td>{{.GoodFor}}</td>{{end}}</tr>
+            {{- range $i, $b := $sp.Benefits}}
+            {{- if newGroup $sp.Benefits $i}}
+            <tr class="group-row"><th scope="rowgroup" colspan="{{add (len $sp.Packages) 1}}">{{$b.Group}}</th></tr>
+            {{- end}}
+            <tr><th scope="row">{{$b.Label}}</th>{{range $b.Values}}<td>{{benefit .}}</td>{{end}}</tr>
+            {{- end}}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Explore opportunities</h2>
+      <div class="grid-2">
+        {{- range $sp.Opportunities}}
+        <div class="card"><span class="track-icon">{{icon .Icon}}</span><h3 class="mt-sm">{{.Title}}</h3><p class="mb-0">{{.Text}}</p></div>
+        {{- end}}
+      </div>
+
+      <h2>Gain a competitive edge</h2>
+      <div class="grid-3">
+        {{- range $sp.Advantages}}
+        <div class="card"><span class="track-icon">{{icon .Icon}}</span><h3 class="mt-sm">{{.Title}}</h3><p class="mb-0">{{.Text}}</p></div>
+        {{- end}}
+      </div>
+
+      {{- if $sp.Partners}}
+      <h2>Trusted by</h2>
+      <div class="marquee" aria-label="Partner organizations">
+        <ul class="marquee-track">
+          {{- range $sp.Partners}}<li>{{if .Logo}}<img src="{{.Logo}}" alt="{{.Name}}" loading="lazy">{{else}}{{.Name}}{{end}}</li>{{end}}
+          {{- range $sp.Partners}}<li aria-hidden="true">{{if .Logo}}<img src="{{.Logo}}" alt="" loading="lazy">{{else}}{{.Name}}{{end}}</li>{{end}}
+        </ul>
+      </div>
+      {{- end}}
+
+      {{- range $sp.Extras}}
+      <h2>{{.Title}}</h2>
+      {{- range .Paragraphs}}<p>{{.}}</p>{{end}}
+      {{- end}}
+
+      <div class="callout callout-accent">
+        {{icon "briefcase"}}
+        <div><p><strong>Interested in exhibiting at {{$c.FullTitle}}?</strong> Tell us about your goals and we will help you choose the right package, or build a custom one.</p>
+        <a class="btn btn-accent btn-sm" href="/contact?topic=Sponsorship+%26+exhibition">Request the prospectus</a></div>
+      </div>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

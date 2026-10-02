@@ -1,0 +1,65 @@
+{{define "content"}}{{$r := .Site.Registration}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <p class="lead">Each paper with workshop is followed by a 90-minute afternoon workshop for 25 or 50 participants. Workshop seats are booked separately and are limited, so register early for the workshops you want.</p>
+
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><strong>Register for the conference.</strong> See the <a href="/registration">registration fees</a>.</li>
+        <li><strong>Choose your workshops.</strong> Book a seat in the workshops you want to join; seats are allocated in order of registration.</li>
+        <li><strong>Prepare your laptop.</strong> Make sure it meets the workshop's laptop hardware requirements, and follow the installation guide the speakers send before the conference.</li>
+        <li><strong>Join the morning presentation.</strong> The speakers’ 25-minute morning presentation introduces what you will build.</li>
+      </ol>
+
+      <h2>Workshop fees</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Ticket</th><th scope="col">Early-bird rate</th><th scope="col">Regular rate</th></tr></thead>
+          <tbody>
+            {{- range $r.WorkshopFees}}
+            <tr>
+              <th scope="row">{{.Category}}</th>
+              <td>{{if .Early}}{{$r.Currency}} {{.Early}}{{else}}{{tba ""}}{{end}}</td>
+              <td>{{if .Regular}}{{$r.Currency}} {{.Regular}}{{else}}{{tba ""}}{{end}}</td>
+            </tr>
+            {{- end}}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-accent">
+        {{icon "dollar"}}
+        <div><p><strong>Speaker feedback.</strong> 40% of each workshop's registration fees are given to its speakers as feedback, based on attendance.</p></div>
+      </div>
+
+      <h2>What to bring</h2>
+      <ul class="track-points">
+        <li>{{icon "laptop"}}<span>Your own laptop, meeting the workshop's hardware requirements, charged and with its power adapter</span></li>
+        <li>{{icon "tool"}}<span>The software listed in the workshop's prerequisites, installed in advance</span></li>
+        <li>{{icon "user"}}<span>An account on any services the speaker asks you to set up</span></li>
+      </ul>
+
+      <h2>Workshops</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Workshop</th><th scope="col">Seats</th><th scope="col">Level</th><th scope="col">Laptop requirements</th><th scope="col">Prerequisites</th></tr></thead>
+          <tbody>
+            {{- range .Site.Workshops}}
+            <tr>
+              <th scope="row"><a href="/program/workshops#{{lower .Code}}">{{.Code}}</a></th>
+              <td>{{if .Title}}{{.Title}}{{else}}<span class="tba">Selected after review</span>{{end}}</td>
+              <td>{{tba .Capacity}}</td>
+              <td>{{tba .Level}}</td>
+              <td>{{tba .Laptop}}</td>
+              <td>{{tba .Prerequisites}}</td>
+            </tr>
+            {{- end}}
+          </tbody>
+        </table>
+      </div>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

@@ -1,0 +1,48 @@
+{{define "content"}}{{$t := track "without-workshop"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <p class="lead">Papers without workshop are academic papers relevant to the conference theme. <strong>{{$t.Slots}} speaking slots are available.</strong></p>
+
+      <div class="key-figures">
+        <div class="key-figure"><strong>{{$t.Slots}}</strong><span>speaking slots</span></div>
+        <div class="key-figure"><strong>~15 min</strong><span>per speaker</span></div>
+        <div class="key-figure"><strong>Afternoon</strong><span>in parallel with the workshops</span></div>
+      </div>
+
+      <h2>Format &amp; schedule</h2>
+      <p>Sessions will run <strong>concurrently with the afternoon workshops</strong>, with an estimated <strong>15 minutes allocated per speaker</strong>.</p>
+
+      <h2>Topic scope</h2>
+      <p>Submissions aligned with the <a href="/call-for-papers/topics">conference theme</a> are warmly welcomed, though topics are <strong>not strictly limited</strong> to it — any compelling, relevant research is welcome.</p>
+      <div class="topic-compact">{{template "topics" .}}</div>
+
+      <h2>What your proposal must include</h2>
+      <ul>
+        {{- range .Site.Requirements}}{{if applies . "without-workshop"}}
+        <li><strong>{{.Title}}:</strong> {{.Text}}{{range .Items}} {{.}}{{end}}</li>
+        {{- end}}{{end}}
+      </ul>
+      <p>For papers without workshop, the outline must give a <strong>clear breakdown of the 15-minute presentation structure</strong>.</p>
+
+      <h2>Example presentation structure</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Minutes</th><th scope="col">Content</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">0–2</th><td>Problem and motivation</td></tr>
+            <tr><th scope="row">2–5</th><td>Background and related work</td></tr>
+            <tr><th scope="row">5–11</th><td>Method and key results</td></tr>
+            <tr><th scope="row">11–13</th><td>Limitations and implications for autonomous systems</td></tr>
+            <tr><th scope="row">13–15</th><td>Conclusion and questions</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">An illustration only — structure your talk to suit your work.</p>
+
+      {{template "cfp-cta" .}}
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

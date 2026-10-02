@@ -1,0 +1,12 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container">
+    {{template "sponsor-wall" .}}
+    <div class="callout callout-accent">
+      {{icon "star"}}
+      <div><p><strong>Become a sponsor.</strong> Sponsorship and exhibition packages are available for {{.Site.Conference.FullTitle}}.</p>
+      <a class="btn btn-accent btn-sm" href="/sponsors">Sponsorship packages</a></div>
+    </div>
+  </div>
+</div>
+{{end}}

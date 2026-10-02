@@ -1,0 +1,29 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <p class="lead">The Technical Program Committee (TPC) evaluates every proposal in double-blind peer review and builds the technical program.</p>
+      <h2>How the review works</h2>
+      <ol class="steps">
+        <li><strong>Assignment.</strong> Each proposal is assigned to reviewers with expertise in its topic and track.</li>
+        <li><strong>Double-blind review.</strong> Reviewers do not see who the speakers are, and speakers do not learn who reviewed them.</li>
+        <li><strong>Evaluation.</strong> Proposals are scored on technical depth &amp; originality, clarity &amp; feasibility, engagement plan and theme alignment.</li>
+        <li><strong>Selection.</strong> Track chairs select the 5 papers with workshop and 8 papers without workshop for the program.</li>
+      </ol>
+      <p><a href="/call-for-papers/review">Read the full review criteria</a></p>
+
+      {{- if hasPeople .Site.ProgramCommittee}}
+      {{template "people" .Site.ProgramCommittee}}
+      {{- else}}
+      <h2>Committee members</h2>
+      {{template "roles-tba" .Site.ProgramCommittee}}
+      {{template "tba-note" "Track chairs and review committee members will be listed here."}}
+      {{- end}}
+
+      <h2>Become a reviewer</h2>
+      <p>We welcome experienced researchers and practitioners in autonomous systems who would like to review. <a href="/contact?topic=Paper+submission">Contact the organizers</a> with your areas of expertise.</p>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

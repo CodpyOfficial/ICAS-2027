@@ -1,0 +1,62 @@
+{{define "content"}}{{$c := .Site.Conference}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <h2>Important deadlines</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <tbody>
+            {{- range .Site.ImportantDates}}
+            <tr><th scope="row">{{.Label}}</th><td>{{with .Original}}<del>{{.}}</del> {{end}}{{tba .Date}}</td></tr>
+            {{- end}}
+          </tbody>
+        </table>
+      </div>
+      {{- if $c.TimeZone}}<p class="muted">All deadlines are given in {{$c.TimeZone}}.</p>{{end}}
+
+      <h2>Proposal submission</h2>
+      <ul>
+        <li>Proposals are submitted <strong>online only</strong> through the <a href="/submission">proposal submission form</a>; submissions by email are not accepted.</li>
+        <li>All submissions must be in <strong>English</strong>.</li>
+        <li>Indicate the track clearly: <a href="/call-for-papers/with-workshop">Paper with Workshop</a> or <a href="/call-for-papers/without-workshop">Paper without Workshop</a>.</li>
+        <li>You receive a submission ID on the confirmation page; quote it in all correspondence.</li>
+        <li>To change a submitted proposal before the deadline, <a href="/contact?topic=Paper+submission">contact the organizers</a> with your submission ID.</li>
+      </ul>
+
+      <h2>Proposal specification</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <tbody>
+            <tr><th scope="row">Language</th><td>English</td></tr>
+            <tr><th scope="row">Review</th><td>Double-blind — keep the proposal anonymous</td></tr>
+            <tr><th scope="row">Abstract</th><td>Max 300 words</td></tr>
+            <tr><th scope="row">Outline</th><td>With workshop: 25-min session breakdown + milestones for the 90-min workshop · Without workshop: 15-min structure</td></tr>
+            <tr><th scope="row">Prerequisites &amp; toolchain</th><td>With workshop only: software, target OS, hardware, skill level</td></tr>
+            <tr><th scope="row">Workshop size</th><td>With workshop only: 25 or 50 participants; 10 or 20 equipment sets (if needed)</td></tr>
+            <tr><th scope="row">Laptop requirements</th><td>With workshop only: hardware requirements for participants' laptops</td></tr>
+            <tr><th scope="row">Teaching assistant</th><td>With workshop only: at least one TA</td></tr>
+            <tr><th scope="row">Demo video</th><td>With workshop only: 2–5 min, public or unlisted link</td></tr>
+            <tr><th scope="row">Speaker bio</th><td>Max 150 words, speaking experience, project links</td></tr>
+            <tr><th scope="row">Presentation slides</th><td>After acceptance: the <a href="/authors/presentation-guidelines#template">official ICAS slide template</a> is mandatory</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><a href="/call-for-papers/requirements">Detailed submission requirements</a></p>
+
+      <h2>After acceptance</h2>
+      <ol class="steps">
+        <li><strong>Confirm and register.</strong> At least one speaker of each accepted proposal is expected to register by the speaker registration deadline.</li>
+        <li><strong>Prepare your material.</strong> Prepare your slides with the <a href="/authors/presentation-guidelines#template">official ICAS slide template</a> (mandatory) and follow the <a href="/authors/presentation-guidelines">presentation guidelines</a>; speakers of papers with workshop also prepare all workshop equipment and environment set-ups, provide the laptop hardware requirements for participants, and arrange at least one teaching assistant.</li>
+        <li><strong>Present in person.</strong> Accepted contributions are presented at the conference.</li>
+      </ol>
+
+      <h2>Speaker feedback (papers with workshop)</h2>
+      <p>Speakers of papers with workshop receive <strong>40% of the registration fees of their workshop</strong> as feedback, based on attendance. The arrangements will be communicated to the accepted speakers.</p>
+
+      <h2>Further assistance</h2>
+      <p>Questions about the call or the submission process? See the <a href="/faq">FAQ</a> or <a href="/contact?topic=Paper+submission">contact us</a>.</p>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

@@ -1,0 +1,249 @@
+{{define "content"}}{{$c := .Site.Conference}}{{$ho := track "with-workshop"}}{{$th := track "without-workshop"}}
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container hero-inner">
+    <div>
+      <div class="hero-kicker">
+        <span>{{icon "map-pin"}} {{orText $c.Location "Venue to be announced"}}</span>
+        <span>{{icon "calendar"}} {{orText $c.Dates "Dates to be announced"}}</span>
+      </div>
+      <h1 id="hero-title"><span class="accent">{{$c.FullTitle}}</span><span class="hero-name">{{$c.Name}}</span></h1>
+      <p class="hero-lead">{{$c.Tagline}}</p>
+      <div class="btn-row">
+        <a class="btn btn-accent" href="/call-for-papers">{{icon "megaphone"}} Call for Papers</a>
+        <a class="btn btn-ghost-light" href="/submission">{{icon "send"}} Submit a proposal</a>
+        <a class="btn btn-ghost-light" href="/contact">{{icon "mail"}} Contact us</a>
+      </div>
+      <ul class="hero-facts">
+        <li><strong>{{.Site.TotalSlots}}</strong><span>speaking slots</span></li>
+        <li><strong>{{$ho.Slots}}</strong><span>papers with workshop</span></li>
+        <li><strong>{{$th.Slots}}</strong><span>papers without workshop</span></li>
+        <li><strong>40%</strong><span>of workshop fees as speaker feedback</span></li>
+      </ul>
+    </div>
+    <div class="hero-visual">
+      <img src="{{asset "img/icas-emblem.svg"}}" alt="ICAS emblem: a robot arm, a humanoid robot, a self-driving car, a drone and a satellite against a rising sun" width="520" height="520">
+    </div>
+  </div>
+  <svg class="hero-curve" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 70V38C260 2 520-6 760 18s460 46 680 14v38z" fill="#e8694b"/></svg>
+</section>
+
+<div class="ribbon">
+  <div class="container">
+    {{- if $c.SubmissionOpen}}
+    <p>{{icon "bell"}} The Call for Papers is open — submit a paper with workshop or a paper without workshop.</p>
+    <a class="btn btn-sm" href="/submission">Submit now</a>
+    {{- else}}
+    <p>{{icon "bell"}} Call for Papers announced — the proposal submission system opens soon.</p>
+    <a class="btn btn-sm" href="/subscribe">Notify me</a>
+    {{- end}}
+  </div>
+</div>
+
+{{- with $c.StartDate}}
+<section class="section-navy" aria-label="Countdown">
+  <div class="container center pad-y">
+    <ul class="countdown" data-countdown="{{.}}" hidden>
+      <li><strong data-unit="d">0</strong><span>days</span></li>
+      <li><strong data-unit="h">00</strong><span>hours</span></li>
+      <li><strong data-unit="m">00</strong><span>minutes</span></li>
+      <li><strong data-unit="s">00</strong><span>seconds</span></li>
+    </ul>
+  </div>
+</section>
+{{- end}}
+
+<section class="section" aria-labelledby="highlights-title">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Highlights</span>
+      <h2 id="highlights-title">What we are looking for</h2>
+      <p>Two tracks, one goal: bring the people who build autonomous systems together with the people who advance their theory.</p>
+    </div>
+    <div class="carousel" data-carousel aria-roledescription="carousel" aria-label="Conference highlights">
+      <div class="carousel-track">
+        <article class="carousel-slide is-active spotlight" aria-roledescription="slide" aria-label="1 of 3">
+          <div>
+            <span class="eyebrow">{{$ho.Slots}} speaking slots</span>
+            <h3>Papers with Workshop</h3>
+            <p>Engage the audience interactively: deliver a 25-minute presentation in the morning, then lead a 90-minute workshop for 25 or 50 participants in the afternoon, where participants build along on their own laptops with the help of your teaching assistants.</p>
+            <p><strong>Speakers receive 40% of the workshop registration fees as feedback</strong> — choose an engaging topic and draw in as many participants as possible!</p>
+            <div class="btn-row">
+              <a class="btn btn-accent" href="/call-for-papers/with-workshop">Papers with workshop</a>
+              <a class="btn btn-outline" href="/submission?track=with-workshop">Submit</a>
+            </div>
+          </div>
+          <img src="{{asset "img/mascot-pile.webp"}}" alt="Illustration: the ICAS bear mascot on a pile of papers" width="300" height="300" loading="lazy">
+        </article>
+        <article class="carousel-slide spotlight" aria-roledescription="slide" aria-label="2 of 3">
+          <div>
+            <span class="eyebrow">{{$th.Slots}} speaking slots</span>
+            <h3>Papers without Workshop</h3>
+            <p>Present academic work relevant to the conference theme in a focused 15-minute talk. Sessions run concurrently with the afternoon workshops.</p>
+            <p>Topics are not strictly limited to the theme — any compelling, relevant research is welcome.</p>
+            <div class="btn-row">
+              <a class="btn btn-accent" href="/call-for-papers/without-workshop">Papers without workshop</a>
+              <a class="btn btn-outline" href="/submission?track=without-workshop">Submit</a>
+            </div>
+          </div>
+          <img src="{{asset "img/mascot-paper.webp"}}" alt="Illustration: the ICAS bear mascot wearing glasses and holding a paper" width="300" height="300" loading="lazy">
+        </article>
+        <article class="carousel-slide spotlight" aria-roledescription="slide" aria-label="3 of 3">
+          <div>
+            <span class="eyebrow">Industry &amp; partners</span>
+            <h3>Sponsor or exhibit at {{$c.FullTitle}}</h3>
+            <p>Put your platform in the hands of workshop participants, meet researchers and engineers working on autonomy, and recruit talent.</p>
+            <div class="btn-row">
+              <a class="btn btn-accent" href="/sponsors">Sponsorship packages</a>
+              <a class="btn btn-outline" href="/contact?topic=Sponsorship+%26+exhibition">Talk to us</a>
+            </div>
+          </div>
+          <img src="{{asset "img/icas-emblem.svg"}}" alt="" width="300" height="300" loading="lazy">
+        </article>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn carousel-prev" type="button" aria-label="Previous slide">{{icon "chevron-left"}}</button>
+        <div class="carousel-dots"></div>
+        <button class="carousel-btn carousel-next" type="button" aria-label="Next slide">{{icon "chevron-right"}}</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" aria-labelledby="news-title">
+  <div class="container page-grid">
+    <div>
+      <div class="card">
+        <div class="card-title-row">
+          <h2 id="news-title">{{icon "news"}} News Highlights</h2>
+          <a href="/news">More news {{icon "arrow-right"}}</a>
+        </div>
+        <ul class="news-list">
+          {{- range first 6 .Site.News}}
+          <li>
+            <span class="news-date">{{.Date}}</span>
+            <span class="news-text">{{.Text}}{{if .Link}} <a href="{{.Link}}">{{orText .LinkText "Read more"}}</a>{{end}}</span>
+          </li>
+          {{- end}}
+        </ul>
+      </div>
+    </div>
+    <div class="sidebar">{{template "dates-card" .}}</div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="about-title">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">About</span>
+      <h2 id="about-title">About {{$c.Acronym}}</h2>
+    </div>
+    <div class="grid-2">
+      <div>
+        <p class="lead">The {{$c.Name}} ({{$c.Acronym}}) is a forum for researchers, engineers and practitioners working on the theory, design and deployment of systems that perceive, decide and act on their own — from robots and vehicles to self-adaptive software.</p>
+        <p>{{$c.FullTitle}} combines two complementary formats: <strong>papers with workshop</strong>, where speakers present in the morning and run a 90-minute interactive workshop in the afternoon, and <strong>papers without workshop</strong>, presented as focused 15-minute talks.</p>
+        <ul class="track-points">
+          <li>{{icon "check"}}<span>Presentations and laptop-based workshops (papers with workshop)</span></li>
+          <li>{{icon "check"}}<span>Paper sessions (papers without workshop)</span></li>
+          <li>{{icon "check"}}<span>Keynote talks, special sessions and tutorials</span></li>
+          <li>{{icon "check"}}<span>Live demonstrations and industry exhibition</span></li>
+        </ul>
+      </div>
+      <div>
+        <p>The conference theme puts implementation first — autonomous robotics, vehicles, embedded computing, perception, simulation and real-world applications — and extends to control, planning, learning, multi-agent systems, human–autonomy teaming, safety, security and the ethics and policy questions autonomy raises.</p>
+        <p>All proposals undergo <strong>double-blind peer review</strong> for technical depth and originality, clarity and feasibility, engagement, and alignment with current industry and academic trends.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="/about">More about {{$c.Acronym}}</a>
+          <a class="btn btn-outline" href="/about/welcome">Welcome message</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-rose" aria-labelledby="tracks-title">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Call for Papers</span>
+      <h2 id="tracks-title">Two tracks, {{.Site.TotalSlots}} speaking slots</h2>
+      <p>All submissions must be in English. Proposals are evaluated in double-blind peer review.</p>
+    </div>
+    {{template "tracks" .}}
+  </div>
+</section>
+
+<section class="section" aria-labelledby="topics-title">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Conference Theme</span>
+      <h2 id="topics-title">Topics of interest</h2>
+      <p>Implementation topics come first, reflecting the conference's emphasis on practice. Submissions aligned with these areas are warmly welcomed, though not strictly limited to them.</p>
+    </div>
+    <div class="topic-compact">{{template "topics" .}}</div>
+    <p class="center mt-lg"><a class="btn btn-outline" href="/call-for-papers/topics">Topic details</a></p>
+  </div>
+</section>
+
+<section class="section section-alt" aria-labelledby="keynotes-title">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Program</span>
+      <h2 id="keynotes-title">Keynote Speakers</h2>
+      <p>Plenary speakers will be announced soon.</p>
+    </div>
+    <div class="grid-3">
+      {{- range .Site.Keynotes}}
+      <article class="card keynote">
+        <span class="avatar">{{if .Photo}}<img src="{{.Photo}}" alt="" loading="lazy">{{else if .Name}}{{.Initials}}{{else}}{{icon "mic"}}{{end}}</span>
+        <h3>{{orText .Name "To be announced"}}</h3>
+        <p class="person-aff">{{orText .Affiliation "Affiliation to be announced"}}</p>
+        {{- with .Talk}}<p class="keynote-talk">{{.}}</p>{{end}}
+        <a href="/program/keynotes">Abstract &amp; speaker’s bio</a>
+      </article>
+      {{- end}}
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="format-title">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Format</span>
+      <h2 id="format-title">A day at {{$c.Acronym}}</h2>
+      <p>Presentations in the morning; workshops and paper sessions in parallel in the afternoon.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <span class="track-icon">{{icon "mic"}}</span>
+        <h3 class="mt-sm">Morning</h3>
+        <p>Presentations of papers with workshop — 25 minutes per speaker, introducing what participants will build in the afternoon.</p>
+      </div>
+      <div class="card">
+        <span class="track-icon">{{icon "laptop"}}</span>
+        <h3 class="mt-sm">Afternoon workshops</h3>
+        <p>90-minute, milestone-driven workshops for 25 or 50 participants, each assisted by at least one TA. Attendees bring their own laptops.</p>
+      </div>
+      <div class="card">
+        <span class="track-icon">{{icon "book"}}</span>
+        <h3 class="mt-sm">Afternoon sessions</h3>
+        <p>Papers without workshop are presented concurrently with the workshops — about 15 minutes per speaker.</p>
+      </div>
+    </div>
+    <p class="center mt-lg"><a class="btn btn-primary" href="/program">Program at a glance</a></p>
+  </div>
+</section>
+
+<section class="section section-alt" aria-labelledby="sponsors-title">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Sponsors</span>
+      <h2 id="sponsors-title">Sponsors &amp; Exhibitors</h2>
+      <p>We thank our sponsors for their generous support of {{$c.FullTitle}}.</p>
+    </div>
+    {{template "sponsor-wall" .}}
+    <div class="btn-row justify-center">
+      <a class="btn btn-accent" href="/sponsors">Become a sponsor</a>
+      <a class="btn btn-outline" href="/sponsors/list">View all sponsors</a>
+    </div>
+  </div>
+</section>
+{{end}}

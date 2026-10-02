@@ -1,0 +1,66 @@
+{{define "content"}}{{$v := .Site.Venue}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <div class="card venue-card">
+        <div class="venue-head">
+          <span class="track-icon">{{icon "map-pin"}}</span>
+          <div>
+            <h2 class="mb-0">{{orText $v.Name "Venue to be announced"}}</h2>
+            <p class="person-aff mb-0">{{orText $v.Address "Address to be announced"}}</p>
+          </div>
+        </div>
+        {{- with $v.Description}}<p class="mt-sm">{{.}}</p>{{end}}
+        <div class="btn-row">
+          {{- with $v.Website}}<a class="btn btn-outline btn-sm" href="{{.}}" target="_blank" rel="noopener">Venue website {{icon "external"}}</a>{{end}}
+          {{- with $v.MapLinkURL}}<a class="btn btn-outline btn-sm" href="{{.}}" target="_blank" rel="noopener">Open in maps {{icon "external"}}</a>{{end}}
+          <a class="btn btn-primary btn-sm" href="/travel/getting-there">Transportation guide</a>
+        </div>
+      </div>
+
+      <h2>Location</h2>
+      {{- if $v.MapEmbedURL}}
+      <iframe class="map-frame" src="{{$v.MapEmbedURL}}" title="Map of the conference venue" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      {{- else}}
+      <div class="map-placeholder">
+        {{icon "map-pin"}}
+        <p class="mb-0"><strong>Map coming soon.</strong><br>An interactive map will appear here once the venue is announced.</p>
+      </div>
+      {{- end}}
+
+      {{- if $v.Photos}}
+      <h2>The venue</h2>
+      <div class="photo-strip">
+        {{- range $v.Photos}}
+        <figure class="figure"><img src="{{.Src}}" alt="{{.Alt}}" loading="lazy">{{with .Credit}}<figcaption>© {{.}}</figcaption>{{end}}</figure>
+        {{- end}}
+      </div>
+      {{- end}}
+
+      <h2>Facilities</h2>
+      {{- if $v.Facilities}}
+      <ul class="track-points">{{range $v.Facilities}}<li>{{icon "check"}}<span>{{.}}</span></li>{{end}}</ul>
+      {{- else}}
+      <p class="muted">Rooms for the keynotes, parallel workshops and paper sessions, an exhibition area and catering spaces will be described here.</p>
+      {{- end}}
+
+      <h2>From the airport</h2>
+      {{template "routes" $v.FromAirport}}
+      <h2>From the city centre</h2>
+      {{template "routes" $v.FromCity}}
+
+      {{- if $v.Landmarks}}
+      <h2>Nearby landmarks</h2>
+      <ul>{{range $v.Landmarks}}<li>{{.}}</li>{{end}}</ul>
+      {{- end}}
+
+      <ul class="link-cards mt-lg">
+        <li><a class="link-card" href="/travel/hotels"><strong>Hotels {{icon "bed"}}</strong><span>Accommodation near the venue</span></a></li>
+        <li><a class="link-card" href="/travel/city"><strong>Host city {{icon "camera"}}</strong><span>Things to see and do</span></a></li>
+        <li><a class="link-card" href="/travel/visa"><strong>Visa {{icon "globe"}}</strong><span>Entry requirements and invitation letters</span></a></li>
+      </ul>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

@@ -1,0 +1,29 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      {{- if not (named .Site.Keynotes)}}
+      {{template "tba-note" "Keynote speakers will be announced here, with their talk titles, abstracts and biographies."}}
+      {{- end}}
+      <ol class="keynote-list">
+        {{- range $i, $k := .Site.Keynotes}}
+        <li class="keynote-entry" id="{{if $k.Name}}keynote-{{slug $k.Name}}{{else}}keynote-{{add $i 1}}{{end}}">
+          <span class="avatar avatar-lg">{{if $k.Photo}}<img src="{{$k.Photo}}" alt="" loading="lazy">{{else if $k.Name}}{{$k.Initials}}{{else}}{{icon "mic"}}{{end}}</span>
+          <div>
+            <h2>{{orText $k.Name (printf "Keynote speaker %d — to be announced" (add $i 1))}}</h2>
+            {{- with $k.Talk}}<p class="keynote-talk">{{.}}</p>{{end}}
+            {{- if or $k.Position $k.Affiliation}}<p class="person-aff"><strong>{{$k.Position}}</strong>{{if and $k.Position $k.Affiliation}}, {{end}}{{$k.Affiliation}}{{with $k.Country}}, {{.}}{{end}}</p>{{end}}
+            {{- with $k.When}}<p>{{icon "clock"}} {{.}}</p>{{end}}
+            {{- if $k.Abstract}}<h3>Abstract</h3><p>{{$k.Abstract}}</p>{{end}}
+            {{- if $k.Bio}}<h3>Speaker’s bio</h3><p>{{$k.Bio}}</p>{{end}}
+            {{- with $k.URL}}<p><a href="{{.}}" target="_blank" rel="noopener">Speaker website {{icon "external"}}</a></p>{{end}}
+          </div>
+        </li>
+        {{- end}}
+      </ol>
+      <p><a href="/">{{icon "arrow-up"}} Back to the home page overview</a></p>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

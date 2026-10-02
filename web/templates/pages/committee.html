@@ -1,0 +1,20 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      {{- if hasPeople .Site.Committee}}
+      {{template "people" .Site.Committee}}
+      {{- else}}
+      <p class="lead">The organizing committee is being formed. Members will be announced on this page.</p>
+      {{template "roles-tba" .Site.Committee}}
+      {{template "tba-note" "Committee members, affiliations and photos will be published here."}}
+      {{- end}}
+      <h2>Technical Program Committee</h2>
+      <p>Track chairs and review committee members who carry out the double-blind review are listed on the <a href="/committee/technical-program">Technical Program Committee</a> page.</p>
+      <h2>Get involved</h2>
+      <p>Interested in reviewing, chairing a session or volunteering at {{.Site.Conference.Acronym}}? <a href="/contact?topic=General+inquiry">Get in touch with the organizers.</a></p>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

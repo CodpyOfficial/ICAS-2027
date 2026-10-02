@@ -1,0 +1,37 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <h2>Conference proceedings</h2>
+      {{template "tba-note" "The publication of accepted contributions (proceedings format, indexing and camera-ready requirements) will be announced."}}
+
+      <h2>Journal special issue</h2>
+      {{- if .Site.Journals}}
+      <p>Authors of selected contributions will be invited to submit extended versions to the following journals:</p>
+      <ul class="link-cards">
+        {{- range .Site.Journals}}
+        <li><a class="link-card" href="{{.URL}}" target="_blank" rel="noopener"><strong>{{.Name}} {{icon "external"}}</strong><span>{{.Description}}</span></a></li>
+        {{- end}}
+      </ul>
+      {{- else}}
+      {{template "tba-note" "Partner journals for a special issue of selected papers will be listed here."}}
+      {{- end}}
+
+      <h3>Invitation process</h3>
+      <ol class="steps">
+        <li><strong>Selection.</strong> Guest editors select contributions based on quality, timeliness and the review outcome.</li>
+        <li><strong>Invitation.</strong> Invited authors receive instructions for submitting an extended manuscript.</li>
+        <li><strong>Review.</strong> Extended manuscripts go through the journal's own peer review.</li>
+      </ol>
+      <div class="callout callout-warn">
+        {{icon "alert"}}
+        <div><p><strong>Important.</strong> A journal version must substantially extend the conference contribution with new, non-trivial material.</p></div>
+      </div>
+
+      <h2>Workshop materials</h2>
+      <p>Speakers of papers with workshop are encouraged to publish their workshop material (code, environment and instructions) in a public repository, so participants can revisit it after the conference.</p>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

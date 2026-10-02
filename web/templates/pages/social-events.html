@@ -1,0 +1,29 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <p class="lead">Meet speakers, workshop participants, exhibitors and fellow researchers outside the sessions.</p>
+      <div class="grid-2">
+        {{- range .Site.SocialEvents}}
+        <section class="card">
+          <span class="track-icon">{{icon .Icon}}</span>
+          <h3 class="mt-sm">{{.Title}}</h3>
+          <p>{{.Description}}</p>
+          <ul class="meta-list">
+            <li>{{icon "calendar"}} {{tba .Date}}</li>
+            <li>{{icon "clock"}} {{tba .Time}}</li>
+            <li>{{icon "map-pin"}} {{tba .Place}}</li>
+            <li>{{icon "id-card"}} {{orText .Ticket "Ticket information will be announced with registration"}}</li>
+          </ul>
+        </section>
+        {{- end}}
+      </div>
+      <h2>Companions and guests</h2>
+      <p>Companion tickets for social events will be offered during <a href="/registration">registration</a>.</p>
+      <h2>Dietary requirements</h2>
+      <p>You will be able to indicate dietary requirements and allergies when you register.</p>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

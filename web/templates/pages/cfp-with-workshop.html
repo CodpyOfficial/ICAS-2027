@@ -1,0 +1,79 @@
+{{define "content"}}{{$t := track "with-workshop"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <p class="lead">Papers with workshop are papers capable of engaging the audience interactively. <strong>{{$t.Slots}} speaking slots are available.</strong></p>
+
+      <div class="key-figures">
+        <div class="key-figure"><strong>{{$t.Slots}}</strong><span>speaking slots</span></div>
+        <div class="key-figure"><strong>25 min</strong><span>morning presentation</span></div>
+        <div class="key-figure"><strong>90 min</strong><span>afternoon workshop</span></div>
+        <div class="key-figure"><strong>25/50</strong><span>participants per workshop</span></div>
+        <div class="key-figure"><strong>40%</strong><span>of workshop fees as speaker feedback</span></div>
+      </div>
+
+      <h2>Format</h2>
+      <p>Deliver a <strong>25-minute presentation in the morning</strong>, followed by a <strong>90-minute (1.5-hour) workshop in the afternoon</strong>. The morning presentation introduces your work and what participants will build; the workshop lets them build it.</p>
+
+      <h2>Workshop size and equipment</h2>
+      <div class="media-split">
+        <div>
+          <p>Speakers choose the size of their workshop. If the workshop needs equipment, such as robots, boards, sensors or kits, prepare the corresponding number of sets for participants to share:</p>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th scope="col">Workshop size</th><th scope="col">Equipment sets (if needed)</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">25 participants</th><td>10 sets</td></tr>
+                <tr><th scope="row">50 participants</th><td>20 sets</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Speakers are responsible for preparing all necessary equipment and environment set-ups for the workshop, while attendees are asked to <strong>bring their own laptops</strong>.</p>
+        </div>
+        <img class="mascot" src="{{asset "img/mascot-pile.webp"}}" alt="Illustration: the ICAS bear mascot on a pile of papers" width="260" height="260">
+      </div>
+
+      <h2>Laptop hardware requirements</h2>
+      <div class="callout">
+        {{icon "laptop"}}
+        <div><p>Speakers provide the <strong>hardware requirements for participants' laptops</strong>, such as CPU, memory (RAM), GPU, free disk space and operating system. The requirements are published on the workshop pages, so that participants can check their laptops before registering for a workshop.</p></div>
+      </div>
+
+      <h2>Teaching assistants</h2>
+      <p>Each workshop should be supported by <strong>at least one teaching assistant (TA)</strong>, who helps participants with set-up issues and with the practical exercises, so that everyone can keep pace with the milestones.</p>
+
+      <h2>Speaker feedback</h2>
+      <p>Speakers receive feedback based on attendance: <strong>40% of the workshop registration fees</strong> are given to the speakers of the workshop. Choose an engaging topic and draw in as many participants as possible!</p>
+
+      <h2>What your proposal must include</h2>
+      <ul>
+        {{- range .Site.Requirements}}{{if applies . "with-workshop"}}
+        <li><strong>{{.Title}}:</strong> {{.Text}}{{range .Items}} {{.}}{{end}}</li>
+        {{- end}}{{end}}
+      </ul>
+      <p>The outline must give a <strong>detailed breakdown of the 25-minute morning session</strong> and a <strong>milestone-based progression for the 90-minute workshop</strong>. The <strong>2–5 minute demo video</strong> is crucial for the program committee to evaluate technical feasibility and participant engagement.</p>
+
+      <h2>How proposals are evaluated</h2>
+      <p>All criteria apply, with particular attention to <strong>Clarity &amp; Feasibility</strong> — can the agenda be completed within 90 minutes? — and the <strong>Engagement Plan</strong>, the degree of meaningful interactivity planned for participants. <a href="/call-for-papers/review">Review criteria</a></p>
+
+      <h2>Example milestone plan</h2>
+      <p class="muted">An illustration of the level of detail reviewers look for — adapt it to your topic.</p>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Milestone</th><th scope="col">Participants will…</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">M0 · Set-up check</th><td>Start the provided environment and run a first example of the toolchain.</td></tr>
+            <tr><th scope="row">M1 · First result</th><td>Reproduce a baseline behaviour end to end.</td></tr>
+            <tr><th scope="row">M2 · Core technique</th><td>Implement or configure the key idea presented in the morning.</td></tr>
+            <tr><th scope="row">M3 · Evaluate</th><td>Measure the result and compare it with the baseline.</td></tr>
+            <tr><th scope="row">M4 · Extend (optional)</th><td>Try a variation and discuss the results with the room.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      {{template "cfp-cta" .}}
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

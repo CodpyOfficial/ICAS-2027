@@ -1,0 +1,26 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      {{- if .Site.News}}
+      <ul class="news-list">
+        {{- range .Site.News}}
+        <li>
+          <span class="news-date">{{.Date}}</span>
+          <span class="news-text">{{.Text}}{{if .Link}} <a href="{{.Link}}">{{orText .LinkText "Read more"}}</a>{{end}}</span>
+        </li>
+        {{- end}}
+      </ul>
+      {{- else}}
+      {{template "tba-note" "News will be published here."}}
+      {{- end}}
+      <div class="callout">
+        {{icon "bell"}}
+        <div><p><strong>Never miss an update.</strong> Subscribe to receive deadline reminders and announcements by email.</p>
+        <a class="btn btn-primary btn-sm" href="/subscribe">Keep me updated</a></div>
+      </div>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

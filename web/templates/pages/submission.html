@@ -1,0 +1,193 @@
+{{define "content"}}{{$c := .Site.Conference}}{{$f := .Form}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <h2>Types of contributions</h2>
+      <ul class="call-cards">
+        {{- range .Site.Calls}}
+        <li class="call-card">
+          <div class="call-card-head">
+            <span class="track-icon">{{icon .Icon}}</span>
+            {{callBadge .Status}}
+          </div>
+          <h3><a href="{{.Path}}">{{.Title}}</a></h3>
+          <p>{{.Description}}</p>
+          <p class="call-deadline">{{icon "calendar"}} Submission deadline: <strong>{{tba .Deadline}}</strong></p>
+          {{- if and (eq .Status "open") .SubmitURL}}
+          <a class="btn btn-accent btn-sm" href="{{.SubmitURL}}#proposal-form">Submit now</a>
+          {{- else if eq .Status "closed"}}
+          <span class="btn btn-sm btn-outline is-disabled" aria-disabled="true">Submission closed</span>
+          {{- else}}
+          <a class="btn btn-sm btn-outline" href="{{.Path}}">Read the call</a>
+          {{- end}}
+        </li>
+        {{- end}}
+      </ul>
+
+      <h2 id="submit">Submit a paper with workshop or a paper without workshop</h2>
+      <div class="callout">
+        {{icon "info"}}
+        <div>
+          <p><strong>Before you start</strong></p>
+          <ul>
+            <li>Write everything in <strong>English</strong>.</li>
+            <li>Keep the title, abstract and outline <strong>anonymous</strong> — the review is double-blind.</li>
+            <li>Abstract: max <strong>300 words</strong>. Speaker bio: max <strong>150 words</strong>.</li>
+            <li>Accepted speakers must present with the <strong>official ICAS slide template</strong>.</li>
+            <li>Papers with workshop also need the prerequisites &amp; toolchain, the <strong>workshop size</strong> (25 or 50 participants), the <strong>laptop hardware requirements</strong> for participants, at least one <strong>teaching assistant</strong>, and a <strong>2–5 minute demo video</strong> (public or unlisted link).</li>
+          </ul>
+          <p><a href="/call-for-papers/requirements">Full submission requirements</a></p>
+        </div>
+      </div>
+
+      {{- if not $c.SubmissionOpen}}
+      <div class="alert alert-err" role="status">{{icon "alert"}}<div><p><strong>The submission system is currently closed.</strong> Please check the <a href="/important-dates">important dates</a>.</p></div></div>
+      {{- end}}
+
+      {{template "form-alerts" .}}
+
+      <form class="form" id="proposal-form" action="/submission" method="post">
+        {{template "hp" .}}
+
+        <fieldset class="fieldset">
+          <legend>1. Session track</legend>
+          {{$err := fieldErr $f "track"}}
+          <div class="field{{if $err}} has-error{{end}}">
+            <span class="label" id="track-label">Which track are you submitting to? <span class="req" aria-hidden="true">*</span></span>
+            <div class="choice-cards" role="radiogroup" aria-labelledby="track-label">
+              <label class="choice-card">
+                <input type="radio" name="track" value="with-workshop" required{{if checked $f "track" "with-workshop"}} checked{{end}}>
+                <span class="choice-body"><strong>{{icon "laptop"}} Paper with Workshop</strong><small>25-minute presentation + 90-minute workshop · {{(track "with-workshop").Slots}} slots · 40% of workshop fees as speaker feedback</small></span>
+              </label>
+              <label class="choice-card">
+                <input type="radio" name="track" value="without-workshop" required{{if checked $f "track" "without-workshop"}} checked{{end}}>
+                <span class="choice-body"><strong>{{icon "book"}} Paper without Workshop</strong><small>About 15-minute presentation · {{(track "without-workshop").Slots}} slots</small></span>
+              </label>
+            </div>
+            {{- with $err}}<span class="field-error">{{.}}</span>{{end}}
+          </div>
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <legend>2. Proposal <span class="badge badge-soon">Seen by reviewers</span></legend>
+          <p class="fieldset-note">Do not include speaker names, affiliations or self-identifying links in this section.</p>
+          {{template "fld" (dict "F" $f "Name" "title" "Label" "Title" "Req" true "Max" 200 "Hint" "A concise title.")}}
+          {{template "fld" (dict "F" $f "Name" "abstract" "Label" "Abstract" "Kind" "textarea" "Req" true "Words" 300 "Rows" 9)}}
+
+          <div class="field{{if fieldErr $f "other_topic"}} has-error{{end}}">
+            <span class="label">Topic areas</span>
+            <span class="hint">Select all that apply. Papers without workshop are not strictly limited to the conference theme.</span>
+            <div class="checks">
+              {{- range .Site.Topics}}
+              <label class="check"><input type="checkbox" name="topics" value="{{.Title}}"{{if checked $f "topics" .Title}} checked{{end}}><span>{{.Title}}</span></label>
+              {{- end}}
+              <label class="check"><input type="checkbox" name="topics" value="Other"{{if checked $f "topics" "Other"}} checked{{end}}><span>Other (describe below)</span></label>
+            </div>
+          </div>
+          {{template "fld" (dict "F" $f "Name" "other_topic" "Label" "Other topic" "Max" 200 "Hint" "Only if you ticked “Other”.")}}
+
+          <div class="field{{if fieldErr $f "talk_outline"}} has-error{{end}}">
+            <label for="f-talk_outline"><span data-track-text data-with-workshop="Breakdown of the 25-minute morning session" data-without-workshop="Breakdown of the 15-minute presentation structure" data-none="Presentation outline">Presentation outline</span> <span class="req" aria-hidden="true">*</span></label>
+            <span class="hint" id="f-talk_outline-hint">How you will use the time, section by section (e.g. “0–5 min: motivation …”).</span>
+            <textarea class="textarea" id="f-talk_outline" name="talk_outline" required maxlength="6000" rows="7" aria-describedby="f-talk_outline-hint{{if fieldErr $f "talk_outline"}} f-talk_outline-err{{end}}">{{field $f "talk_outline"}}</textarea>
+            {{- with fieldErr $f "talk_outline"}}<span class="field-error" id="f-talk_outline-err">{{.}}</span>{{end}}
+          </div>
+
+          <div class="track-only" data-track="with-workshop">
+            {{template "fld" (dict "F" $f "Name" "workshop_plan" "Label" "Milestone-based progression for the 90-minute workshop" "Kind" "textarea" "Req" true "TrackOnly" true "Max" 6000 "Rows" 8 "Hint" "List the milestones participants will reach and the time for each (e.g. “M1, 0–20 min: environment running …”).")}}
+          </div>
+        </fieldset>
+
+        <fieldset class="fieldset track-only" data-track="with-workshop">
+          <legend>3. Workshop set-up <span class="badge badge-accent">With workshop</span></legend>
+          {{$zerr := fieldErr $f "workshop_size"}}
+          <div class="field{{if $zerr}} has-error{{end}}">
+            <span class="label" id="size-label">Workshop size <span class="req" aria-hidden="true">*</span></span>
+            <span class="hint">If the workshop needs equipment, prepare 10 sets for 25 participants or 20 sets for 50 participants.</span>
+            <div class="choice-cards" role="radiogroup" aria-labelledby="size-label">
+              <label class="choice-card">
+                <input type="radio" name="workshop_size" value="25" data-required{{if checked $f "workshop_size" "25"}} checked{{end}}>
+                <span class="choice-body"><strong>{{icon "users"}} 25 participants</strong><small>10 equipment sets (if needed)</small></span>
+              </label>
+              <label class="choice-card">
+                <input type="radio" name="workshop_size" value="50" data-required{{if checked $f "workshop_size" "50"}} checked{{end}}>
+                <span class="choice-body"><strong>{{icon "users"}} 50 participants</strong><small>20 equipment sets (if needed)</small></span>
+              </label>
+            </div>
+            {{- with $zerr}}<span class="field-error">{{.}}</span>{{end}}
+          </div>
+          {{template "fld" (dict "F" $f "Name" "software" "Label" "Required software" "Kind" "textarea" "Req" true "TrackOnly" true "Max" 2000 "Rows" 3 "Hint" "Languages, frameworks, simulators, packages and versions participants need.")}}
+          <div class="field-row">
+            {{template "fld" (dict "F" $f "Name" "target_os" "Label" "Target OS compatibility" "Req" true "TrackOnly" true "Max" 200 "Place" "e.g. Ubuntu 22.04, macOS 14, Windows 11 (WSL2)")}}
+            {{$serr := fieldErr $f "skill_level"}}
+            <div class="field{{if $serr}} has-error{{end}}">
+              <label for="f-skill_level">Recommended skill level <span class="req" aria-hidden="true">*</span></label>
+              <select class="select" id="f-skill_level" name="skill_level" data-required{{if $serr}} aria-invalid="true"{{end}}>
+                <option value="">Choose…</option>
+                {{- range skillLevels}}
+                <option{{if eq (field $f "skill_level") .}} selected{{end}}>{{.}}</option>
+                {{- end}}
+              </select>
+              {{- with $serr}}<span class="field-error">{{.}}</span>{{end}}
+            </div>
+          </div>
+          {{template "fld" (dict "F" $f "Name" "hardware" "Label" "Equipment provided by the speakers" "Kind" "textarea" "Req" true "TrackOnly" true "Max" 2000 "Rows" 3 "Hint" "Robots, boards, sensors or kits you will bring for participants, and how many sets — or “none (laptop only)”.")}}
+          {{template "fld" (dict "F" $f "Name" "laptop_requirements" "Label" "Laptop hardware requirements for participants" "Kind" "textarea" "Req" true "TrackOnly" true "Max" 2000 "Rows" 4 "Hint" "Minimum CPU, memory (RAM), GPU, free disk space, operating system and ports. These requirements are published to participants.")}}
+        </fieldset>
+
+        <fieldset class="fieldset track-only" data-track="with-workshop">
+          <legend>4. Teaching assistants <span class="badge badge-accent">With workshop</span></legend>
+          <p class="fieldset-note">At least one teaching assistant (TA) is expected to help participants during the practical part of the workshop.</p>
+          {{$terr := fieldErr $f "ta_count"}}
+          <div class="field{{if $terr}} has-error{{end}}">
+            <label for="f-ta_count">Number of teaching assistants <span class="req" aria-hidden="true">*</span></label>
+            <select class="select" id="f-ta_count" name="ta_count" data-required{{if $terr}} aria-invalid="true"{{end}}>
+              <option value="">Choose…</option>
+              {{- range taCounts}}
+              <option{{if eq (field $f "ta_count") .}} selected{{end}}>{{.}}</option>
+              {{- end}}
+            </select>
+            {{- with $terr}}<span class="field-error">{{.}}</span>{{end}}
+          </div>
+          {{template "fld" (dict "F" $f "Name" "ta_names" "Label" "Teaching assistants (optional)" "Kind" "textarea" "Max" 1000 "Rows" 2 "Hint" "Names and affiliations, if already known. Not shown to reviewers.")}}
+        </fieldset>
+
+        <fieldset class="fieldset track-only" data-track="with-workshop">
+          <legend>5. Interactive demo video <span class="badge badge-accent">With workshop</span></legend>
+          <p class="fieldset-note">A short demonstration video (2–5 minutes) showcasing the functioning prototype, project workflow, or target outcomes participants will build during the workshop. It is crucial for the program committee to evaluate technical feasibility and participant engagement.</p>
+          {{template "fld" (dict "F" $f "Name" "demo_video" "Label" "Video link" "Type" "url" "Req" true "TrackOnly" true "Max" 500 "Place" "https://" "Hint" "A publicly viewable or unlisted link (e.g. YouTube, Vimeo, Loom or Google Drive).")}}
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <legend><span data-track-text data-with-workshop="6." data-without-workshop="3." data-none="3.">3.</span> Speaker information <span class="badge badge-closed">Not shown to reviewers</span></legend>
+          <div class="field-row">
+            {{template "fld" (dict "F" $f "Name" "speaker_name" "Label" "Speaker name" "Req" true "Max" 200 "Auto" "name")}}
+            {{template "fld" (dict "F" $f "Name" "speaker_email" "Label" "Email" "Type" "email" "Req" true "Max" 200 "Auto" "email")}}
+          </div>
+          <div class="field-row">
+            {{template "fld" (dict "F" $f "Name" "affiliation" "Label" "Affiliation" "Req" true "Max" 200 "Auto" "organization")}}
+            {{template "fld" (dict "F" $f "Name" "country" "Label" "Country" "Max" 100 "Auto" "country-name")}}
+          </div>
+          {{template "fld" (dict "F" $f "Name" "co_speakers" "Label" "Co-speakers (optional)" "Kind" "textarea" "Max" 2000 "Rows" 2 "Hint" "Name, affiliation and email of each co-speaker, one per line.")}}
+          {{template "fld" (dict "F" $f "Name" "bio" "Label" "Speaker bio — professional background" "Kind" "textarea" "Req" true "Words" 150 "Rows" 5)}}
+          {{template "fld" (dict "F" $f "Name" "experience" "Label" "Previous speaking experience" "Kind" "textarea" "Req" true "Max" 3000 "Rows" 3 "Hint" "Talks, tutorials or workshops you have given — or “none yet”.")}}
+          {{template "fld" (dict "F" $f "Name" "links" "Label" "Relevant project links" "Kind" "textarea" "Max" 2000 "Rows" 3 "Hint" "e.g. GitHub, Google Scholar, LinkedIn — one per line.")}}
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <legend>Confirmation</legend>
+          {{template "check" (dict "F" $f "Name" "confirm_english" "Label" "My proposal is written in English and the proposal section contains no identifying information." "Req" true)}}
+          {{template "check" (dict "F" $f "Name" "confirm_template" "Label" "If my proposal is accepted, I will prepare my presentation with the official ICAS slide template." "Req" true)}}
+          {{template "check" (dict "F" $f "Name" "confirm_privacy" "Label" "I agree that the organizers store and process this information to review the proposal and build the program." "Req" true)}}
+        </fieldset>
+
+        <div class="btn-row">
+          <button class="btn btn-accent" type="submit"{{if not $c.SubmissionOpen}} disabled{{end}}>{{icon "send"}} Submit proposal</button>
+          <a class="btn btn-outline" href="/call-for-papers">Back to the call</a>
+        </div>
+      </form>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

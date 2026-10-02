@@ -1,0 +1,57 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <p class="lead">The detailed schedule will be published after the review. The structure below follows the call for papers: presentations of papers with workshop in the morning, then workshops running in parallel with the sessions for papers without workshop in the afternoon.</p>
+      <div class="legend" aria-label="Legend">
+        <span><i class="lg-session"></i> Technical sessions</span>
+        <span><i class="lg-keynote"></i> Keynotes &amp; social</span>
+        <span><i class="lg-break"></i> Breaks</span>
+      </div>
+      {{- range .Site.Program}}
+      <section class="day" aria-label="{{.Label}}">
+        <div class="day-head"><span>{{.Label}}</span><span>{{tba .Date}}</span></div>
+        <ol class="slots">
+          {{- range .Slots}}
+          <li class="slot slot-{{.Kind}}">
+            <div class="slot-time">{{.Time}}</div>
+            <div class="slot-body">
+              <h4>{{if .Link}}<a href="{{.Link}}">{{.Title}}</a>{{else}}{{.Title}}{{end}}</h4>
+              {{- with .Detail}}<p>{{.}}</p>{{end}}
+              {{- with .Room}}<p>{{icon "map-pin"}} {{.}}</p>{{end}}
+              {{- if .Parallel}}
+              <div class="slot-parallel">
+                {{- range .Parallel}}
+                <div class="parallel-cell"><strong>{{if .Link}}<a href="{{.Link}}">{{.Title}}</a>{{else}}{{.Title}}{{end}}</strong>{{.Detail}}</div>
+                {{- end}}
+              </div>
+              {{- end}}
+            </div>
+          </li>
+          {{- end}}
+        </ol>
+      </section>
+      {{- with .Note}}<p class="muted">{{.}}</p>{{end}}
+      {{- end}}
+
+      <h2>Program details</h2>
+      <ul class="link-cards">
+        <li><a class="link-card" href="/program/keynotes"><strong>Keynote Speakers {{icon "arrow-right"}}</strong><span>Plenary talks</span></a></li>
+        <li><a class="link-card" href="/program/workshops"><strong>Workshops {{icon "arrow-right"}}</strong><span>W1–W5, 90 minutes, 25 or 50 participants</span></a></li>
+        <li><a class="link-card" href="/program/sessions"><strong>Paper Sessions {{icon "arrow-right"}}</strong><span>P1–P8, about 15 minutes each</span></a></li>
+        <li><a class="link-card" href="/program/tutorials"><strong>Tutorials {{icon "arrow-right"}}</strong><span>In-depth educational sessions</span></a></li>
+        <li><a class="link-card" href="/program/special-events"><strong>Special Events {{icon "arrow-right"}}</strong><span>Forums, competition, mentoring</span></a></li>
+        <li><a class="link-card" href="/program/social-events"><strong>Social Events {{icon "arrow-right"}}</strong><span>Receptions and dinner</span></a></li>
+      </ul>
+
+      <h2>Downloads</h2>
+      <ul class="download-list">
+        {{- range .Site.ProgramDownloads}}
+        <li>{{template "download-item" .}}</li>
+        {{- end}}
+      </ul>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

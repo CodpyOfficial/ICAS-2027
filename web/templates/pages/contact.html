@@ -1,0 +1,82 @@
+{{define "content"}}{{$f := .Form}}
+<div class="page-body">
+  <div class="container">
+    <div class="grid-2 contact-cards">
+      {{- range .Site.Secretariats}}
+      <section class="card">
+        <span class="track-icon">{{icon "briefcase"}}</span>
+        <h2 class="mt-sm">{{.Title}}</h2>
+        <p class="muted">{{.Purpose}}</p>
+        {{- if .Name}}
+        <address>
+          <strong>{{.Name}}</strong><br>
+          {{- range .Address}}{{.}}<br>{{end}}
+        </address>
+        <ul class="meta-list">
+          {{- with .URL}}<li>{{icon "globe"}} <a href="{{.}}" target="_blank" rel="noopener">{{.}}</a></li>{{end}}
+          {{- with .Phone}}<li>{{icon "phone"}} <a href="tel:{{.}}">{{.}}</a></li>{{end}}
+          {{- with .Email}}<li>{{icon "mail"}} <a href="mailto:{{.}}">{{.}}</a></li>{{end}}
+        </ul>
+        {{- else}}
+        <p><span class="badge badge-tba">To be announced</span></p>
+        <p class="mb-0">Until then, please use the contact form below.</p>
+        {{- end}}
+      </section>
+      {{- end}}
+    </div>
+
+    <div class="page-grid mt-lg">
+      <div>
+        <h2>Send us a message</h2>
+        {{template "form-alerts" .}}
+        <form class="form" action="/contact" method="post">
+          {{template "hp" .}}
+          <div class="fieldset">
+            <div class="field-row">
+              {{template "fld" (dict "F" $f "Name" "name" "Label" "Your name" "Req" true "Max" 200 "Auto" "name")}}
+              {{template "fld" (dict "F" $f "Name" "email" "Label" "Email" "Type" "email" "Req" true "Max" 200 "Auto" "email")}}
+            </div>
+            {{$terr := fieldErr $f "topic"}}
+            <div class="field{{if $terr}} has-error{{end}}">
+              <label for="f-topic">Topic <span class="req" aria-hidden="true">*</span></label>
+              <select class="select" id="f-topic" name="topic" required>
+                <option value="">Choose a topic…</option>
+                {{- range contactTopics}}
+                <option{{if eq (field $f "topic") .}} selected{{end}}>{{.}}</option>
+                {{- end}}
+              </select>
+              {{- with $terr}}<span class="field-error">{{.}}</span>{{end}}
+            </div>
+            {{template "fld" (dict "F" $f "Name" "subject" "Label" "Subject" "Max" 200)}}
+            {{template "fld" (dict "F" $f "Name" "message" "Label" "Message" "Kind" "textarea" "Req" true "Max" 6000 "Rows" 7)}}
+            <button class="btn btn-accent" type="submit">{{icon "send"}} Send message</button>
+          </div>
+        </form>
+      </div>
+      <aside class="sidebar">
+        <section class="side-card">
+          <h2>{{icon "mail"}} Inquiries</h2>
+          <div class="side-card-body">
+            <ul class="footer-contact contact-list">
+              {{- range .Site.Contacts}}
+              <li><span class="label">{{.Label}}</span>{{if .Email}}<a href="mailto:{{.Email}}">{{.Email}}</a>{{else}}<span class="muted">Use the form</span>{{end}}</li>
+              {{- end}}
+            </ul>
+          </div>
+        </section>
+        <section class="side-card">
+          <h2>{{icon "help"}} Quick answers</h2>
+          <div class="side-card-body">
+            <ul class="side-links">
+              <li><a href="/faq">{{icon "chevron-right"}} Frequently asked questions</a></li>
+              <li><a href="/call-for-papers/requirements">{{icon "chevron-right"}} Submission requirements</a></li>
+              <li><a href="/registration">{{icon "chevron-right"}} Registration</a></li>
+              <li><a href="/travel/visa">{{icon "chevron-right"}} Visa information</a></li>
+            </ul>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+</div>
+{{end}}

@@ -1,0 +1,26 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <p class="lead">The conference theme covers {{len .Site.Topics}} topic areas. Implementation topics come first, reflecting the conference's emphasis on practice. Submissions aligned with the theme are warmly welcomed; papers without workshop are not strictly limited to it.</p>
+      <ol class="topic-grid">
+        {{- range $i, $t := .Site.Topics}}
+        <li>
+          <div class="topic{{if $t.Practice}} is-practice{{end}}">
+            <span class="topic-num">{{icon $t.Icon}}</span>
+            <div>
+              <h3>{{pad2 (add $i 1)}}. {{$t.Title}}</h3>
+              <p>{{$t.Keywords}}</p>
+              {{- if $t.Practice}}<span class="topic-flag">Implementation focus</span>{{end}}
+            </div>
+          </div>
+        </li>
+        {{- end}}
+      </ol>
+      <p class="muted mt-lg">* “Self-*” denotes the family of self-managing properties: self-configuration, self-healing, self-optimization and self-protection.</p>
+      {{template "cfp-cta" .}}
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

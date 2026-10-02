@@ -1,0 +1,28 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container">
+    <div class="receipt">
+      <img class="mascot" src="{{asset "img/mascot-paper.webp"}}" alt="" width="200" height="200">
+      <h2>Thank you — your proposal has been received</h2>
+      {{- with .Data}}
+      <p>Your submission ID is</p>
+      <div class="receipt-id">{{.}}</div>
+      <p>Please keep this ID and quote it in any correspondence about your proposal.</p>
+      {{- else}}
+      <p>Your proposal has been recorded.</p>
+      {{- end}}
+      <h3>What happens next</h3>
+      <ol class="steps receipt-steps">
+        <li><strong>Double-blind review.</strong> The program committee evaluates your proposal against the <a href="/call-for-papers/review">review criteria</a>.</li>
+        <li><strong>Notification.</strong> You will hear from us by the notification date on the <a href="/important-dates">Important Dates</a> page.</li>
+        <li><strong>Preparation.</strong> Accepted speakers receive the <a href="/authors/presentation-guidelines">presentation guidelines</a> and the registration details.</li>
+      </ol>
+      <div class="btn-row justify-center">
+        <a class="btn btn-primary" href="/">Back to the home page</a>
+        <a class="btn btn-outline" href="/submission#submit">Submit another proposal</a>
+        <a class="btn btn-outline" href="/contact?topic=Paper+submission">Contact the organizers</a>
+      </div>
+    </div>
+  </div>
+</div>
+{{end}}

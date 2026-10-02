@@ -1,0 +1,82 @@
+{{define "content"}}{{$c := .Site.Conference}}{{$r := .Site.Registration}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <div class="btn-row">
+        {{- if and $c.RegistrationOpen $c.RegistrationURL}}
+        <a class="btn btn-accent" href="{{$c.RegistrationURL}}" target="_blank" rel="noopener">{{icon "id-card"}} Register now {{icon "external"}}</a>
+        {{- else}}
+        <span class="btn btn-accent is-disabled" aria-disabled="true">{{icon "id-card"}} Registration opens soon</span>
+        {{- end}}
+        <a class="btn btn-outline" href="/travel/visa">{{icon "globe"}} Visa requirements</a>
+        <a class="btn btn-outline" href="/registration/workshops">{{icon "laptop"}} Workshop registration</a>
+      </div>
+
+      <p class="lead mt-lg">{{$r.Intro}}</p>
+
+      <h2>Registration fees</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col">Early-bird rate<br><small>on/before {{orText $r.EarlyDeadline "TBA"}}</small></th>
+              <th scope="col">Regular rate<br><small>after {{orText $r.EarlyDeadline "TBA"}}</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            {{- range $r.Fees}}
+            <tr>
+              <th scope="row">{{.Category}}{{with .Note}}<br><small class="muted">{{.}}</small>{{end}}</th>
+              <td>{{if .Early}}{{$r.Currency}} {{.Early}}{{else}}{{tba ""}}{{end}}</td>
+              <td>{{if .Regular}}{{$r.Currency}} {{.Regular}}{{else}}{{tba ""}}{{end}}</td>
+            </tr>
+            {{- end}}
+          </tbody>
+        </table>
+      </div>
+      {{- if $r.Includes}}
+      <p class="table-note"><strong>Full registration includes:</strong></p>
+      <ul class="table-note">{{range $r.Includes}}<li>{{.}}</li>{{end}}</ul>
+      {{- end}}
+      {{- range $r.FeeNotes}}<p class="table-note">{{.}}</p>{{end}}
+
+      <h2>Workshop seats</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Ticket</th><th scope="col">Early-bird rate</th><th scope="col">Regular rate</th></tr></thead>
+          <tbody>
+            {{- range $r.WorkshopFees}}
+            <tr>
+              <th scope="row">{{.Category}}{{with .Note}}<br><small class="muted">{{.}}</small>{{end}}</th>
+              <td>{{if .Early}}{{$r.Currency}} {{.Early}}{{else}}{{tba ""}}{{end}}</td>
+              <td>{{if .Regular}}{{$r.Currency}} {{.Regular}}{{else}}{{tba ""}}{{end}}</td>
+            </tr>
+            {{- end}}
+          </tbody>
+        </table>
+      </div>
+      <p><a href="/registration/workshops">How workshop registration works</a></p>
+
+      <h2>Policies</h2>
+      <div class="grid-2">
+        {{- range $r.Policies}}
+        <section class="card">
+          <h3>{{icon .Icon}} {{.Title}}</h3>
+          {{- range .Paragraphs}}<p>{{.}}</p>{{end}}
+          {{- if .Items}}<ul>{{range .Items}}<li>{{.}}</li>{{end}}</ul>{{end}}
+          {{- range .Links}}<p class="mb-0"><a href="{{.URL}}">{{.Label}} {{icon "arrow-right"}}</a></p>{{end}}
+        </section>
+        {{- end}}
+      </div>
+
+      <h2>Events registration</h2>
+      <p>Some events — such as the <a href="/program/events/women-in-autonomy">Women in Autonomy &amp; Young Professionals Event</a> and the <a href="/program/social-events">social program</a> — may require a separate sign-up. Links will appear here when available. <span class="badge badge-soon">Coming soon</span></p>
+
+      <h2>Questions?</h2>
+      <p>Contact the registration secretariat through the <a href="/contact?topic=Registration">contact form</a>.</p>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

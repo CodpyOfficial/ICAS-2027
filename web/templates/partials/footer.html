@@ -1,0 +1,105 @@
+{{define "footer"}}{{$c := .Site.Conference}}
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="container">
+      <a class="footer-brand" href="/">
+        <img src="{{asset "img/icas-emblem.svg"}}" alt="" width="56" height="56">
+        <span>
+          <strong>{{$c.Year}} {{$c.Name}} ({{$c.Acronym}})</strong>
+          <span>{{orText $c.Location "Venue to be announced"}} · {{orText $c.Dates "Dates to be announced"}}</span>
+        </span>
+      </a>
+      <div class="btn-row">
+        <a class="btn btn-accent" href="/submission">Submit a proposal</a>
+        <a class="btn btn-ghost-light" href="/subscribe">Keep me updated!</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container footer-grid">
+    <section aria-labelledby="ft-contact">
+      <h2 id="ft-contact">{{$c.FullTitle}} Contact</h2>
+      <ul class="footer-contact">
+        {{- range .Site.Contacts}}
+        <li>
+          <span class="label">{{.Label}}</span>
+          {{if .Email}}<a href="mailto:{{.Email}}">{{.Email}}</a>{{else}}<a href="/contact">Use the contact form</a>{{end}}
+          {{- if .Phone}}<br><a href="tel:{{.Phone}}">{{.Phone}}</a>{{end}}
+        </li>
+        {{- end}}
+      </ul>
+    </section>
+    <section aria-labelledby="ft-sitemap">
+      <h2 id="ft-sitemap">Site Map</h2>
+      <ul class="footer-links">
+        <li><a href="/news">News Release</a></li>
+        <li><a href="/about/welcome">Welcome Message</a></li>
+        <li><a href="/call-for-papers">Call for Papers</a></li>
+        <li><a href="/important-dates">Important Dates</a></li>
+        <li><a href="/submission">Proposal Submission</a></li>
+        <li><a href="/program">Program at a Glance</a></li>
+        <li><a href="/program/keynotes">Keynote Speakers</a></li>
+        <li><a href="/program/workshops">Workshops</a></li>
+        <li><a href="/registration">Registration</a></li>
+        <li><a href="/committee">Organizing Committee</a></li>
+        <li><a href="/sitemap">Full site map</a></li>
+      </ul>
+    </section>
+    <section aria-labelledby="ft-useful">
+      <h2 id="ft-useful">Useful Links</h2>
+      <ul class="footer-links">
+        <li><a href="/venue">Conference Venue</a></li>
+        <li><a href="/travel/hotels">Accommodation</a></li>
+        <li><a href="/travel/getting-there">Transportation</a></li>
+        <li><a href="/travel/visa">Visa Requirements</a></li>
+        <li><a href="/travel/city">Local Activities</a></li>
+        <li><a href="/sponsors">Sponsorship Prospectus</a></li>
+        <li><a href="/promotional-items">Promotional Items</a></li>
+        <li><a href="/about/history">Conference History</a></li>
+        <li><a href="/faq">FAQs</a></li>
+      </ul>
+    </section>
+    <section class="footer-social" aria-labelledby="ft-social">
+      <h2 id="ft-social">Stay Connected</h2>
+      {{template "social" .Site.Social}}
+      <p>Deadline reminders and program announcements, straight to your inbox.</p>
+      <a class="btn btn-accent btn-sm" href="/subscribe">{{icon "bell"}} Keep me updated</a>
+    </section>
+  </div>
+
+  {{- if .Site.Secretariats}}
+  <div class="container secretariat">
+    {{- range .Site.Secretariats}}
+    <section>
+      <h2>{{.Title}}</h2>
+      <address>
+        {{- if .Name}}
+        <strong>{{.Name}}</strong><br>
+        {{- range .Address}}{{.}}<br>{{end}}
+        {{- if .URL}}<a href="{{.URL}}" target="_blank" rel="noopener">{{.URL}}</a><br>{{end}}
+        {{- if .Phone}}<a href="tel:{{.Phone}}">{{.Phone}}</a><br>{{end}}
+        {{- if .Email}}<a href="mailto:{{.Email}}">{{.Email}}</a>{{end}}
+        {{- else}}
+        <span class="badge badge-tba">To be announced</span>
+        {{- end}}
+      </address>
+    </section>
+    {{- end}}
+  </div>
+  {{- end}}
+
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; {{year}} {{orText $c.Copyright (printf "%s – %s" $c.Acronym $c.Name)}}. All rights reserved. Use of this website signifies your agreement to the <a href="/policies#terms">Terms of Use</a>. This site is maintained by the {{$c.Acronym}} Organizing Committee — <a href="/contact">contact us</a> for any assistance.</p>
+      <ul>
+        <li><a href="/policies#code-of-conduct">Code of Conduct</a></li>
+        <li><a href="/policies#privacy">Privacy Policy</a></li>
+        <li><a href="/policies#non-discrimination">Non-discrimination</a></li>
+        <li><a href="/policies#accessibility">Accessibility</a></li>
+        <li><a href="/policies#ethics">Ethics Reporting</a></li>
+        <li><a href="/sitemap">Site Map</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+{{end}}

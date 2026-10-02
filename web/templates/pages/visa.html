@@ -1,0 +1,30 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      {{- range .Site.Venue.Visa}}
+      <section class="visa-block">
+        <h2>{{icon (orText .Icon "globe")}} {{.Title}}</h2>
+        {{- range .Paragraphs}}<p>{{.}}</p>{{end}}
+        {{- if .Items}}<ul>{{range .Items}}<li>{{.}}</li>{{end}}</ul>{{end}}
+        {{- if .Links}}<div class="btn-row">{{range .Links}}<a class="btn btn-accent btn-sm" href="{{.URL}}">{{.Label}}</a>{{end}}</div>{{end}}
+      </section>
+      {{- end}}
+      <h2>{{icon "file-text"}} What to include in your request</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <tbody>
+            <tr><th scope="row">Full name</th><td>Exactly as in your passport</td></tr>
+            <tr><th scope="row">Nationality</th><td>The country that issued your passport</td></tr>
+            <tr><th scope="row">Affiliation</th><td>Institution or company, and your position</td></tr>
+            <tr><th scope="row">Registration ID</th><td>From your conference registration confirmation</td></tr>
+            <tr><th scope="row">Accepted proposal</th><td>Title and submission ID, if you are a speaker</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">Please do not send passport numbers or copies through the website form; the secretariat will tell you how to provide them securely if they are needed.</p>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

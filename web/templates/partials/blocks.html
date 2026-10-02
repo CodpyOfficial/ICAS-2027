@@ -1,0 +1,299 @@
+{{/* Reusable page blocks. */}}
+
+{{define "sidebar"}}
+<aside class="sidebar" aria-label="Section navigation">
+  {{- with .Sidebar}}
+  <section class="side-card">
+    <h2>{{icon "list"}} {{.Label}}</h2>
+    <div class="side-card-body">
+      <ul class="side-links">
+        {{- range .Children}}
+        <li>
+          <a href="{{.Path}}"{{if eq .Path $.Page.Path}} aria-current="page"{{end}}>{{icon "chevron-right"}} {{.Label}}</a>
+          {{- if .Children}}
+          <ul class="side-sub">
+            {{- range .Children}}
+            <li><a href="{{.Path}}"{{if eq .Path $.Page.Path}} aria-current="page"{{end}}>{{.Label}}</a></li>
+            {{- end}}
+          </ul>
+          {{- end}}
+        </li>
+        {{- end}}
+      </ul>
+    </div>
+  </section>
+  {{- end}}
+  {{template "dates-card" .}}
+  <section class="side-card">
+    <h2>{{icon "zap"}} Quick Links</h2>
+    <div class="side-card-body">
+      <ul class="side-links">
+        <li><a href="/submission">{{icon "send"}} Submit a proposal</a></li>
+        <li><a href="{{asset "files/ICAS-Call-for-Papers.pptx"}}" download>{{icon "download"}} Call for Papers (PPTX)</a></li>
+        <li><a href="{{asset "files/ICAS-slide-template.pptx"}}" download>{{icon "monitor"}} Official slide template (PPTX)</a></li>
+        <li><a href="/registration">{{icon "id-card"}} Registration</a></li>
+        <li><a href="/faq">{{icon "help"}} FAQs</a></li>
+        <li><a href="/contact">{{icon "mail"}} Contact the organizers</a></li>
+      </ul>
+    </div>
+  </section>
+</aside>
+{{end}}
+
+{{define "dates-card"}}
+<section class="side-card">
+  <h2>{{icon "calendar"}} Important Dates</h2>
+  <div class="side-card-body">
+    <ul class="dates">
+      {{- range .Site.ImportantDates}}
+      <li{{if past .}} class="is-past"{{end}}>
+        <span class="date-label">{{.Label}}</span>
+        <span class="date-value">{{tba .Date}}</span>
+        {{- with .Note}}<span class="date-note">{{.}}</span>{{end}}
+      </li>
+      {{- end}}
+    </ul>
+    <p><a class="btn btn-outline btn-sm btn-block" href="/important-dates">All important dates</a></p>
+  </div>
+</section>
+{{end}}
+
+{{define "timeline"}}
+<ol class="timeline">
+  {{- range .Site.ImportantDates}}
+  <li{{if past .}} class="is-past"{{end}}>
+    <span class="t-date">{{tba .Date}}</span>
+    <span class="t-label">{{.Label}}{{if .Highlight}} <span class="badge badge-accent">Key date</span>{{end}}</span>
+    {{- with .Note}}<small class="muted">{{.}}</small>{{end}}
+  </li>
+  {{- end}}
+</ol>
+{{end}}
+
+{{define "tracks"}}
+<div class="grid-2">
+  {{- range .Site.Tracks}}
+  <article class="card track-card track-{{.Key}}">
+    <div class="track-head">
+      <span class="track-icon">{{icon .Icon}}</span>
+      <div>
+        <h3>{{.Name}}</h3>
+        <span class="track-slots">{{.Slots}} speaking slots available</span>
+      </div>
+    </div>
+    <p>{{.Summary}}</p>
+    <ul class="track-points">
+      {{- range .Points}}
+      <li>{{icon "check"}}<span>{{.}}</span></li>
+      {{- end}}
+    </ul>
+    <div class="btn-row">
+      <a class="btn btn-primary btn-sm" href="{{.Path}}">Track details</a>
+      <a class="btn btn-accent btn-sm" href="/submission?track={{.Key}}">Submit</a>
+    </div>
+  </article>
+  {{- end}}
+</div>
+{{end}}
+
+{{define "topics"}}
+<ol class="topic-grid">
+  {{- range $i, $t := .Site.Topics}}
+  <li>
+    <div class="topic{{if $t.Practice}} is-practice{{end}}">
+      <span class="topic-num">{{pad2 (add $i 1)}}</span>
+      <div>
+        <h3>{{$t.Title}}</h3>
+        <p>{{$t.Keywords}}</p>
+        {{- if $t.Practice}}<span class="topic-flag">Implementation focus</span>{{end}}
+      </div>
+    </div>
+  </li>
+  {{- end}}
+</ol>
+{{end}}
+
+{{define "sponsor-wall"}}
+{{- if not (hasSponsors .Site.Sponsorship.Sponsors)}}
+<div class="sponsor-empty">
+  <span class="logo-slot is-placeholder">Your logo here</span>
+  <div>
+    <p><strong>Sponsorship opportunities are open.</strong> Become one of the first partners of {{.Site.Conference.FullTitle}}.</p>
+    <ul class="tier-pills">
+      {{- range .Site.Sponsorship.Sponsors}}<li>{{.Tier}}</li>{{end}}
+    </ul>
+  </div>
+</div>
+{{- else}}
+{{- range .Site.Sponsorship.Sponsors}}{{if .Sponsors}}
+<div class="tier {{.Class}}">
+  <h3>{{.Tier}} Sponsors</h3>
+  <ul class="logo-wall">
+    {{- range .Sponsors}}
+    <li>{{if .URL}}<a class="logo-slot" href="{{.URL}}" target="_blank" rel="noopener">{{else}}<span class="logo-slot">{{end}}{{if .Logo}}<img src="{{.Logo}}" alt="{{.Name}}" loading="lazy">{{else}}{{.Name}}{{end}}{{if .URL}}</a>{{else}}</span>{{end}}</li>
+    {{- end}}
+  </ul>
+</div>
+{{- end}}{{end}}
+{{- end}}
+{{end}}
+
+{{define "roles-tba"}}
+<ul class="role-grid">
+  {{- range .}}
+  <li><span>{{.Title}}</span>{{if .People}}<span class="badge badge-open">{{len .People}}</span>{{else}}<span class="badge badge-tba">TBA</span>{{end}}</li>
+  {{- end}}
+</ul>
+{{end}}
+
+{{define "people"}}
+{{- range .}}
+<section class="people-group">
+  <h2>{{.Title}}</h2>
+  <ul class="people">
+    {{- if not .People}}
+    <li><div class="person is-tba"><span class="avatar">{{icon "user"}}</span><div><div class="person-name">To be announced</div></div></div></li>
+    {{- end}}
+    {{- range .People}}
+    <li>
+      <div class="person">
+        <span class="avatar">{{if .Photo}}<img src="{{.Photo}}" alt="" loading="lazy">{{else if .Name}}{{.Initials}}{{else}}{{icon "user"}}{{end}}</span>
+        <div>
+          <div class="person-name">{{if .Name}}{{if .URL}}<a href="{{.URL}}" target="_blank" rel="noopener">{{.Name}}</a>{{else}}{{.Name}}{{end}}{{else}}To be announced{{end}}</div>
+          {{- with .Role}}<div class="person-role">{{.}}</div>{{end}}
+          {{- if or .Affiliation .Country}}<div class="person-aff">{{.Affiliation}}{{if and .Affiliation .Country}}, {{end}}{{.Country}}</div>{{end}}
+          {{- with .Email}}<a class="person-mail" href="mailto:{{.}}">{{icon "mail"}} Email</a>{{end}}
+        </div>
+      </div>
+    </li>
+    {{- end}}
+  </ul>
+</section>
+{{- end}}
+{{end}}
+
+{{define "tba-note"}}
+<div class="callout callout-warn">
+  {{icon "info"}}
+  <div><p><strong>To be announced.</strong> {{.}} Subscribe to <a href="/subscribe">conference updates</a> to be notified as soon as details are published.</p></div>
+</div>
+{{end}}
+
+{{define "cfp-cta"}}
+<div class="callout callout-accent">
+  {{icon "send"}}
+  <div>
+    <p><strong>Ready to submit?</strong> Proposals for both tracks are submitted through the online form. Submissions must be in English.</p>
+    <div class="btn-row">
+      <a class="btn btn-accent btn-sm" href="/submission">Submit a proposal</a>
+      <a class="btn btn-outline btn-sm" href="{{asset "files/ICAS-Call-for-Papers.pptx"}}" download>{{icon "download"}} Download the Call for Papers</a>
+    </div>
+  </div>
+</div>
+{{end}}
+
+{{define "download-item"}}
+{{- if .URL}}<a class="download" href="{{.URL}}" download>{{else}}<div class="download is-disabled">{{end}}
+  <span class="download-icon">{{icon (orText .Icon "download")}}</span>
+  <span><strong>{{.Title}}</strong><small>{{.Description}}</small></span>
+  {{if .URL}}<span class="badge badge-soon">{{.Format}}</span>{{else}}<span class="badge badge-tba">Coming soon</span>{{end}}
+{{if .URL}}</a>{{else}}</div>{{end}}
+{{- end}}
+
+{{define "session-card"}}
+<section class="card session-card" id="{{lower .Code}}">
+  <div class="card-title-row">
+    <h3>{{.Code}} · {{if .Title}}{{.Title}}{{else}}<span class="tba">To be announced</span>{{end}}</h3>
+    {{- if .Status}}<span class="badge badge-closed">{{.Status}}</span>{{end}}
+  </div>
+  <ul class="meta-list">
+    <li>{{icon "clock"}} {{with .Date}}{{.}} · {{end}}{{tba .Time}}</li>
+    <li>{{icon "map-pin"}} {{tba .Room}}</li>
+    {{- with .Capacity}}<li>{{icon "users"}} {{.}} participants</li>{{end}}
+    {{- with .Level}}<li>{{icon "trending-up"}} Level: {{.}}</li>{{end}}
+  </ul>
+  {{- with .Prerequisites}}<p><strong>Prerequisites:</strong> {{.}}</p>{{end}}
+  {{- with .Laptop}}<p><strong>Laptop requirements:</strong> {{.}}</p>{{end}}
+  {{- if .Abstract}}<h4>Abstract</h4><p>{{.Abstract}}</p>{{end}}
+  {{- if .Schedule}}
+  <h4>Tentative schedule</h4>
+  <div class="table-wrap">
+    <table class="table">
+      <thead><tr><th scope="col">Time</th><th scope="col">Content</th></tr></thead>
+      <tbody>{{range .Schedule}}<tr><td>{{.Time}}</td><td>{{.Item}}{{with .Speaker}} — {{.}}{{end}}</td></tr>{{end}}</tbody>
+    </table>
+  </div>
+  {{- end}}
+  {{- if .Instructors}}
+  <h4>Instructor(s)</h4>
+  <ul class="instructors">
+    {{- range .Instructors}}
+    <li>
+      <strong>{{if .URL}}<a href="{{.URL}}" target="_blank" rel="noopener">{{.Name}}</a>{{else}}{{.Name}}{{end}}</strong>{{with .Affiliation}}, {{.}}{{end}}
+      {{- if .Bio}}<details><summary>View biography</summary><p>{{.Bio}}</p></details>{{end}}
+    </li>
+    {{- end}}
+  </ul>
+  {{- end}}
+  {{- if .TAs}}<p><strong>Teaching assistants:</strong> {{join .TAs ", "}}</p>{{end}}
+  {{- if not .Title}}<p class="muted mb-0">Title, abstract, schedule, laptop requirements and instructors will be published after the review.</p>{{end}}
+</section>
+{{end}}
+
+{{define "routes"}}
+{{- if .}}
+<div class="routes">
+  {{- range .}}
+  <section class="route">
+    <span class="route-label">{{.Label}}</span>
+    <div>
+      <h3>{{.Title}}</h3>
+      {{- with .Duration}}<p class="muted">{{icon "clock"}} {{.}}</p>{{end}}
+      {{- if .Steps}}<ol>{{range .Steps}}<li>{{.}}</li>{{end}}</ol>{{end}}
+    </div>
+  </section>
+  {{- end}}
+</div>
+{{- else}}
+<p class="muted">Step-by-step directions will be published once the venue is announced. <span class="badge badge-tba">TBA</span></p>
+{{- end}}
+{{end}}
+
+{{define "call-status"}}
+<div class="call-status">
+  {{callBadge .Status}}
+  <span>{{icon "calendar"}} Deadline: <strong>{{tba .Deadline}}</strong></span>
+</div>
+{{end}}
+
+{{define "call-submit"}}
+<div class="callout callout-accent">
+  {{icon "send"}}
+  <div>
+    {{- if eq .Status "open"}}
+    <p><strong>Submissions are open.</strong></p>
+    <a class="btn btn-accent btn-sm" href="{{.SubmitURL}}">Submit now</a>
+    {{- else if eq .Status "closed"}}
+    <p><strong>Submission is closed.</strong> Thank you to everyone who submitted.</p>
+    {{- else}}
+    <p><strong>The submission system for this call opens soon.</strong> Subscribe to be notified as soon as it opens.</p>
+    <a class="btn btn-primary btn-sm" href="/subscribe">Notify me</a>
+    {{- end}}
+  </div>
+</div>
+{{end}}
+
+{{define "form-alerts"}}
+{{- with .Form}}
+{{- if .Notice}}<div class="alert alert-ok" role="status">{{icon "check-circle"}}<div><p>{{.Notice}}</p></div></div>{{end}}
+{{- if .Problem}}<div class="alert alert-err" role="alert">{{icon "alert"}}<div><p>{{.Problem}}</p></div></div>{{end}}
+{{- end}}
+{{end}}
+
+{{define "hp"}}
+<div class="hp-field" aria-hidden="true">
+  <label for="website">Leave this field empty</label>
+  <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+</div>
+<input type="hidden" name="csrf_token" value="{{.CSRF}}">
+{{end}}

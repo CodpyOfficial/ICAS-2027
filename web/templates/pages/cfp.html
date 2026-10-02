@@ -1,0 +1,87 @@
+{{define "content"}}{{$c := .Site.Conference}}{{$ho := track "with-workshop"}}{{$th := track "without-workshop"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <h2 id="technical-contributions">Call for technical contributions</h2>
+      <div class="media-split">
+        <div>
+          <p class="lead">{{$c.FullTitle}}, the {{$c.Name}}, invites proposals from researchers and practitioners working on systems that perceive, decide and act on their own.</p>
+          <p>{{$c.FullTitle}} will be held {{if $c.Location}}in {{$c.Location}}{{else}}at a venue to be announced{{end}}{{if $c.Dates}}, {{$c.Dates}}{{end}}. Its technical program features <strong>papers with workshop</strong>, <strong>papers without workshop</strong>, keynotes, special sessions, tutorials and live demonstrations, with a particular emphasis on implementation.</p>
+        </div>
+        <img class="mascot" src="{{asset "img/mascot-paper.webp"}}" alt="The ICAS bear mascot holding a paper" width="260" height="260">
+      </div>
+
+      <h2 id="looking-for">What we are looking for</h2>
+      <ul class="track-points">
+        <li>{{icon "laptop"}}<span><strong>Papers with Workshop ({{$ho.Slots}} speaking slots available):</strong> papers capable of engaging the audience interactively.</span></li>
+        <li>{{icon "book"}}<span><strong>Papers without Workshop ({{$th.Slots}} speaking slots available):</strong> academic papers relevant to the conference theme.</span></li>
+      </ul>
+      {{template "tracks" .}}
+
+      <h2 id="types">Types of contributions</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Contribution</th><th scope="col">Description</th><th scope="col">Status</th><th scope="col">Deadline</th></tr></thead>
+          <tbody>
+            {{- range .Site.Calls}}
+            <tr>
+              <th scope="row"><a href="{{.Path}}">{{.Title}}</a></th>
+              <td>{{.Description}}</td>
+              <td>{{callBadge .Status}}</td>
+              <td>{{tba .Deadline}}</td>
+            </tr>
+            {{- end}}
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="theme">Conference theme</h2>
+      <p>Submissions are invited in all areas of autonomous systems, including but not limited to the following. Implementation topics are listed first, reflecting the conference's emphasis on practice.</p>
+      <div class="topic-compact">{{template "topics" .}}</div>
+      <p><a href="/call-for-papers/topics">See the keywords for each topic area</a></p>
+
+      <h2 id="requirements">Proposal submission requirements</h2>
+      <p>All submissions must be submitted in <strong>English</strong> and include the following details:</p>
+      <ul>
+        {{- range .Site.Requirements}}
+        <li><strong>{{.Title}}:</strong> {{.Text}}{{if .Items}}<ul>{{range .Items}}<li>{{.}}</li>{{end}}</ul>{{end}}</li>
+        {{- end}}
+      </ul>
+      <p><a href="/call-for-papers/requirements">Detailed requirements by track</a></p>
+
+      <h2 id="review">Review criteria</h2>
+      <p>Submissions will undergo <strong>double-blind peer review</strong> evaluated against the following standards:</p>
+      <ul class="criteria">
+        {{- range .Site.ReviewCriteria}}
+        <li><strong>{{icon .Icon}} {{.Title}}</strong><p>{{.Text}}</p></li>
+        {{- end}}
+      </ul>
+
+      <h2 id="dates">Important dates</h2>
+      {{template "timeline" .}}
+
+      <h2 id="publication">Publication</h2>
+      <p>Information about proceedings and journal opportunities for accepted contributions will be published on the <a href="/authors/publication">Publication Opportunities</a> page.</p>
+
+      <h2 id="template">Presentation template</h2>
+      <p>Accepted speakers, with or without workshop, must prepare their presentations with the <a href="/authors/presentation-guidelines#template">official ICAS slide template</a>.</p>
+
+      <h2 id="download">Download the call</h2>
+      <ul class="download-list">
+        <li><a class="download" href="{{asset "files/ICAS-Call-for-Papers.pptx"}}" download><span class="download-icon">{{icon "download"}}</span><span><strong>Call for Papers slides</strong><small>The original call for papers deck</small></span><span class="badge badge-soon">PPTX</span></a></li>
+        <li><a class="download" href="{{asset "files/ICAS-CFP-flyer.pdf"}}" download><span class="download-icon">{{icon "printer"}}</span><span><strong>Call for Papers flyer</strong><small>One-page A4 summary for printing and sharing</small></span><span class="badge badge-soon">PDF</span></a></li>
+      </ul>
+
+      {{template "cfp-cta" .}}
+
+      <h2 id="committee">Conference leadership</h2>
+      {{- if hasPeople .Site.Committee}}
+      <p>See the <a href="/committee">organizing committee</a>.</p>
+      {{- else}}
+      <p>General chairs and technical program chairs will be announced on the <a href="/committee">Organizing Committee</a> page.</p>
+      {{- end}}
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

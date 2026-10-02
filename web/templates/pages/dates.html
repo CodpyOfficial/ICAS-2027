@@ -1,0 +1,30 @@
+{{define "content"}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <p class="lead">Key deadlines for {{.Site.Conference.FullTitle}}. Dates marked <span class="badge badge-tba">TBA</span> will be announced soon.</p>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Milestone</th><th scope="col">Date</th></tr></thead>
+          <tbody>
+            {{- range .Site.ImportantDates}}
+            <tr{{if past .}} class="is-past"{{end}}>
+              <th scope="row">{{.Label}}{{if .Highlight}} <span class="badge badge-accent">Key date</span>{{end}}{{with .Note}}<br><small class="muted">{{.}}</small>{{end}}</th>
+              <td>{{with .Original}}<del>{{.}}</del> <span class="badge badge-accent">Extended</span><br>{{end}}<strong>{{tba .Date}}</strong></td>
+            </tr>
+            {{- end}}
+          </tbody>
+        </table>
+      </div>
+      <h2>Timeline</h2>
+      {{template "timeline" .}}
+      <div class="callout">
+        {{icon "bell"}}
+        <div><p><strong>Get reminders.</strong> Subscribe to receive an email before each deadline.</p>
+        <a class="btn btn-primary btn-sm" href="/subscribe">Keep me updated</a></div>
+      </div>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}
