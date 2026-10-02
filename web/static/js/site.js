@@ -174,6 +174,28 @@
     update();
   });
 
+  // ---- file inputs: accept PDFs within the size limit only ----
+  function formatSize(n) {
+    return n >= 1048576 ? (n / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB";
+  }
+  $all("input[type=file][data-max-bytes]").forEach(function (input) {
+    var max = parseInt(input.getAttribute("data-max-bytes"), 10);
+    var info = document.getElementById(input.id + "-info");
+    input.addEventListener("change", function () {
+      var file = input.files && input.files[0];
+      var problem = "";
+      if (file) {
+        if (!/\.pdf$/i.test(file.name)) problem = "Please choose a PDF file (.pdf).";
+        else if (file.size > max) problem = "The PDF is " + formatSize(file.size) + "; the limit is " + formatSize(max) + ".";
+      }
+      input.setCustomValidity(problem);
+      if (info) {
+        info.textContent = file ? (problem || file.name + " (" + formatSize(file.size) + ")") : "";
+        info.classList.toggle("is-over", !!problem);
+      }
+    });
+  });
+
   // ---- submission form: show only the fields for the chosen track ----
   var form = $("#proposal-form");
   if (form) {

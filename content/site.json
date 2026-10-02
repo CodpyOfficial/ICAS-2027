@@ -405,6 +405,13 @@
       "items": []
     },
     {
+      "title": "Paper (PDF)",
+      "icon": "upload",
+      "applies": "all",
+      "text": "One anonymized PDF file (max 10 MB).",
+      "items": []
+    },
+    {
       "title": "Session Track",
       "icon": "flag",
       "applies": "all",
@@ -1567,7 +1574,11 @@
         },
         {
           "q": "What must a proposal contain?",
-          "a": "A title and an abstract of at most 300 words, the session track, an outline and schedule, and a speaker bio of at most 150 words with previous speaking experience and relevant project links. Papers with workshop also need the prerequisites and toolchain, the workshop size, the laptop hardware requirements for participants, the teaching assistant(s) and a 2–5 minute demo video."
+          "a": "The paper as one PDF file (max 10 MB), a title and an abstract of at most 300 words, the session track, an outline and schedule, and a speaker bio of at most 150 words with previous speaking experience and relevant project links. Papers with workshop also need the prerequisites and toolchain, the workshop size, the laptop hardware requirements for participants, the teaching assistant(s) and a 2–5 minute demo video."
+        },
+        {
+          "q": "In which format do I submit my paper?",
+          "a": "Upload the paper as one PDF file of at most 10 MB with the submission form. Other formats (Word, LaTeX sources, images) are not accepted. Remove author names and affiliations from the PDF for the double-blind review."
         },
         {
           "q": "Which video platforms can I use for the demo video?",

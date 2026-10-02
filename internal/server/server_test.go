@@ -1,9 +1,16 @@
 package server
 
 import (
+	"archive/zip"
+	"bytes"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"io"
+	"io/fs"
 	"log"
+	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -87,6 +94,70 @@ func post(t *testing.T, s *Server, path string, form url.Values, cookie *http.Co
 	rec := httptest.NewRecorder()
 	s.ServeHTTP(rec, req)
 	return rec
+}
+
+// samplePDF is a minimal file that passes the server's PDF check.
+var samplePDF = []byte("%PDF-1.4\n1 0 obj << /Type /Catalog >> endobj\ntrailer << /Root 1 0 R >>\n%%EOF\n")
+
+// postSubmission sends form to /submission as multipart/form-data, the way
+// a browser does. paper is attached as the "paper" file unless both
+// paperName and paper are empty (a browser sends an empty part with an
+// empty file name when no file was chosen).
+func postSubmission(t *testing.T, s *Server, form url.Values, paperName string, paper []byte, cookie *http.Cookie) *httptest.ResponseRecorder {
+	t.Helper()
+	body, contentType := multipartBody(t, form, paperName, paper)
+	req := httptest.NewRequest(http.MethodPost, "/submission", body)
+	req.Header.Set("Content-Type", contentType)
+	if cookie != nil {
+		req.AddCookie(cookie)
+	}
+	rec := httptest.NewRecorder()
+	s.ServeHTTP(rec, req)
+	return rec
+}
+
+// multipartBody encodes form and paper as multipart/form-data and returns
+// the body and its Content-Type.
+func multipartBody(t *testing.T, form url.Values, paperName string, paper []byte) (*bytes.Buffer, string) {
+	t.Helper()
+	var body bytes.Buffer
+	mw := multipart.NewWriter(&body)
+	for k, vs := range form {
+		for _, v := range vs {
+			if err := mw.WriteField(k, v); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+	if paperName != "" || paper != nil {
+		fw, err := mw.CreateFormFile("paper", paperName)
+		if err != nil {
+			t.Fatal(err)
+		}
+		fw.Write(paper)
+	}
+	if err := mw.Close(); err != nil {
+		t.Fatal(err)
+	}
+	return &body, mw.FormDataContentType()
+}
+
+// storedPapers lists the files in the papers directory, temporary ones
+// included.
+func storedPapers(t *testing.T, s *Server) []string {
+	t.Helper()
+	entries, err := os.ReadDir(s.papersDir())
+	if errors.Is(err, fs.ErrNotExist) {
+		return nil
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	var names []string
+	for _, e := range entries {
+		names = append(names, e.Name())
+	}
+	return names
 }
 
 func TestEveryPageRenders(t *testing.T) {
@@ -195,6 +266,33 @@ func TestEveryInternalLinkResolves(t *testing.T) {
 	}
 }
 
+func TestEveryIconExists(t *testing.T) {
+	s := newTestServer(t, nil)
+	sprite, err := os.ReadFile(filepath.Join("..", "..", "web", "static", "img", "icons.svg"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	useRe := regexp.MustCompile(`icons\.svg\?v=[^#"]*#([a-z0-9-]+)`)
+	seen := map[string]bool{}
+	for _, p := range s.pages {
+		if p.Path == "/admin" {
+			continue
+		}
+		for _, m := range useRe.FindAllStringSubmatch(get(t, s, p.Path).Body.String(), -1) {
+			if seen[m[1]] {
+				continue
+			}
+			seen[m[1]] = true
+			if !bytes.Contains(sprite, []byte(`<symbol id="`+m[1]+`"`)) {
+				t.Errorf("%s uses icon %q, which is not in icons.svg", p.Path, m[1])
+			}
+		}
+	}
+	if len(seen) == 0 {
+		t.Fatal("no icons found: the pattern is out of date")
+	}
+}
+
 func TestSecurityHeadersAndGzip(t *testing.T) {
 	s := newTestServer(t, nil)
 	req := httptest.NewRequest(http.MethodGet, "/", nil)
@@ -244,10 +342,19 @@ func validWithWorkshop() url.Values {
 func TestSubmissionFlow(t *testing.T) {
 	s := newTestServer(t, nil)
 	cookie, token := session(t, s, "/submission")
+	page := get(t, s, "/submission").Body.String()
+	for _, want := range []string{
+		`enctype="multipart/form-data"`,
+		`type="file" id="f-paper" name="paper" accept="application/pdf,.pdf" required data-max-bytes="10485760"`,
+	} {
+		if !strings.Contains(page, want) {
+			t.Errorf("submission form lacks %s", want)
+		}
+	}
 
 	form := validWithWorkshop()
 	form.Set(csrfFieldName, token)
-	rec := post(t, s, "/submission", form, cookie)
+	rec := postSubmission(t, s, form, "drones.pdf", samplePDF, cookie)
 	if rec.Code != http.StatusSeeOther {
 		t.Fatalf("POST /submission = %d; body: %s", rec.Code, rec.Body.String())
 	}
@@ -261,7 +368,7 @@ func TestSubmissionFlow(t *testing.T) {
 		theory.Del(k)
 	}
 	theory.Set(csrfFieldName, token)
-	rec = post(t, s, "/submission", theory, cookie)
+	rec = postSubmission(t, s, theory, `C:\fakepath\Theory Paper.PDF`, samplePDF, cookie)
 	if loc := rec.Header().Get("Location"); loc != "/submission/received?id=ICAS2027-P001" {
 		t.Fatalf("paper without workshop: Location = %q (code %d)", loc, rec.Code)
 	}
@@ -279,6 +386,25 @@ func TestSubmissionFlow(t *testing.T) {
 	}
 	if subs[1].DemoVideo != "" || subs[1].WorkshopPlan != "" || subs[1].TANames != "" {
 		t.Errorf("paper without workshop kept workshop fields: %+v", subs[1])
+	}
+
+	sum := sha256.Sum256(samplePDF)
+	for i, want := range []struct{ file, name string }{
+		{"ICAS2027-W001.pdf", "drones.pdf"},
+		{"ICAS2027-P001.pdf", "Theory Paper.PDF"},
+	} {
+		got := subs[i]
+		if got.PaperFile != want.file || got.PaperName != want.name ||
+			got.PaperSize != int64(len(samplePDF)) || got.PaperSHA256 != hex.EncodeToString(sum[:]) {
+			t.Errorf("paper %d stored as %q %q %d %q", i, got.PaperFile, got.PaperName, got.PaperSize, got.PaperSHA256)
+		}
+		data, err := os.ReadFile(filepath.Join(s.papersDir(), want.file))
+		if err != nil || !bytes.Equal(data, samplePDF) {
+			t.Errorf("paper file %s: %v", want.file, err)
+		}
+	}
+	if got := storedPapers(t, s); len(got) != 2 {
+		t.Errorf("papers directory holds %v, want exactly the two PDFs", got)
 	}
 
 	rec = get(t, s, "/submission/received?id=ICAS2027-W001")
@@ -306,12 +432,13 @@ func TestSubmissionValidation(t *testing.T) {
 	form.Set("ta_count", "0")
 	form.Del("confirm_english")
 	form.Del("confirm_template")
-	rec := post(t, s, "/submission", form, cookie)
+	rec := postSubmission(t, s, form, "drones.pdf", samplePDF, cookie)
 	if rec.Code != http.StatusUnprocessableEntity {
 		t.Fatalf("code = %d, want 422", rec.Code)
 	}
 	body := rec.Body.String()
 	for _, want := range []string{
+		"then select your PDF again",
 		"Abstract must be at most 300 words (currently 301).",
 		"Speaker bio must be at most 150 words (currently 151).",
 		"Please enter a full link starting with https://",
@@ -332,11 +459,139 @@ func TestSubmissionValidation(t *testing.T) {
 	if n, _ := s.store.Count("submissions"); n != 0 {
 		t.Errorf("invalid submission was stored")
 	}
+	if got := storedPapers(t, s); len(got) != 0 {
+		t.Errorf("paper of an invalid submission was kept: %v", got)
+	}
+}
+
+func TestPaperUploadValidation(t *testing.T) {
+	s := newTestServer(t, nil)
+	cookie, token := session(t, s, "/submission")
+	form := validWithWorkshop()
+	form.Set(csrfFieldName, token)
+
+	big := append(append([]byte(nil), samplePDF...), bytes.Repeat([]byte{' '}, maxPaperBytes)...)
+	for _, c := range []struct {
+		name string
+		data []byte
+		want string
+	}{
+		{"", nil, "Please upload your paper as a PDF file."},
+		{"", []byte{}, "Please upload your paper as a PDF file."},
+		{"paper.docx", samplePDF, "Please upload a PDF file (.pdf). Other formats are not accepted."},
+		{"paper", samplePDF, "Please upload a PDF file (.pdf). Other formats are not accepted."},
+		{"renamed.pdf", []byte("PK\x03\x04 a zip archive"), "The file is not a valid PDF document."},
+		{"empty.pdf", []byte{}, "The file is not a valid PDF document."},
+		{"big.pdf", big, "The PDF must be at most 10 MB."},
+	} {
+		rec := postSubmission(t, s, form, c.name, c.data, cookie)
+		if rec.Code != http.StatusUnprocessableEntity || !strings.Contains(rec.Body.String(), c.want) {
+			t.Errorf("paper %q (%d bytes): code %d, want 422 with %q", c.name, len(c.data), rec.Code, c.want)
+		}
+	}
+
+	// A form sent without multipart encoding cannot carry a file.
+	if rec := post(t, s, "/submission", form, cookie); rec.Code != http.StatusUnprocessableEntity ||
+		!strings.Contains(rec.Body.String(), "Please upload your paper as a PDF file.") {
+		t.Errorf("URL-encoded submission: code %d, want 422", rec.Code)
+	}
+
+	// A request larger than the PDF limit plus the form is cut off.
+	huge := append(append([]byte(nil), samplePDF...), bytes.Repeat([]byte{' '}, maxSubmissionBytes)...)
+	if rec := postSubmission(t, s, form, "huge.pdf", huge, cookie); rec.Code != http.StatusRequestEntityTooLarge ||
+		!strings.Contains(rec.Body.String(), "the paper must be a PDF of at most 10 MB") {
+		t.Errorf("oversized request: code %d, want 413", rec.Code)
+	}
+
+	if n, _ := s.store.Count("submissions"); n != 0 {
+		t.Errorf("%d rejected submissions were stored", n)
+	}
+	if got := storedPapers(t, s); len(got) != 0 {
+		t.Errorf("rejected papers left files behind: %v", got)
+	}
+}
+
+func TestSlowUploadOutlastsServerTimeouts(t *testing.T) {
+	s := newTestServer(t, nil)
+	ts := httptest.NewUnstartedServer(s)
+	// Far shorter than the pause below: the upload only succeeds if the
+	// handler extends the deadlines of its request.
+	ts.Config.ReadTimeout = 300 * time.Millisecond
+	ts.Config.WriteTimeout = 300 * time.Millisecond
+	ts.Start()
+	defer ts.Close()
+
+	cookie, token := session(t, s, "/submission")
+	form := validWithWorkshop()
+	form.Set(csrfFieldName, token)
+	body, contentType := multipartBody(t, form, "drones.pdf", samplePDF)
+	data := body.Bytes()
+
+	// Send half of the body, stall like a slow connection, then the rest.
+	pr, pw := io.Pipe()
+	go func() {
+		pw.Write(data[:len(data)/2])
+		time.Sleep(time.Second)
+		pw.Write(data[len(data)/2:])
+		pw.Close()
+	}()
+	req, err := http.NewRequest(http.MethodPost, ts.URL+"/submission", pr)
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.ContentLength = int64(len(data))
+	req.Header.Set("Content-Type", contentType)
+	req.Header.Set("Accept-Encoding", "gzip") // as browsers send it, which puts the gzip writer in the chain
+	req.AddCookie(cookie)
+	client := &http.Client{CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
+	resp, err := client.Do(req)
+	if err != nil {
+		t.Fatalf("slow upload: %v", err)
+	}
+	resp.Body.Close()
+	if resp.StatusCode != http.StatusSeeOther {
+		t.Fatalf("slow upload = %d, want 303", resp.StatusCode)
+	}
+}
+
+func TestSubmissionIDSkipsOrphanedPDF(t *testing.T) {
+	s := newTestServer(t, nil)
+	// The PDF of a record removed by hand must never be overwritten.
+	if err := os.MkdirAll(s.papersDir(), 0o700); err != nil {
+		t.Fatal(err)
+	}
+	orphan := filepath.Join(s.papersDir(), "ICAS2027-W001.pdf")
+	if err := os.WriteFile(orphan, []byte("%PDF-1.4 orphan"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	cookie, token := session(t, s, "/submission")
+	form := validWithWorkshop()
+	form.Set(csrfFieldName, token)
+	rec := postSubmission(t, s, form, "drones.pdf", samplePDF, cookie)
+	if loc := rec.Header().Get("Location"); loc != "/submission/received?id=ICAS2027-W002" {
+		t.Fatalf("Location = %q (code %d)", loc, rec.Code)
+	}
+	if data, _ := os.ReadFile(orphan); string(data) != "%PDF-1.4 orphan" {
+		t.Error("orphaned PDF was overwritten")
+	}
+}
+
+func TestCleanFileName(t *testing.T) {
+	for in, want := range map[string]string{
+		"paper.pdf":                "paper.pdf",
+		`C:\fakepath\My Paper.pdf`: "My Paper.pdf",
+		"../../etc/passwd.pdf":     "passwd.pdf",
+		"a\x00b\r\nc.pdf":          "abc.pdf",
+	} {
+		if got := cleanFileName(in); got != want {
+			t.Errorf("cleanFileName(%q) = %q, want %q", in, got, want)
+		}
+	}
 }
 
 func TestCSRFAndHoneypot(t *testing.T) {
 	s := newTestServer(t, nil)
-	rec := post(t, s, "/submission", validWithWorkshop(), nil)
+	rec := postSubmission(t, s, validWithWorkshop(), "drones.pdf", samplePDF, nil)
 	if rec.Code != http.StatusForbidden {
 		t.Fatalf("POST without CSRF = %d, want 403", rec.Code)
 	}
@@ -345,12 +600,15 @@ func TestCSRFAndHoneypot(t *testing.T) {
 	form := validWithWorkshop()
 	form.Set(csrfFieldName, token)
 	form.Set("website", "http://spam.example")
-	rec = post(t, s, "/submission", form, cookie)
+	rec = postSubmission(t, s, form, "spam.pdf", samplePDF, cookie)
 	if rec.Code != http.StatusSeeOther {
 		t.Fatalf("honeypot POST = %d", rec.Code)
 	}
 	if n, _ := s.store.Count("submissions"); n != 0 {
 		t.Error("honeypot submission was stored")
+	}
+	if got := storedPapers(t, s); len(got) != 0 {
+		t.Errorf("honeypot submission left files behind: %v", got)
 	}
 }
 
@@ -360,7 +618,7 @@ func TestSubmissionClosed(t *testing.T) {
 	cookie, token := session(t, s, "/submission")
 	form := validWithWorkshop()
 	form.Set(csrfFieldName, token)
-	if rec := post(t, s, "/submission", form, cookie); rec.Code != http.StatusConflict {
+	if rec := postSubmission(t, s, form, "drones.pdf", samplePDF, cookie); rec.Code != http.StatusConflict {
 		t.Fatalf("POST while closed = %d, want 409", rec.Code)
 	}
 }
@@ -421,7 +679,9 @@ func TestAdmin(t *testing.T) {
 	form := validWithWorkshop()
 	form.Set(csrfFieldName, token)
 	form.Set("title", "=HYPERLINK(\"http://evil\")")
-	post(t, s, "/submission", form, cookie)
+	if rec := postSubmission(t, s, form, "ada-lovelace-draft.pdf", samplePDF, cookie); rec.Code != http.StatusSeeOther {
+		t.Fatalf("submission = %d", rec.Code)
+	}
 
 	auth := func(path string) *httptest.ResponseRecorder {
 		req := httptest.NewRequest(http.MethodGet, path, nil)
@@ -437,6 +697,9 @@ func TestAdmin(t *testing.T) {
 	if rec.Header().Get("Cache-Control") != "no-store" {
 		t.Errorf("admin Cache-Control = %q", rec.Header().Get("Cache-Control"))
 	}
+	if !strings.Contains(rec.Body.String(), `href="/admin/paper?id=ICAS2027-W001"`) {
+		t.Error("admin page does not link the paper")
+	}
 	rec = auth("/admin/export?kind=submissions")
 	if !strings.HasPrefix(rec.Header().Get("Content-Type"), "text/csv") || !strings.Contains(rec.Body.String(), "ada@example.org") {
 		t.Fatalf("submissions export: %s", rec.Header().Get("Content-Type"))
@@ -444,16 +707,59 @@ func TestAdmin(t *testing.T) {
 	if !strings.Contains(rec.Body.String(), `'=HYPERLINK`) {
 		t.Error("formula injection not neutralised in CSV export")
 	}
+	if !strings.Contains(rec.Body.String(), "ada-lovelace-draft.pdf") || !strings.Contains(rec.Body.String(), "Paper SHA-256") {
+		t.Error("submissions export lacks the paper details")
+	}
 	rec = auth("/admin/export?kind=review")
 	if strings.Contains(rec.Body.String(), "ada@example.org") || strings.Contains(rec.Body.String(), "Ada Lovelace") ||
-		strings.Contains(rec.Body.String(), "Grace Hopper") {
+		strings.Contains(rec.Body.String(), "Grace Hopper") || strings.Contains(rec.Body.String(), "lovelace") {
 		t.Error("reviewer export leaks speaker or TA identity")
+	}
+	if !strings.Contains(rec.Body.String(), "ICAS2027-W001.pdf") {
+		t.Error("reviewer export does not name the paper file")
 	}
 	if !strings.Contains(rec.Body.String(), "Paper with Workshop") {
 		t.Error("reviewer export does not use the track name")
 	}
 	if rec := auth("/admin/export?kind=nope"); rec.Code != http.StatusBadRequest {
 		t.Errorf("unknown export kind = %d", rec.Code)
+	}
+
+	rec = auth("/admin/paper?id=ICAS2027-W001")
+	if rec.Code != http.StatusOK || rec.Header().Get("Content-Type") != "application/pdf" || !bytes.Equal(rec.Body.Bytes(), samplePDF) {
+		t.Fatalf("paper download: %d %q", rec.Code, rec.Header().Get("Content-Type"))
+	}
+	if cd := rec.Header().Get("Content-Disposition"); cd != `attachment; filename="ICAS2027-W001.pdf"` {
+		t.Errorf("paper Content-Disposition = %q", cd)
+	}
+	for _, id := range []string{"ICAS2027-W002", "../ICAS2027-W001", "../submissions", ""} {
+		if rec := auth("/admin/paper?id=" + url.QueryEscape(id)); rec.Code != http.StatusNotFound {
+			t.Errorf("paper %q = %d, want 404", id, rec.Code)
+		}
+	}
+	if rec := get(t, s, "/admin/paper?id=ICAS2027-W001"); rec.Code != http.StatusUnauthorized {
+		t.Errorf("paper without auth = %d, want 401", rec.Code)
+	}
+
+	rec = auth("/admin/papers.zip")
+	if rec.Code != http.StatusOK || rec.Header().Get("Content-Type") != "application/zip" {
+		t.Fatalf("papers zip: %d %q", rec.Code, rec.Header().Get("Content-Type"))
+	}
+	zr, err := zip.NewReader(bytes.NewReader(rec.Body.Bytes()), int64(rec.Body.Len()))
+	if err != nil || len(zr.File) != 1 || zr.File[0].Name != "ICAS2027-W001.pdf" {
+		t.Fatalf("papers zip content: %v", err)
+	}
+	zf, err := zr.File[0].Open()
+	if err != nil {
+		t.Fatal(err)
+	}
+	data, _ := io.ReadAll(zf)
+	zf.Close()
+	if !bytes.Equal(data, samplePDF) {
+		t.Error("papers zip holds a different PDF")
+	}
+	if rec := get(t, s, "/admin/papers.zip"); rec.Code != http.StatusUnauthorized {
+		t.Errorf("papers zip without auth = %d, want 401", rec.Code)
 	}
 }
 

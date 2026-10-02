@@ -33,7 +33,7 @@ func main() {
 	}
 	var (
 		addr       = flag.String("addr", defaultAddr, "listen address (env ICAS_ADDR or PORT)")
-		dataDir    = flag.String("data", env("ICAS_DATA_DIR", "data"), "directory for submissions, contact messages and subscribers (env ICAS_DATA_DIR)")
+		dataDir    = flag.String("data", env("ICAS_DATA_DIR", "data"), "directory for submissions, uploaded papers, contact messages and subscribers (env ICAS_DATA_DIR)")
 		baseURL    = flag.String("base-url", env("ICAS_BASE_URL", ""), "public origin used in canonical links and the sitemap, e.g. https://icas.example.org (env ICAS_BASE_URL)")
 		dev        = flag.Bool("dev", os.Getenv("ICAS_DEV") == "1", "read templates, static files and content/site.json from disk on every request (env ICAS_DEV=1)")
 		trustProxy = flag.Bool("trust-proxy", os.Getenv("ICAS_TRUST_PROXY") == "1", "trust X-Forwarded-For/-Proto from a reverse proxy (env ICAS_TRUST_PROXY=1)")
@@ -70,6 +70,8 @@ func main() {
 		logger.Fatal(err)
 	}
 
+	// The timeouts suit pages; the paper upload and the paper downloads
+	// extend them for their own request.
 	httpSrv := &http.Server{
 		Addr:              *addr,
 		Handler:           srv,

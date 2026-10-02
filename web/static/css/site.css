@@ -918,3 +918,12 @@ a.logo-slot { text-decoration: none; }
 .topic-flag { display: inline-block; margin-top: 6px; font-family: var(--font-head); font-weight: 700; font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--coral-700); }
 .key-figure { padding: 16px 10px; }
 .key-figure strong { font-size: 1.55rem; white-space: nowrap; }
+
+/* paper upload */
+.file-input { padding: 9px 12px; background: var(--bg-alt); cursor: pointer; }
+.file-input::file-selector-button {
+  margin-right: 12px; padding: 7px 14px; border: 0; border-radius: 6px; cursor: pointer;
+  background: var(--navy-800); color: #fff; font-family: var(--font-head); font-weight: 700; font-size: .8rem;
+}
+.file-info { font-size: .85rem; color: var(--ok); font-weight: 600; }
+.file-info.is-over { color: var(--err); }

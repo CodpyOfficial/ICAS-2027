@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 
@@ -112,11 +113,13 @@ func (s *Server) handleAdminExport(w http.ResponseWriter, r *http.Request) {
 		header = []string{"ID", "Received (UTC)", "Track", "Title", "Abstract", "Topics", "Other topic",
 			"Presentation outline", "Workshop plan", "Software", "Target OS", "Equipment provided", "Skill level",
 			"Workshop size", "Participant laptop requirements", "TAs", "TA names", "Demo video",
+			"Paper file", "Paper original name", "Paper size (bytes)", "Paper SHA-256",
 			"Speaker", "Email", "Affiliation", "Country", "Co-speakers", "Bio", "Speaking experience", "Links"}
 		for _, x := range d.Submissions {
 			rows = append(rows, []string{x.ID, x.Received.Format(time.RFC3339), trackName(x.Track), x.Title, x.Abstract,
 				strings.Join(x.Topics, "; "), x.OtherTopic, x.TalkOutline, x.WorkshopPlan, x.Software, x.TargetOS,
 				x.Hardware, x.SkillLevel, x.WorkshopSize, x.Laptop, x.TACount, x.TANames, x.DemoVideo,
+				x.PaperFile, x.PaperName, strconv.FormatInt(x.PaperSize, 10), x.PaperSHA256,
 				x.SpeakerName, x.SpeakerEmail, x.Affiliation, x.Country, x.CoSpeakers, x.Bio, x.Experience, x.Links})
 		}
 	case "review":
@@ -124,11 +127,11 @@ func (s *Server) handleAdminExport(w http.ResponseWriter, r *http.Request) {
 		// (name, contact, affiliation, bio, links) is left out.
 		header = []string{"ID", "Track", "Title", "Abstract", "Topics", "Other topic", "Presentation outline",
 			"Workshop plan", "Software", "Target OS", "Equipment provided", "Skill level", "Workshop size",
-			"Participant laptop requirements", "TAs", "Demo video"}
+			"Participant laptop requirements", "TAs", "Demo video", "Paper file"}
 		for _, x := range d.Submissions {
 			rows = append(rows, []string{x.ID, trackName(x.Track), x.Title, x.Abstract, strings.Join(x.Topics, "; "), x.OtherTopic,
 				x.TalkOutline, x.WorkshopPlan, x.Software, x.TargetOS, x.Hardware, x.SkillLevel, x.WorkshopSize,
-				x.Laptop, x.TACount, x.DemoVideo})
+				x.Laptop, x.TACount, x.DemoVideo, x.PaperFile})
 		}
 	case "contacts":
 		header = []string{"Received (UTC)", "Name", "Email", "Topic", "Subject", "Message"}

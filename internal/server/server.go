@@ -182,6 +182,8 @@ func (s *Server) routes() http.Handler {
 	mux.HandleFunc("/subscribe", s.handleSubscribe)
 	mux.HandleFunc("/admin", s.handleAdmin)
 	mux.HandleFunc("/admin/export", s.handleAdminExport)
+	mux.HandleFunc("/admin/paper", s.handleAdminPaper)
+	mux.HandleFunc("/admin/papers.zip", s.handleAdminPapersZip)
 	mux.HandleFunc("/", s.handlePage)
 
 	var h http.Handler = mux

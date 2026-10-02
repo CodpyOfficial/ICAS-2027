@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"net/mail"
 	"net/url"
+	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 	"time"
@@ -127,12 +129,25 @@ func oneOf(v string, allowed []string) bool {
 	return false
 }
 
-// prepare enforces the shared POST preconditions: size limit, parsing,
-// CSRF and rate limiting. It returns false after writing a response.
-func (s *Server) prepare(w http.ResponseWriter, r *http.Request, page *Page, f *formState) bool {
-	r.Body = http.MaxBytesReader(w, r.Body, maxFormBytes)
-	if err := r.ParseForm(); err != nil {
-		f.Problem = "The form could not be read (it may be too large). Please shorten your answers and try again."
+// prepare enforces the shared POST preconditions: size limit, parsing
+// (URL-encoded or multipart), CSRF and rate limiting. tooLarge is shown
+// when the body exceeds limit. It returns false after writing a response.
+func (s *Server) prepare(w http.ResponseWriter, r *http.Request, page *Page, f *formState, limit int64, tooLarge string) bool {
+	r.Body = http.MaxBytesReader(w, r.Body, limit)
+	var err error
+	if strings.HasPrefix(r.Header.Get("Content-Type"), "multipart/form-data") {
+		err = r.ParseMultipartForm(1 << 20) // larger parts are buffered in temporary files
+	} else {
+		err = r.ParseForm()
+	}
+	if err != nil {
+		var tooBig *http.MaxBytesError
+		if errors.As(err, &tooBig) || strings.Contains(err.Error(), "request body too large") {
+			f.Problem = tooLarge
+			s.render(w, r, http.StatusRequestEntityTooLarge, page, f, nil)
+			return false
+		}
+		f.Problem = "The form could not be read. Please try again."
 		s.render(w, r, http.StatusBadRequest, page, f, nil)
 		return false
 	}
@@ -174,6 +189,10 @@ type Submission struct {
 	TACount      string    `json:"taCount,omitempty"`
 	TANames      string    `json:"taNames,omitempty"`
 	DemoVideo    string    `json:"demoVideo,omitempty"`
+	PaperFile    string    `json:"paperFile"` // <ID>.pdf in the papers directory
+	PaperName    string    `json:"paperName"` // the file name on the author's computer
+	PaperSize    int64     `json:"paperSize"`
+	PaperSHA256  string    `json:"paperSHA256"`
 	SpeakerName  string    `json:"speakerName"`
 	SpeakerEmail string    `json:"speakerEmail"`
 	Affiliation  string    `json:"affiliation"`
@@ -204,8 +223,15 @@ func (s *Server) handleSubmission(w http.ResponseWriter, r *http.Request) {
 		}
 		s.render(w, r, http.StatusOK, page, f, nil)
 	case http.MethodPost:
+		allowSlowTransfer(w) // before the body is read: it carries the PDF
 		f := newForm()
-		if !s.prepare(w, r, page, f) {
+		defer func() {
+			if r.MultipartForm != nil {
+				r.MultipartForm.RemoveAll()
+			}
+		}()
+		tooLarge := fmt.Sprintf("The submission is too large: the paper must be a PDF of at most %d MB. Please select a smaller file and fill in the form again.", maxPaperBytes>>20)
+		if !s.prepare(w, r, page, f, maxSubmissionBytes, tooLarge) {
 			return
 		}
 		site := s.site()
@@ -221,8 +247,14 @@ func (s *Server) handleSubmission(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		sub := validateSubmission(f, site)
+		// The paper is checked last and only kept when the whole form is valid.
+		paper, err := s.receivePaper(r, f)
+		if err != nil {
+			s.serverError(w, fmt.Errorf("store uploaded paper: %w", err))
+			return
+		}
 		if !f.ok() {
-			f.Problem = "Please correct the highlighted fields below."
+			f.Problem = "Please correct the highlighted fields below, then select your PDF again: browsers do not keep files when a form is returned."
 			s.render(w, r, http.StatusUnprocessableEntity, page, f, nil)
 			return
 		}
@@ -234,21 +266,29 @@ func (s *Server) handleSubmission(w http.ResponseWriter, r *http.Request) {
 		if sub.Track == content.TrackWithWorkshop {
 			letter = "W"
 		}
-		err := s.store.Add("submissions", func(existing []json.RawMessage) (any, error) {
+		var stored string
+		err = s.store.Add("submissions", func(existing []json.RawMessage) (any, error) {
 			subs, err := store.Decode[Submission](existing)
 			if err != nil {
 				return nil, err
 			}
-			n := 1
-			for _, e := range subs {
-				if e.Track == sub.Track {
-					n++
-				}
+			sub.ID = s.nextID(subs, sub.Track, prefix+"-"+letter)
+			// The PDF is named after the submission ID, so the stored file
+			// name carries no author information.
+			target := filepath.Join(s.papersDir(), sub.ID+".pdf")
+			if err := os.Rename(paper.tmpPath, target); err != nil {
+				return nil, err
 			}
-			sub.ID = fmt.Sprintf("%s-%s%03d", prefix, letter, n)
+			stored = target
+			sub.PaperFile, sub.PaperName = sub.ID+".pdf", paper.name
+			sub.PaperSize, sub.PaperSHA256 = paper.size, paper.sha256
 			return sub, nil
 		})
 		if err != nil {
+			os.Remove(paper.tmpPath)
+			if stored != "" {
+				os.Remove(stored)
+			}
 			s.serverError(w, fmt.Errorf("save submission: %w", err))
 			return
 		}
@@ -395,7 +435,7 @@ func (s *Server) handleContact(w http.ResponseWriter, r *http.Request) {
 		s.render(w, r, http.StatusOK, page, f, contactTopics)
 	case http.MethodPost:
 		f := newForm()
-		if !s.prepare(w, r, page, f) {
+		if !s.prepare(w, r, page, f, maxFormBytes, "The message is too long. Please shorten it and try again.") {
 			return
 		}
 		f.collect(r, "name", "email", "topic", "subject", "message")
@@ -468,7 +508,7 @@ func (s *Server) handleSubscribe(w http.ResponseWriter, r *http.Request) {
 		s.render(w, r, http.StatusOK, page, f, interestOptions)
 	case http.MethodPost:
 		f := newForm()
-		if !s.prepare(w, r, page, f) {
+		if !s.prepare(w, r, page, f, maxFormBytes, "The form is too large. Please shorten your answers and try again.") {
 			return
 		}
 		f.collect(r, "first_name", "last_name", "email", "organization", "country", "work_field", "consent")

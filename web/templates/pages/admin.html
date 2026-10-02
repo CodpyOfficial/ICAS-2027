@@ -11,16 +11,17 @@
     <div class="btn-row">
       <a class="btn btn-primary btn-sm" href="/admin/export?kind=submissions">{{icon "download"}} Proposals (CSV)</a>
       <a class="btn btn-outline btn-sm" href="/admin/export?kind=review">{{icon "download"}} Anonymized proposals for reviewers (CSV)</a>
+      <a class="btn btn-outline btn-sm" href="/admin/papers.zip">{{icon "download"}} All papers (ZIP of PDFs)</a>
       <a class="btn btn-outline btn-sm" href="/admin/export?kind=contacts">{{icon "download"}} Messages (CSV)</a>
       <a class="btn btn-outline btn-sm" href="/admin/export?kind=subscribers">{{icon "download"}} Subscribers (CSV)</a>
     </div>
-    <p class="muted mt-sm">Records are stored as JSON Lines in <code>{{$d.DataDir}}</code>. Back up this directory regularly.</p>
+    <p class="muted mt-sm">Records are stored as JSON Lines in <code>{{$d.DataDir}}</code>, and the uploaded papers as <code>papers/&lt;ID&gt;.pdf</code> in the same directory. Back up this directory regularly.</p>
 
     <h2 class="mt-lg">Proposals</h2>
     {{- if $d.Submissions}}
     <div class="table-wrap">
       <table class="table admin-table">
-        <thead><tr><th scope="col">ID</th><th scope="col">Received (UTC)</th><th scope="col">Track</th><th scope="col">Title</th><th scope="col">Speaker</th><th scope="col">Details</th></tr></thead>
+        <thead><tr><th scope="col">ID</th><th scope="col">Received (UTC)</th><th scope="col">Track</th><th scope="col">Title</th><th scope="col">Speaker</th><th scope="col">Paper</th><th scope="col">Details</th></tr></thead>
         <tbody>
           {{- range $d.Submissions}}
           <tr>
@@ -29,6 +30,7 @@
             <td>{{trackName .Track}}</td>
             <td>{{.Title}}</td>
             <td>{{.SpeakerName}}<br><a href="mailto:{{.SpeakerEmail}}">{{.SpeakerEmail}}</a><br><small class="muted">{{.Affiliation}}</small></td>
+            <td>{{if .PaperFile}}<a href="/admin/paper?id={{.ID}}">{{icon "download"}} PDF</a><br><small class="muted">{{fileSize .PaperSize}}</small>{{else}}<span class="muted">–</span>{{end}}</td>
             <td><details><summary>View</summary><pre>{{pretty .}}</pre></details></td>
           </tr>
           {{- end}}

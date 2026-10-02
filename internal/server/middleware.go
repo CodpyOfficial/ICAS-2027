@@ -56,6 +56,10 @@ func (s *statusRecorder) Write(b []byte) (int, error) {
 	return n, err
 }
 
+// Unwrap lets http.ResponseController reach the connection, which
+// allowSlowTransfer needs to extend the deadlines of an upload.
+func (s *statusRecorder) Unwrap() http.ResponseWriter { return s.ResponseWriter }
+
 func logRequests(logger *log.Logger, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
@@ -140,6 +144,10 @@ func (g *gzipWriter) Write(b []byte) (int, error) {
 	}
 	return g.gz.Write(b)
 }
+
+// Unwrap lets http.ResponseController reach the connection (see
+// statusRecorder.Unwrap).
+func (g *gzipWriter) Unwrap() http.ResponseWriter { return g.ResponseWriter }
 
 func (g *gzipWriter) close() {
 	if g.gz != nil {

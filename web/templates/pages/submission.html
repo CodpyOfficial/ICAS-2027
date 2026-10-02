@@ -32,6 +32,7 @@
           <ul>
             <li>Write everything in <strong>English</strong>.</li>
             <li>Keep the title, abstract and outline <strong>anonymous</strong> — the review is double-blind.</li>
+            <li>Upload your paper as <strong>one PDF file</strong> (max {{maxPaperMB}} MB), without author names.</li>
             <li>Abstract: max <strong>300 words</strong>. Speaker bio: max <strong>150 words</strong>.</li>
             <li>Accepted speakers must present with the <strong>official ICAS slide template</strong>.</li>
             <li>Papers with workshop also need the prerequisites &amp; toolchain, the <strong>workshop size</strong> (25 or 50 participants), the <strong>laptop hardware requirements</strong> for participants, at least one <strong>teaching assistant</strong>, and a <strong>2–5 minute demo video</strong> (public or unlisted link).</li>
@@ -46,7 +47,7 @@
 
       {{template "form-alerts" .}}
 
-      <form class="form" id="proposal-form" action="/submission" method="post">
+      <form class="form" id="proposal-form" action="/submission" method="post" enctype="multipart/form-data">
         {{template "hp" .}}
 
         <fieldset class="fieldset">
@@ -73,6 +74,14 @@
           <p class="fieldset-note">Do not include speaker names, affiliations or self-identifying links in this section.</p>
           {{template "fld" (dict "F" $f "Name" "title" "Label" "Title" "Req" true "Max" 200 "Hint" "A concise title.")}}
           {{template "fld" (dict "F" $f "Name" "abstract" "Label" "Abstract" "Kind" "textarea" "Req" true "Words" 300 "Rows" 9)}}
+          {{$perr := fieldErr $f "paper"}}
+          <div class="field{{if $perr}} has-error{{end}}">
+            <label for="f-paper">{{icon "upload"}} Paper (PDF) <span class="req" aria-hidden="true">*</span></label>
+            <span class="hint" id="f-paper-hint">One PDF file, at most {{maxPaperMB}} MB. Remove author names, affiliations and acknowledgements, including from the PDF properties, for the double-blind review.</span>
+            <input class="input file-input" type="file" id="f-paper" name="paper" accept="application/pdf,.pdf" required data-max-bytes="{{maxPaperBytes}}" aria-describedby="f-paper-hint f-paper-info{{if $perr}} f-paper-err{{end}}"{{if $perr}} aria-invalid="true"{{end}}>
+            <span class="file-info" id="f-paper-info" aria-live="polite"></span>
+            {{- with $perr}}<span class="field-error" id="f-paper-err">{{.}}</span>{{end}}
+          </div>
 
           <div class="field{{if fieldErr $f "other_topic"}} has-error{{end}}">
             <span class="label">Topic areas</span>

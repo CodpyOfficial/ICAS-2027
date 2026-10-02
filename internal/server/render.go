@@ -191,6 +191,17 @@ func (s *Server) funcs() template.FuncMap {
 		"workshopSizes": func() []string { return workshopSizes },
 		"taCounts":      func() []string { return taCounts },
 		"trackName":     trackName,
+		"maxPaperMB":    func() int { return maxPaperBytes >> 20 },
+		"maxPaperBytes": func() int { return maxPaperBytes },
+		"fileSize": func(n int64) string {
+			switch {
+			case n >= 1<<20:
+				return fmt.Sprintf("%.1f MB", float64(n)/(1<<20))
+			case n >= 1<<10:
+				return fmt.Sprintf("%d KB", n>>10)
+			}
+			return fmt.Sprintf("%d bytes", n)
+		},
 		"workFields":    func() []string { return workFields },
 		"interests":     func() []string { return interestOptions },
 		"contactTopics": func() []string { return contactTopics },
