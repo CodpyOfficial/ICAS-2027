@@ -1,0 +1,10 @@
+# Store text files with LF line endings so gofmt and diffs behave the same
+# on every platform; never touch binary assets.
+* text=auto eol=lf
+
+*.png  binary
+*.webp binary
+*.ico  binary
+*.pdf  binary
+*.pptx binary
+*.zip  binary

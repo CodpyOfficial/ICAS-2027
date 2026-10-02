@@ -1,0 +1,5 @@
+data/
+*.exe
+
+# Local Claude Code / preview configuration
+.claude/
