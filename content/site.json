@@ -1,0 +1,1835 @@
+{
+  "conference": {
+    "acronym": "ICAS",
+    "name": "International Conference on Autonomous System",
+    "year": "2027",
+    "tagline": "From theory to practice: researchers present new ideas, and practitioners teach the tools that make autonomous systems work.",
+    "description": "ICAS 2027, the International Conference on Autonomous System. Call for papers with workshop and papers without workshop on autonomous robotics, vehicles, embedded autonomy, perception, simulation, planning, control, learning and safety.",
+    "dates": "",
+    "startDate": "",
+    "city": "",
+    "country": "",
+    "venueName": "",
+    "format": "In-person conference with practical workshops",
+    "language": "English",
+    "timeZone": "",
+    "baseURL": "",
+    "submissionOpen": true,
+    "registrationOpen": false,
+    "registrationURL": "",
+    "copyright": "ICAS – International Conference on Autonomous System"
+  },
+  "contacts": [
+    {
+      "label": "General inquiry",
+      "email": "",
+      "phone": "",
+      "note": ""
+    },
+    {
+      "label": "Paper submission inquiry",
+      "email": "",
+      "phone": "",
+      "note": ""
+    },
+    {
+      "label": "Registration related inquiry",
+      "email": "",
+      "phone": "",
+      "note": ""
+    },
+    {
+      "label": "Sponsorship & exhibition",
+      "email": "",
+      "phone": "",
+      "note": ""
+    }
+  ],
+  "secretariats": [
+    {
+      "title": "Registration Secretariat",
+      "purpose": "Contact the registration secretariat for registration procedures, invoices and payments, and for sponsorship and exhibition bookings.",
+      "name": "",
+      "address": [],
+      "phone": "",
+      "email": "",
+      "url": ""
+    },
+    {
+      "title": "Organizing Secretariat",
+      "purpose": "Contact the organizing secretariat for general enquiries about the program, submissions, venue and travel.",
+      "name": "",
+      "address": [],
+      "phone": "",
+      "email": "",
+      "url": ""
+    }
+  ],
+  "social": [],
+  "importantDates": [
+    {
+      "label": "Call for Papers announced",
+      "date": "",
+      "original": "",
+      "iso": "",
+      "note": "",
+      "highlight": false
+    },
+    {
+      "label": "Proposal submission deadline (papers with and without workshop)",
+      "date": "",
+      "original": "",
+      "iso": "",
+      "note": "",
+      "highlight": true
+    },
+    {
+      "label": "Special session proposal deadline",
+      "date": "",
+      "original": "",
+      "iso": "",
+      "note": "",
+      "highlight": false
+    },
+    {
+      "label": "Tutorial proposal deadline",
+      "date": "",
+      "original": "",
+      "iso": "",
+      "note": "",
+      "highlight": false
+    },
+    {
+      "label": "Live demonstration submission deadline",
+      "date": "",
+      "original": "",
+      "iso": "",
+      "note": "",
+      "highlight": false
+    },
+    {
+      "label": "Notification of acceptance",
+      "date": "",
+      "original": "",
+      "iso": "",
+      "note": "",
+      "highlight": false
+    },
+    {
+      "label": "Final presentation materials due",
+      "date": "",
+      "original": "",
+      "iso": "",
+      "note": "",
+      "highlight": false
+    },
+    {
+      "label": "Early-bird registration deadline",
+      "date": "",
+      "original": "",
+      "iso": "",
+      "note": "",
+      "highlight": false
+    },
+    {
+      "label": "Speaker registration deadline",
+      "date": "",
+      "original": "",
+      "iso": "",
+      "note": "",
+      "highlight": false
+    },
+    {
+      "label": "Conference",
+      "date": "",
+      "original": "",
+      "iso": "",
+      "note": "",
+      "highlight": true
+    }
+  ],
+  "news": [
+    {
+      "date": "Oct 2, 2026",
+      "text": "The Call for Papers is out: 5 speaking slots for papers with workshop and 8 for papers without workshop.",
+      "link": "/call-for-papers",
+      "linkText": "Read the call"
+    },
+    {
+      "date": "Oct 2, 2026",
+      "text": "Speakers of papers with workshop receive 40% of their workshop's registration fees as feedback.",
+      "link": "/call-for-papers/with-workshop",
+      "linkText": "Papers with workshop"
+    },
+    {
+      "date": "Oct 2, 2026",
+      "text": "The online proposal submission form is open.",
+      "link": "/submission",
+      "linkText": "Submit a proposal"
+    },
+    {
+      "date": "Oct 2, 2026",
+      "text": "Sponsorship and exhibition opportunities are available.",
+      "link": "/sponsors",
+      "linkText": "Sponsorship packages"
+    },
+    {
+      "date": "Oct 2, 2026",
+      "text": "The ICAS 2027 website is open.",
+      "link": "",
+      "linkText": ""
+    }
+  ],
+  "calls": [
+    {
+      "key": "with-workshop",
+      "title": "Papers with Workshop",
+      "icon": "laptop",
+      "path": "/call-for-papers/with-workshop",
+      "submitURL": "/submission?track=with-workshop",
+      "status": "open",
+      "deadline": "",
+      "description": "A 25-minute morning presentation followed by a 90-minute afternoon workshop for 25 or 50 participants. Speakers receive 40% of the workshop registration fees as feedback."
+    },
+    {
+      "key": "without-workshop",
+      "title": "Papers without Workshop",
+      "icon": "book",
+      "path": "/call-for-papers/without-workshop",
+      "submitURL": "/submission?track=without-workshop",
+      "status": "open",
+      "deadline": "",
+      "description": "Presentations of about 15 minutes on academic work relevant to the conference theme, running alongside the afternoon workshops."
+    },
+    {
+      "key": "with-workshop",
+      "title": "Papers with Workshop",
+      "icon": "laptop",
+      "path": "/call-for-papers/with-workshop",
+      "submitURL": "/submission?track=with-workshop",
+      "status": "open",
+      "deadline": "",
+      "description": "A 25-minute morning presentation followed by a 90-minute afternoon workshop for 25 or 50 participants. Speakers receive 40% of the workshop registration fees as feedback."
+    },
+    {
+      "key": "without-workshop",
+      "title": "Papers without Workshop",
+      "icon": "book",
+      "path": "/call-for-papers/without-workshop",
+      "submitURL": "/submission?track=without-workshop",
+      "status": "open",
+      "deadline": "",
+      "description": "Presentations of about 15 minutes on academic work relevant to the conference theme, running alongside the afternoon workshops."
+    },
+    {
+      "key": "special-sessions",
+      "title": "Special Sessions",
+      "icon": "layers",
+      "path": "/call-for-papers/special-sessions",
+      "submitURL": "",
+      "status": "soon",
+      "deadline": "",
+      "description": "Proposals for focused sessions on emerging, interdisciplinary or high-impact topics in autonomy."
+    },
+    {
+      "key": "tutorials",
+      "title": "Tutorials",
+      "icon": "graduation",
+      "path": "/call-for-papers/tutorials",
+      "submitURL": "",
+      "status": "soon",
+      "deadline": "",
+      "description": "Educational sessions on established techniques or emerging trends with practical or industrial relevance."
+    },
+    {
+      "key": "demos",
+      "title": "Live Demonstrations",
+      "icon": "monitor",
+      "path": "/call-for-papers/demonstrations",
+      "submitURL": "",
+      "status": "soon",
+      "deadline": "",
+      "description": "Interactive demonstrations of working autonomous systems: robots, vehicles, software or all three."
+    },
+    {
+      "key": "challenge",
+      "title": "Autonomy Grand Challenge",
+      "icon": "trophy",
+      "path": "/call-for-papers/challenge",
+      "submitURL": "",
+      "status": "soon",
+      "deadline": "",
+      "description": "A competition for teams tackling an open problem in autonomous systems."
+    }
+  ],
+  "tracks": [
+    {
+      "key": "with-workshop",
+      "name": "Papers with Workshop",
+      "slots": 5,
+      "icon": "laptop",
+      "summary": "Papers capable of engaging the audience interactively.",
+      "format": "A 25-minute presentation in the morning, followed by a 90-minute (1.5-hour) workshop in the afternoon.",
+      "duration": "25 min + 90 min",
+      "points": [
+        "A 25-minute presentation in the morning, then a 90-minute (1.5-hour) workshop in the afternoon",
+        "A workshop for 25 or 50 participants, with 10 or 20 sets of equipment respectively (if needed)",
+        "Speakers prepare the equipment and environment set-ups; attendees bring their own laptops",
+        "Speakers provide participants with the laptop hardware requirements",
+        "At least one teaching assistant (TA) assists in each workshop",
+        "40% of the workshop registration fees are given to the speakers as feedback"
+      ],
+      "path": "/call-for-papers/with-workshop"
+    },
+    {
+      "key": "without-workshop",
+      "name": "Papers without Workshop",
+      "slots": 8,
+      "icon": "book",
+      "summary": "Academic papers relevant to the conference theme.",
+      "format": "About 15 minutes per speaker, in sessions that run concurrently with the afternoon workshops.",
+      "duration": "15 min",
+      "points": [
+        "An estimated 15 minutes allocated per speaker",
+        "Sessions run concurrently with the afternoon workshops",
+        "Submissions aligned with the conference theme are warmly welcomed",
+        "Not strictly limited to the theme: any compelling, relevant research is welcome"
+      ],
+      "path": "/call-for-papers/without-workshop"
+    }
+  ],
+  "topics": [
+    {
+      "title": "Autonomous Robotics",
+      "icon": "bot",
+      "keywords": "Mobile robots, legged and humanoid robots, manipulators, soft robotics.",
+      "practice": true
+    },
+    {
+      "title": "Autonomous Vehicles and Mobility",
+      "icon": "car",
+      "keywords": "Self-driving cars, UAVs, unmanned surface and underwater vehicles, space autonomy.",
+      "practice": true
+    },
+    {
+      "title": "Edge and Embedded Computing for Autonomy",
+      "icon": "cpu",
+      "keywords": "Real-time systems, hardware acceleration, energy efficiency, communication.",
+      "practice": true
+    },
+    {
+      "title": "Perception and Situational Awareness",
+      "icon": "eye",
+      "keywords": "Sensor fusion, SLAM, object detection and tracking, scene understanding.",
+      "practice": true
+    },
+    {
+      "title": "Simulation, Digital Twins and Benchmarking",
+      "icon": "box",
+      "keywords": "Simulators, datasets, evaluation benchmarks, hardware-in-the-loop testing.",
+      "practice": true
+    },
+    {
+      "title": "Applications of Autonomous Systems",
+      "icon": "grid",
+      "keywords": "Industry 4.0, agriculture, healthcare, logistics and warehousing, disaster response, smart cities.",
+      "practice": true
+    },
+    {
+      "title": "Control of Autonomous Systems",
+      "icon": "sliders",
+      "keywords": "Adaptive control, model predictive control, learning-based control, hybrid systems.",
+      "practice": false
+    },
+    {
+      "title": "Planning, Decision-Making and Reasoning",
+      "icon": "route",
+      "keywords": "Motion planning, task planning, decision-making under uncertainty, POMDPs.",
+      "practice": false
+    },
+    {
+      "title": "Learning for Autonomy",
+      "icon": "trending-up",
+      "keywords": "Reinforcement learning, imitation learning, sim-to-real transfer, lifelong learning, foundation models and LLMs in autonomous systems.",
+      "practice": false
+    },
+    {
+      "title": "Multi-Agent and Swarm Autonomy",
+      "icon": "network",
+      "keywords": "Cooperation, distributed decision-making, coordination under limited communication.",
+      "practice": false
+    },
+    {
+      "title": "Human–Autonomy Teaming and Interaction",
+      "icon": "user-check",
+      "keywords": "Shared autonomy, explainability, trust, human-in-the-loop systems.",
+      "practice": false
+    },
+    {
+      "title": "Safety, Assurance and Verification",
+      "icon": "shield-check",
+      "keywords": "Formal verification, runtime monitoring, safe reinforcement learning, fault detection and tolerance, certification.",
+      "practice": false
+    },
+    {
+      "title": "Security, Privacy and Resilience",
+      "icon": "lock",
+      "keywords": "Adversarial attacks, sensor spoofing, intrusion detection, graceful degradation.",
+      "practice": false
+    },
+    {
+      "title": "Autonomic Computing and Self-* Systems",
+      "icon": "refresh",
+      "keywords": "Self-configuration, self-healing, self-optimization, self-adaptive software.",
+      "practice": false
+    },
+    {
+      "title": "Foundations and Architectures of Autonomous Systems",
+      "icon": "layers",
+      "keywords": "Levels of autonomy, cognitive architectures, formal definitions of autonomy.",
+      "practice": false
+    },
+    {
+      "title": "Ethics, Policy and Societal Impact",
+      "icon": "scale",
+      "keywords": "Accountability, standards and regulation, fairness, impact on labor.",
+      "practice": false
+    }
+  ],
+  "submissionRequirements": [
+    {
+      "title": "Title & Abstract",
+      "icon": "file-text",
+      "applies": "all",
+      "text": "A concise title and an abstract (max 300 words).",
+      "items": []
+    },
+    {
+      "title": "Session Track",
+      "icon": "flag",
+      "applies": "all",
+      "text": "Clear indication of Paper with Workshop or Paper without Workshop.",
+      "items": []
+    },
+    {
+      "title": "Outline & Schedule",
+      "icon": "list",
+      "applies": "all",
+      "text": "A breakdown of how the allotted time will be used.",
+      "items": [
+        "Papers with workshop: detailed breakdown of the 25-minute morning session and milestone-based progression for the 90-minute workshop.",
+        "Papers without workshop: clear breakdown of the 15-minute presentation structure."
+      ]
+    },
+    {
+      "title": "Prerequisites & Toolchain (Papers with Workshop)",
+      "icon": "tool",
+      "applies": "with-workshop",
+      "text": "List of required software, target OS compatibility, hardware dependencies, and recommended skill level.",
+      "items": []
+    },
+    {
+      "title": "Workshop Size (Papers with Workshop)",
+      "icon": "users",
+      "applies": "with-workshop",
+      "text": "Choose a workshop for 25 or 50 participants. If the workshop needs equipment, prepare 10 sets for 25 participants or 20 sets for 50 participants.",
+      "items": []
+    },
+    {
+      "title": "Participant Hardware Requirements (Papers with Workshop)",
+      "icon": "laptop",
+      "applies": "with-workshop",
+      "text": "The minimum hardware participants' laptops must meet, such as CPU, memory (RAM), GPU, free disk space and operating system. These requirements are published to attendees.",
+      "items": []
+    },
+    {
+      "title": "Teaching Assistant (Papers with Workshop)",
+      "icon": "user-check",
+      "applies": "with-workshop",
+      "text": "At least one teaching assistant (TA) to help participants during the practical part of the workshop.",
+      "items": []
+    },
+    {
+      "title": "Interactive Demo Video (Papers with Workshop only)",
+      "icon": "video",
+      "applies": "with-workshop",
+      "text": "A short demonstration video (2–5 minutes) showcasing the functioning prototype, project workflow, or target outcomes participants will build during the workshop.",
+      "items": [
+        "Please provide a publicly viewable or unlisted link (e.g., YouTube, Vimeo, Loom, or Google Drive).",
+        "This video is crucial for the program committee to evaluate technical feasibility and participant engagement."
+      ]
+    },
+    {
+      "title": "Speaker Bio",
+      "icon": "user",
+      "applies": "all",
+      "text": "Professional background (max 150 words), previous speaking experience, and relevant project links (e.g., GitHub, Google Scholar, LinkedIn).",
+      "items": []
+    }
+  ],
+  "reviewCriteria": [
+    {
+      "title": "Technical Depth & Originality",
+      "icon": "bulb",
+      "text": "Novelty of the research or practical value of the tooling."
+    },
+    {
+      "title": "Clarity & Feasibility",
+      "icon": "clock",
+      "text": "Feasibility of completing the agenda within the allotted time frame (particularly for 90-minute workshops)."
+    },
+    {
+      "title": "Engagement Plan",
+      "icon": "target",
+      "text": "Degree of meaningful interactivity planned for workshop participants."
+    },
+    {
+      "title": "Theme Alignment",
+      "icon": "compass",
+      "text": "Relevance to current industry and academic trends."
+    }
+  ],
+  "committee": [
+    {
+      "title": "Honorary Chairs",
+      "people": []
+    },
+    {
+      "title": "General Co-Chairs",
+      "people": []
+    },
+    {
+      "title": "Technical Program Committee Co-Chairs",
+      "people": []
+    },
+    {
+      "title": "Workshop Chairs",
+      "people": []
+    },
+    {
+      "title": "Tutorial Chairs",
+      "people": []
+    },
+    {
+      "title": "Special Session Chairs",
+      "people": []
+    },
+    {
+      "title": "Plenary (Keynote) Chairs",
+      "people": []
+    },
+    {
+      "title": "Live Demonstration Chairs",
+      "people": []
+    },
+    {
+      "title": "Grand Challenge Chairs",
+      "people": []
+    },
+    {
+      "title": "Finance Chairs",
+      "people": []
+    },
+    {
+      "title": "Exhibition & Sponsorship Chairs",
+      "people": []
+    },
+    {
+      "title": "Industry Liaison Chairs",
+      "people": []
+    },
+    {
+      "title": "Women in Autonomy & Young Professionals Chairs",
+      "people": []
+    },
+    {
+      "title": "Student Activities Chairs",
+      "people": []
+    },
+    {
+      "title": "Publication Chairs",
+      "people": []
+    },
+    {
+      "title": "Publicity Chairs",
+      "people": []
+    },
+    {
+      "title": "Local Arrangement Chairs",
+      "people": []
+    },
+    {
+      "title": "Web Master",
+      "people": []
+    },
+    {
+      "title": "International Advisory Committee",
+      "people": []
+    }
+  ],
+  "programCommittee": [
+    {
+      "title": "Track Chairs — Papers with Workshop",
+      "people": []
+    },
+    {
+      "title": "Track Chairs — Papers without Workshop",
+      "people": []
+    },
+    {
+      "title": "Review Committee Members",
+      "people": []
+    }
+  ],
+  "keynotes": [
+    {
+      "name": "",
+      "position": "",
+      "affiliation": "",
+      "country": "",
+      "photo": "",
+      "url": "",
+      "talk": "",
+      "abstract": "",
+      "bio": "",
+      "when": ""
+    },
+    {
+      "name": "",
+      "position": "",
+      "affiliation": "",
+      "country": "",
+      "photo": "",
+      "url": "",
+      "talk": "",
+      "abstract": "",
+      "bio": "",
+      "when": ""
+    },
+    {
+      "name": "",
+      "position": "",
+      "affiliation": "",
+      "country": "",
+      "photo": "",
+      "url": "",
+      "talk": "",
+      "abstract": "",
+      "bio": "",
+      "when": ""
+    }
+  ],
+  "program": [
+    {
+      "label": "Tentative daily format",
+      "date": "",
+      "note": "Exact times, rooms and the number of conference days will be published with the final program.",
+      "slots": [
+        {
+          "time": "Morning",
+          "title": "Registration & opening",
+          "detail": "Badge pick-up and welcome address.",
+          "kind": "break",
+          "room": "",
+          "link": "",
+          "parallel": []
+        },
+        {
+          "time": "Morning",
+          "title": "Keynote",
+          "detail": "Plenary talk.",
+          "kind": "keynote",
+          "room": "",
+          "link": "/program/keynotes",
+          "parallel": []
+        },
+        {
+          "time": "Morning",
+          "title": "Presentations of papers with workshop",
+          "detail": "Five 25-minute presentations; each introduces the workshop its speaker will run in the afternoon.",
+          "kind": "session",
+          "room": "",
+          "link": "/program/workshops",
+          "parallel": []
+        },
+        {
+          "time": "Midday",
+          "title": "Lunch & networking",
+          "detail": "",
+          "kind": "break",
+          "room": "",
+          "link": "",
+          "parallel": []
+        },
+        {
+          "time": "Afternoon",
+          "title": "Parallel sessions",
+          "detail": "The workshops run concurrently with the sessions for papers without workshop.",
+          "kind": "session",
+          "room": "",
+          "link": "",
+          "parallel": [
+            {
+              "title": "Workshops W1–W5",
+              "detail": "90-minute workshops for 25 or 50 participants, each assisted by at least one TA.",
+              "link": "/program/workshops"
+            },
+            {
+              "title": "Paper Sessions P1–P8",
+              "detail": "Papers without workshop, about 15 minutes each.",
+              "link": "/program/sessions"
+            }
+          ]
+        },
+        {
+          "time": "Evening",
+          "title": "Closing & social program",
+          "detail": "",
+          "kind": "social",
+          "room": "",
+          "link": "/program/social-events",
+          "parallel": []
+        }
+      ]
+    }
+  ],
+  "workshops": [
+    {
+      "code": "W1",
+      "title": "",
+      "status": "",
+      "date": "",
+      "time": "Afternoon · 90 minutes",
+      "room": "",
+      "level": "",
+      "capacity": "",
+      "prerequisites": "",
+      "laptop": "",
+      "abstract": "",
+      "schedule": [],
+      "instructors": [],
+      "tas": []
+    },
+    {
+      "code": "W2",
+      "title": "",
+      "status": "",
+      "date": "",
+      "time": "Afternoon · 90 minutes",
+      "room": "",
+      "level": "",
+      "capacity": "",
+      "prerequisites": "",
+      "laptop": "",
+      "abstract": "",
+      "schedule": [],
+      "instructors": [],
+      "tas": []
+    },
+    {
+      "code": "W3",
+      "title": "",
+      "status": "",
+      "date": "",
+      "time": "Afternoon · 90 minutes",
+      "room": "",
+      "level": "",
+      "capacity": "",
+      "prerequisites": "",
+      "laptop": "",
+      "abstract": "",
+      "schedule": [],
+      "instructors": [],
+      "tas": []
+    },
+    {
+      "code": "W4",
+      "title": "",
+      "status": "",
+      "date": "",
+      "time": "Afternoon · 90 minutes",
+      "room": "",
+      "level": "",
+      "capacity": "",
+      "prerequisites": "",
+      "laptop": "",
+      "abstract": "",
+      "schedule": [],
+      "instructors": [],
+      "tas": []
+    },
+    {
+      "code": "W5",
+      "title": "",
+      "status": "",
+      "date": "",
+      "time": "Afternoon · 90 minutes",
+      "room": "",
+      "level": "",
+      "capacity": "",
+      "prerequisites": "",
+      "laptop": "",
+      "abstract": "",
+      "schedule": [],
+      "instructors": [],
+      "tas": []
+    }
+  ],
+  "talks": [
+    {
+      "code": "P1",
+      "title": "",
+      "speaker": "",
+      "affiliation": "",
+      "time": "",
+      "room": ""
+    },
+    {
+      "code": "P2",
+      "title": "",
+      "speaker": "",
+      "affiliation": "",
+      "time": "",
+      "room": ""
+    },
+    {
+      "code": "P3",
+      "title": "",
+      "speaker": "",
+      "affiliation": "",
+      "time": "",
+      "room": ""
+    },
+    {
+      "code": "P4",
+      "title": "",
+      "speaker": "",
+      "affiliation": "",
+      "time": "",
+      "room": ""
+    },
+    {
+      "code": "P5",
+      "title": "",
+      "speaker": "",
+      "affiliation": "",
+      "time": "",
+      "room": ""
+    },
+    {
+      "code": "P6",
+      "title": "",
+      "speaker": "",
+      "affiliation": "",
+      "time": "",
+      "room": ""
+    },
+    {
+      "code": "P7",
+      "title": "",
+      "speaker": "",
+      "affiliation": "",
+      "time": "",
+      "room": ""
+    },
+    {
+      "code": "P8",
+      "title": "",
+      "speaker": "",
+      "affiliation": "",
+      "time": "",
+      "room": ""
+    }
+  ],
+  "tutorials": [],
+  "events": [
+    {
+      "slug": "industry-forum",
+      "title": "Industry Forum",
+      "navLabel": "Industry Forum",
+      "icon": "briefcase",
+      "summary": "Practitioners discuss what it takes to deploy autonomous systems in the real world.",
+      "date": "",
+      "time": "",
+      "room": "",
+      "overview": [
+        "The Industry Forum brings engineers, product leaders and researchers together to discuss the path from prototype to deployed autonomous system: validation, operations, regulation and the skills teams need."
+      ],
+      "highlights": [
+        "Invited talks from industry",
+        "Panel discussion with audience Q&A",
+        "Networking with exhibitors"
+      ],
+      "agenda": [],
+      "speakers": [],
+      "organizers": [],
+      "participation": "Open to all registered participants.",
+      "registrationURL": ""
+    },
+    {
+      "slug": "student-design-competition",
+      "title": "Student Design Competition",
+      "navLabel": "Student Design Competition",
+      "icon": "award",
+      "summary": "Student teams present autonomous system designs to a jury of experts.",
+      "date": "",
+      "time": "",
+      "room": "",
+      "overview": [
+        "Student teams present the design of an autonomous system: the problem it solves, the architecture, and evidence that it works. Finalists present at the conference."
+      ],
+      "highlights": [
+        "Open to student teams",
+        "Final round held at the conference",
+        "Feedback from academic and industry judges"
+      ],
+      "agenda": [],
+      "speakers": [],
+      "organizers": [],
+      "participation": "Eligibility, team size, phases and awards will be announced in the competition call.",
+      "registrationURL": ""
+    },
+    {
+      "slug": "mentoring-program",
+      "title": "Mentoring Program",
+      "navLabel": "Mentoring Program",
+      "icon": "users",
+      "summary": "Students and early-career researchers meet experienced mentors from academia and industry.",
+      "date": "",
+      "time": "",
+      "room": "",
+      "overview": [
+        "A small-group mentoring and networking session for undergraduate, master's and PhD students and early-career researchers, with mentors from academia and industry."
+      ],
+      "highlights": [
+        "Small-group conversations about research and careers",
+        "Mentors from academia and industry",
+        "Places are limited"
+      ],
+      "agenda": [],
+      "speakers": [],
+      "organizers": [],
+      "participation": "How to apply as a mentee or volunteer as a mentor will be announced on this page.",
+      "registrationURL": ""
+    },
+    {
+      "slug": "women-in-autonomy",
+      "title": "Women in Autonomy & Young Professionals Event",
+      "navLabel": "Women in Autonomy & YP Event",
+      "icon": "heart",
+      "summary": "An evening of talks, discussion and networking for women and young professionals in autonomous systems.",
+      "date": "",
+      "time": "",
+      "room": "",
+      "overview": [
+        "Invited speakers share their career paths, followed by a panel and open discussion and an informal networking dinner."
+      ],
+      "highlights": [
+        "Invited talks",
+        "Panel and student Q&A",
+        "Networking dinner"
+      ],
+      "agenda": [],
+      "speakers": [],
+      "organizers": [],
+      "participation": "Registration details will be announced; places may be limited.",
+      "registrationURL": ""
+    },
+    {
+      "slug": "standards-workshop",
+      "title": "Standards & Certification Workshop",
+      "navLabel": "Standards & Certification Workshop",
+      "icon": "shield-check",
+      "summary": "How standards, regulation and certification shape the design of autonomous systems.",
+      "date": "",
+      "time": "",
+      "room": "",
+      "overview": [
+        "A workshop on the standards and certification processes that apply to autonomous systems, and on how research results can feed into them."
+      ],
+      "highlights": [
+        "Talks on standards and certification",
+        "Working-group updates",
+        "Panel discussion"
+      ],
+      "agenda": [],
+      "speakers": [],
+      "organizers": [],
+      "participation": "Open to all registered participants.",
+      "registrationURL": ""
+    }
+  ],
+  "socialEvents": [
+    {
+      "title": "Welcome Reception",
+      "icon": "coffee",
+      "date": "",
+      "time": "",
+      "place": "",
+      "ticket": "",
+      "description": "An informal reception to open the conference and meet fellow participants."
+    },
+    {
+      "title": "Conference Dinner",
+      "icon": "utensils",
+      "date": "",
+      "time": "",
+      "place": "",
+      "ticket": "",
+      "description": "An evening dinner for participants, speakers and partners."
+    },
+    {
+      "title": "Farewell Gathering",
+      "icon": "heart",
+      "date": "",
+      "time": "",
+      "place": "",
+      "ticket": "",
+      "description": "A relaxed get-together to close the conference."
+    }
+  ],
+  "registration": {
+    "intro": "Registration will open after the notification of acceptance. Fees, deadlines and the link to the registration system will be published on this page.",
+    "currency": "",
+    "earlyDeadline": "",
+    "fees": [
+      {
+        "category": "Full registration — Academia",
+        "note": "",
+        "early": "",
+        "regular": "",
+        "onSite": ""
+      },
+      {
+        "category": "Full registration — Industry",
+        "note": "",
+        "early": "",
+        "regular": "",
+        "onSite": ""
+      },
+      {
+        "category": "Student registration",
+        "note": "Proof of full-time student status may be requested",
+        "early": "",
+        "regular": "",
+        "onSite": ""
+      },
+      {
+        "category": "Companion / guest (social events only)",
+        "note": "",
+        "early": "",
+        "regular": "",
+        "onSite": ""
+      }
+    ],
+    "workshopFees": [
+      {
+        "category": "Workshop seat (per workshop)",
+        "note": "40% of each workshop's registration fees are given to its speakers as feedback",
+        "early": "",
+        "regular": "",
+        "onSite": ""
+      }
+    ],
+    "feeNotes": [
+      "The regular rate applies to online registrations after the early-bird deadline and to on-site registration.",
+      "Each workshop has 25 or 50 seats, as chosen by its speakers; seats are allocated in order of registration."
+    ],
+    "includes": [
+      "Admission to the keynotes and to all paper presentations, with and without workshop",
+      "Workshop seats are registered separately (see Workshop Registration)"
+    ],
+    "policies": [
+      {
+        "title": "Speaker registration",
+        "icon": "mic",
+        "paragraphs": [
+          "At least one speaker of each accepted proposal is expected to register for the conference by the speaker registration deadline. The deadline will be communicated with the notification of acceptance."
+        ],
+        "items": [],
+        "links": []
+      },
+      {
+        "title": "Cancellation & refunds",
+        "icon": "x",
+        "paragraphs": [
+          "Cancellation deadlines and refund conditions will be published when registration opens. Cancellations must be requested in writing."
+        ],
+        "items": [],
+        "links": []
+      },
+      {
+        "title": "Substitutions",
+        "icon": "users",
+        "paragraphs": [
+          "Requests to transfer a registration to another person must be made in writing; the deadline will be announced when registration opens."
+        ],
+        "items": [],
+        "links": []
+      },
+      {
+        "title": "Invoices & payment",
+        "icon": "file-text",
+        "paragraphs": [
+          "Payment methods, invoices and receipts will be handled by the registration secretariat."
+        ],
+        "items": [],
+        "links": []
+      },
+      {
+        "title": "Visa invitation letters",
+        "icon": "id-card",
+        "paragraphs": [
+          "Registered participants who need an invitation letter for a visa application can request one from the organizers."
+        ],
+        "items": [],
+        "links": [
+          {
+            "label": "Visa information",
+            "url": "/travel/visa"
+          }
+        ]
+      }
+    ]
+  },
+  "sponsorship": {
+    "intro": "ICAS brings together researchers, engineers, students and industry practitioners who build autonomous systems. Because the workshops put tools and platforms directly into participants' hands, ICAS is an ideal setting to showcase technology, recruit talent and connect with the people shaping autonomy.",
+    "audience": [
+      {
+        "value": "Academia",
+        "label": "Researchers and faculty working on autonomous systems",
+        "icon": "graduation"
+      },
+      {
+        "value": "Industry",
+        "label": "Engineers and R&D teams deploying autonomy",
+        "icon": "briefcase"
+      },
+      {
+        "value": "Students",
+        "label": "Graduate and undergraduate talent",
+        "icon": "users"
+      },
+      {
+        "value": "Startups",
+        "label": "Founders building robotics and autonomy products",
+        "icon": "zap"
+      }
+    ],
+    "packages": [
+      {
+        "name": "Student",
+        "price": "",
+        "goodFor": "Talent access"
+      },
+      {
+        "name": "Silver",
+        "price": "",
+        "goodFor": "Exhibition"
+      },
+      {
+        "name": "Gold",
+        "price": "",
+        "goodFor": "Active presence"
+      },
+      {
+        "name": "Platinum",
+        "price": "",
+        "goodFor": "Premium exposure"
+      },
+      {
+        "name": "Diamond",
+        "price": "",
+        "goodFor": "Flagship partner"
+      }
+    ],
+    "benefits": [
+      {
+        "group": "Visibility & Branding",
+        "label": "Logo on website and program",
+        "values": [
+          "yes",
+          "yes",
+          "yes",
+          "yes",
+          "yes"
+        ]
+      },
+      {
+        "group": "Visibility & Branding",
+        "label": "Logo on on-site signage",
+        "values": [
+          "yes",
+          "yes",
+          "yes",
+          "yes",
+          "yes"
+        ]
+      },
+      {
+        "group": "Visibility & Branding",
+        "label": "Logo on conference slides",
+        "values": [
+          "Student events",
+          "no",
+          "no",
+          "yes",
+          "yes"
+        ]
+      },
+      {
+        "group": "Visibility & Branding",
+        "label": "Premium logo placement (home page, plenary)",
+        "values": [
+          "no",
+          "no",
+          "no",
+          "yes",
+          "Top tier"
+        ]
+      },
+      {
+        "group": "Visibility & Branding",
+        "label": "Logo on attendee badges",
+        "values": [
+          "no",
+          "no",
+          "no",
+          "no",
+          "yes"
+        ]
+      },
+      {
+        "group": "Exhibition & Presence",
+        "label": "Exhibition booth",
+        "values": [
+          "no",
+          "Standard",
+          "Standard",
+          "Standard",
+          "Premium location"
+        ]
+      },
+      {
+        "group": "Exhibition & Presence",
+        "label": "Priority booth placement",
+        "values": [
+          "no",
+          "no",
+          "yes",
+          "yes",
+          "yes"
+        ]
+      },
+      {
+        "group": "Exhibition & Presence",
+        "label": "Free-standing banner at the registration area",
+        "values": [
+          "no",
+          "no",
+          "no",
+          "yes",
+          "yes"
+        ]
+      },
+      {
+        "group": "Exhibition & Presence",
+        "label": "Private meeting room access",
+        "values": [
+          "no",
+          "no",
+          "no",
+          "no",
+          "yes"
+        ]
+      },
+      {
+        "group": "Engagement & Thought Leadership",
+        "label": "Workshop partner (hardware, cloud credits, kits)",
+        "values": [
+          "no",
+          "no",
+          "yes",
+          "yes",
+          "yes"
+        ]
+      },
+      {
+        "group": "Engagement & Thought Leadership",
+        "label": "Coffee-break sponsorship",
+        "values": [
+          "no",
+          "no",
+          "yes",
+          "yes",
+          "yes"
+        ]
+      },
+      {
+        "group": "Engagement & Thought Leadership",
+        "label": "Technical session sponsorship",
+        "values": [
+          "no",
+          "no",
+          "no",
+          "yes",
+          "yes"
+        ]
+      },
+      {
+        "group": "Engagement & Thought Leadership",
+        "label": "Welcome reception sponsorship",
+        "values": [
+          "no",
+          "no",
+          "no",
+          "yes",
+          "yes"
+        ]
+      },
+      {
+        "group": "Engagement & Thought Leadership",
+        "label": "Speaking opportunity (Industry Forum)",
+        "values": [
+          "no",
+          "no",
+          "no",
+          "yes",
+          "Priority slot"
+        ]
+      },
+      {
+        "group": "Engagement & Thought Leadership",
+        "label": "Conference dinner sponsorship",
+        "values": [
+          "no",
+          "no",
+          "no",
+          "no",
+          "Exclusive option"
+        ]
+      },
+      {
+        "group": "Engagement & Thought Leadership",
+        "label": "Student program sponsorship",
+        "values": [
+          "yes",
+          "no",
+          "no",
+          "no",
+          "no"
+        ]
+      },
+      {
+        "group": "Marketing & Promotion",
+        "label": "Company video before a keynote",
+        "values": [
+          "no",
+          "no",
+          "no",
+          "no",
+          "yes"
+        ]
+      },
+      {
+        "group": "Marketing & Promotion",
+        "label": "Dedicated social media highlight",
+        "values": [
+          "yes",
+          "no",
+          "yes",
+          "yes",
+          "Featured campaign"
+        ]
+      },
+      {
+        "group": "Registrations & Access",
+        "label": "Complimentary full registrations",
+        "values": [
+          "no",
+          "TBA",
+          "TBA",
+          "TBA",
+          "TBA"
+        ]
+      },
+      {
+        "group": "Registrations & Access",
+        "label": "Complimentary workshop seats",
+        "values": [
+          "no",
+          "no",
+          "TBA",
+          "TBA",
+          "TBA"
+        ]
+      },
+      {
+        "group": "Registrations & Access",
+        "label": "Student registrations included",
+        "values": [
+          "Core benefit",
+          "no",
+          "no",
+          "no",
+          "no"
+        ]
+      }
+    ],
+    "opportunities": [
+      {
+        "title": "Exhibition booth",
+        "icon": "monitor",
+        "text": "Demonstrate your robots, vehicles, sensors and software where participants gather between sessions."
+      },
+      {
+        "title": "Workshop partner",
+        "icon": "laptop",
+        "text": "Equip a workshop with your hardware, SDK or cloud credits so participants learn on your platform."
+      },
+      {
+        "title": "Networking & talent",
+        "icon": "users",
+        "text": "Meet students and researchers through the mentoring program, student competition and social events."
+      },
+      {
+        "title": "Digital promotion",
+        "icon": "megaphone",
+        "text": "Reach the community through the website, newsletter and social media before and after the event."
+      }
+    ],
+    "advantages": [
+      {
+        "title": "Increase brand awareness",
+        "icon": "star",
+        "text": "Put your brand in front of the autonomy research and engineering community."
+      },
+      {
+        "title": "Connect with the field",
+        "icon": "network",
+        "text": "Engage directly with the people who build and evaluate autonomous systems."
+      },
+      {
+        "title": "Gain leads & long-term connections",
+        "icon": "trending-up",
+        "text": "Turn conversations at the booth and in workshops into partnerships and hires."
+      }
+    ],
+    "extras": [
+      {
+        "title": "Exhibitor terms",
+        "icon": "file-text",
+        "paragraphs": [
+          "Booth allocation, payment schedule, cancellation terms and on-site rules will be provided with the sponsorship contract."
+        ],
+        "items": [],
+        "links": []
+      }
+    ],
+    "sponsors": [
+      {
+        "tier": "Diamond",
+        "class": "tier-platinum",
+        "sponsors": [],
+        "slots": 1
+      },
+      {
+        "tier": "Platinum",
+        "class": "tier-platinum",
+        "sponsors": [],
+        "slots": 2
+      },
+      {
+        "tier": "Gold",
+        "class": "",
+        "sponsors": [],
+        "slots": 3
+      },
+      {
+        "tier": "Silver",
+        "class": "",
+        "sponsors": [],
+        "slots": 4
+      }
+    ],
+    "partners": []
+  },
+  "venue": {
+    "name": "",
+    "address": "",
+    "website": "",
+    "description": "",
+    "mapEmbedURL": "",
+    "mapLinkURL": "",
+    "photos": [],
+    "facilities": [],
+    "landmarks": [],
+    "fromAirport": [],
+    "fromCity": [],
+    "gettingThere": [
+      {
+        "title": "By plane",
+        "icon": "plane",
+        "paragraphs": [],
+        "items": [],
+        "links": []
+      },
+      {
+        "title": "By train",
+        "icon": "navigation",
+        "paragraphs": [],
+        "items": [],
+        "links": []
+      },
+      {
+        "title": "By bus",
+        "icon": "map-pin",
+        "paragraphs": [],
+        "items": [],
+        "links": []
+      },
+      {
+        "title": "By car",
+        "icon": "car",
+        "paragraphs": [],
+        "items": [],
+        "links": []
+      },
+      {
+        "title": "Local transport",
+        "icon": "route",
+        "paragraphs": [],
+        "items": [],
+        "links": []
+      }
+    ],
+    "cityIntro": "",
+    "attractions": [],
+    "tourismURL": "",
+    "visa": [
+      {
+        "title": "Do I need a visa?",
+        "icon": "globe",
+        "paragraphs": [
+          "Entry requirements depend on your nationality and on the host country. Check the requirements with the embassy or consulate of the host country well before you travel: visa processing can take several weeks."
+        ],
+        "items": [],
+        "links": []
+      },
+      {
+        "title": "Visa invitation letter",
+        "icon": "file-text",
+        "paragraphs": [
+          "Registered participants who need an invitation letter for their visa application can request one from the organizers. Please include your full name as it appears in your passport, your nationality, affiliation and registration ID, and the title of your accepted proposal if you are a speaker."
+        ],
+        "items": [],
+        "links": [
+          {
+            "label": "Request an invitation letter",
+            "url": "/contact?topic=Visa+invitation+letter"
+          }
+        ]
+      },
+      {
+        "title": "Please note",
+        "icon": "alert",
+        "paragraphs": [],
+        "items": [
+          "An invitation letter does not imply any financial support from the conference.",
+          "The organizers cannot intervene in visa decisions.",
+          "Apply early, and book refundable travel until your visa is granted."
+        ],
+        "links": []
+      }
+    ]
+  },
+  "hotels": [],
+  "journals": [],
+  "faq": [
+    {
+      "title": "Submissions",
+      "items": [
+        {
+          "q": "What can I submit to ICAS?",
+          "a": "Two kinds of proposals: Papers with Workshop (5 speaking slots), which engage the audience interactively through a presentation and a workshop, and Papers without Workshop (8 speaking slots), which present academic work relevant to the conference theme. Calls for special sessions, tutorials, live demonstrations and the grand challenge will be announced separately."
+        },
+        {
+          "q": "What is the difference between the two tracks?",
+          "a": "Speakers of papers with workshop give a 25-minute presentation in the morning and run a 90-minute workshop in the afternoon. Speakers of papers without workshop give a talk of about 15 minutes in sessions that run concurrently with the afternoon workshops."
+        },
+        {
+          "q": "Does my topic have to match the conference theme?",
+          "a": "Submissions aligned with the conference theme are warmly welcomed, but topics are not strictly limited to it: any compelling, relevant research is welcome. The theme places particular emphasis on implementation, such as robotics, vehicles and embedded systems."
+        },
+        {
+          "q": "In which language must proposals be written?",
+          "a": "All submissions must be in English."
+        },
+        {
+          "q": "What must a proposal contain?",
+          "a": "A title and an abstract of at most 300 words, the session track, an outline and schedule, and a speaker bio of at most 150 words with previous speaking experience and relevant project links. Papers with workshop also need the prerequisites and toolchain, the workshop size, the laptop hardware requirements for participants, the teaching assistant(s) and a 2–5 minute demo video."
+        },
+        {
+          "q": "Which video platforms can I use for the demo video?",
+          "a": "Any service that gives a publicly viewable or unlisted link, for example YouTube, Vimeo, Loom or Google Drive. Make sure the link works without signing in."
+        },
+        {
+          "q": "Is the review double-blind?",
+          "a": "Yes. Proposals undergo double-blind peer review. Keep names and affiliations out of the title, abstract and outline; speaker details are collected in a separate part of the submission form."
+        },
+        {
+          "q": "How are proposals evaluated?",
+          "a": "On technical depth and originality, clarity and feasibility (particularly for 90-minute workshops), the engagement plan, and alignment with current industry and academic trends."
+        },
+        {
+          "q": "Do I have to use the ICAS slide template?",
+          "a": "Yes. All speakers of accepted papers, with or without workshop, must prepare their presentation slides with the official ICAS slide template, available on the Presentation Guidelines page."
+        }
+      ]
+    },
+    {
+      "title": "Papers with workshop",
+      "items": [
+        {
+          "q": "How does the 40% speaker feedback work?",
+          "a": "Speakers of papers with workshop receive feedback based on attendance: 40% of the registration fees of their workshop. An engaging topic that draws more participants results in more feedback."
+        },
+        {
+          "q": "How large is a workshop?",
+          "a": "Speakers choose a workshop for 25 or 50 participants. If the workshop needs equipment, speakers prepare 10 sets for 25 participants or 20 sets for 50 participants."
+        },
+        {
+          "q": "Who provides the equipment for a workshop?",
+          "a": "Speakers are responsible for preparing all necessary equipment and environment set-ups for the workshop. Attendees are asked to bring their own laptops."
+        },
+        {
+          "q": "What hardware do participants need?",
+          "a": "Speakers provide the laptop hardware requirements of their workshop (for example CPU, memory, GPU, disk space and operating system), and they are published on the workshop pages. Please check them before registering for a workshop."
+        },
+        {
+          "q": "Do I need a teaching assistant?",
+          "a": "Yes. Each workshop should have at least one teaching assistant (TA) to help participants during the practical part."
+        },
+        {
+          "q": "How should I structure my workshop?",
+          "a": "Plan a milestone-based progression for the 90 minutes, so participants reach concrete checkpoints. Your proposal must include this breakdown together with a breakdown of the 25-minute morning presentation."
+        },
+        {
+          "q": "Do participants register separately for workshops?",
+          "a": "Yes. Workshop seats are registered separately from the conference registration and are limited to the workshop size chosen by the speakers."
+        }
+      ]
+    },
+    {
+      "title": "Registration & travel",
+      "items": [
+        {
+          "q": "When does registration open?",
+          "a": "Registration opens after the notification of acceptance. Dates are listed on the Important Dates page; subscribe to updates to be notified."
+        },
+        {
+          "q": "Can I attend without presenting?",
+          "a": "Yes. Everyone interested in autonomous systems is welcome to register and attend."
+        },
+        {
+          "q": "How do I get a visa invitation letter?",
+          "a": "Registered participants can request an invitation letter through the contact form (topic: Visa invitation letter). See the Visa Information page for what to include."
+        },
+        {
+          "q": "Where will the conference take place?",
+          "a": "The venue and dates will be announced on the Conference Venue page and in the site header."
+        }
+      ]
+    }
+  ],
+  "programDownloads": [
+    {
+      "title": "Final Program Book",
+      "description": "Full program with session details, venue maps and practical information.",
+      "url": "",
+      "format": "PDF",
+      "icon": "book"
+    },
+    {
+      "title": "Program at a Glance",
+      "description": "A one-page overview of the schedule.",
+      "url": "",
+      "format": "PDF",
+      "icon": "calendar"
+    },
+    {
+      "title": "Official slide template",
+      "description": "Mandatory 16:9 PowerPoint template for all presentations.",
+      "url": "/static/files/ICAS-slide-template.pptx",
+      "format": "PPTX",
+      "icon": "monitor"
+    },
+    {
+      "title": "Conference Proceedings",
+      "description": "Accepted papers and abstracts.",
+      "url": "",
+      "format": "Online",
+      "icon": "file-text"
+    },
+    {
+      "title": "Call for Papers",
+      "description": "The ICAS Call for Papers slides.",
+      "url": "/static/files/ICAS-Call-for-Papers.pptx",
+      "format": "PPTX",
+      "icon": "megaphone"
+    },
+    {
+      "title": "Call for Papers flyer",
+      "description": "A one-page printable summary of the call.",
+      "url": "/static/files/ICAS-CFP-flyer.pdf",
+      "format": "PDF",
+      "icon": "printer"
+    }
+  ],
+  "promotionalItems": [
+    {
+      "title": "Logo",
+      "icon": "image",
+      "description": "The ICAS emblem and logo, with and without the edition year. Formats: SVG and PNG.",
+      "items": [
+        {
+          "title": "Emblem",
+          "description": "Vector emblem for print and web",
+          "url": "/static/files/promo/icas-emblem.svg",
+          "format": "SVG",
+          "icon": "image"
+        },
+        {
+          "title": "Logo with year",
+          "description": "Emblem and wordmark, 1600 × 560 px",
+          "url": "/static/files/promo/icas-logo-with-year.png",
+          "format": "PNG",
+          "icon": "image"
+        },
+        {
+          "title": "Logo without year",
+          "description": "Emblem and wordmark, 1600 × 560 px",
+          "url": "/static/files/promo/icas-logo.png",
+          "format": "PNG",
+          "icon": "image"
+        },
+        {
+          "title": "Logo pack",
+          "description": "All logo files in one archive",
+          "url": "/static/files/promo/icas-logo-pack.zip",
+          "format": "ZIP",
+          "icon": "download"
+        }
+      ]
+    },
+    {
+      "title": "Promotion kit for X",
+      "icon": "x-logo",
+      "description": "Images sized for X (Twitter): header 1500 × 500 px; posts 1600 × 900 and 1200 × 675 px.",
+      "items": [
+        {
+          "title": "X header",
+          "description": "1500 × 500 px",
+          "url": "/static/files/promo/icas-x-header-1500x500.png",
+          "format": "PNG",
+          "icon": "image"
+        },
+        {
+          "title": "X post (large)",
+          "description": "1600 × 900 px",
+          "url": "/static/files/promo/icas-x-post-1600x900.png",
+          "format": "PNG",
+          "icon": "image"
+        },
+        {
+          "title": "X post",
+          "description": "1200 × 675 px",
+          "url": "/static/files/promo/icas-x-post-1200x675.png",
+          "format": "PNG",
+          "icon": "image"
+        }
+      ]
+    },
+    {
+      "title": "Promotion kit for LinkedIn",
+      "icon": "linkedin",
+      "description": "Images sized for LinkedIn: cover 1128 × 191 px; posts 1200 × 627 and 1080 × 1080 px.",
+      "items": [
+        {
+          "title": "LinkedIn cover",
+          "description": "1128 × 191 px",
+          "url": "/static/files/promo/icas-linkedin-cover-1128x191.png",
+          "format": "PNG",
+          "icon": "image"
+        },
+        {
+          "title": "LinkedIn post",
+          "description": "1200 × 627 px",
+          "url": "/static/files/promo/icas-linkedin-post-1200x627.png",
+          "format": "PNG",
+          "icon": "image"
+        },
+        {
+          "title": "Square post",
+          "description": "1080 × 1080 px",
+          "url": "/static/files/promo/icas-square-post-1080x1080.png",
+          "format": "PNG",
+          "icon": "image"
+        }
+      ]
+    },
+    {
+      "title": "Call for Papers",
+      "icon": "megaphone",
+      "description": "The call for papers as slides and as a printable flyer.",
+      "items": [
+        {
+          "title": "Call for Papers slides",
+          "description": "The call for papers deck",
+          "url": "/static/files/ICAS-Call-for-Papers.pptx",
+          "format": "PPTX",
+          "icon": "download"
+        },
+        {
+          "title": "Call for Papers flyer",
+          "description": "One-page A4 flyer",
+          "url": "/static/files/ICAS-CFP-flyer.pdf",
+          "format": "PDF",
+          "icon": "printer"
+        }
+      ]
+    },
+    {
+      "title": "Mascot",
+      "icon": "heart",
+      "description": "The ICAS bear mascot from the call for papers, on a transparent background.",
+      "items": [
+        {
+          "title": "Bear with paper",
+          "description": "640 × 640 px",
+          "url": "/static/img/mascot-paper.png",
+          "format": "PNG",
+          "icon": "image"
+        },
+        {
+          "title": "Paper pile",
+          "description": "640 × 640 px",
+          "url": "/static/img/mascot-pile.png",
+          "format": "PNG",
+          "icon": "image"
+        }
+      ]
+    }
+  ],
+  "history": [
+    {
+      "year": "2027",
+      "name": "ICAS 2027",
+      "city": "",
+      "dates": "",
+      "url": "/",
+      "note": "This edition",
+      "current": true
+    }
+  ]
+}
