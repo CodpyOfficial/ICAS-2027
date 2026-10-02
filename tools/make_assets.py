@@ -284,7 +284,7 @@ def flyer(r, site, f, emblem_uri, mascot_uri):
     html, body { width: 210mm; height: 297mm; }
     body { font-family: 'Open Sans', 'Segoe UI', Arial, sans-serif; font-size: 8pt; line-height: 1.34; }
     h2 { font-family: 'Montserrat', sans-serif; font-size: 10pt; color: var(--navy); text-transform: uppercase; letter-spacing: .04em; margin: 7px 0 3px; }
-    .top { height: 50mm; padding: 4mm 12mm 0; display: flex; gap: 6mm; align-items: center; position: relative; }
+    .top { height: 46mm; padding: 4mm 12mm 0; display: flex; gap: 6mm; align-items: center; position: relative; }
     .top img.emblem { width: 38mm; height: 38mm; }
     .top .acr { font-family: 'Montserrat'; font-size: 36pt; }
     .top .name { font-family: 'Montserrat'; font-weight: 600; font-size: 11.5pt; color: #cfd9ea; margin-top: 1.5mm; }
