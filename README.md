@@ -1,6 +1,6 @@
 # ICAS website
 
-The website of ICAS, the International Conference on Autonomous System. It is written in Go using only the standard library. The page structure follows the IEEE ISCAS 2026 and 2027 sites.
+The website of ICAS, the International Conference on Autonomous Systems. It is written in Go using only the standard library. The page structure follows the IEEE ISCAS 2026 and 2027 sites.
 
 ## Run
 
@@ -57,7 +57,7 @@ Papers must be PDF files of at most 10 MB (`maxPaperBytes` in `internal/server/p
 
 ## Editing content
 
-All conference facts live in `content/site.json`. An empty string is shown on the site as **TBA**. This covers dates, venue, committee, keynotes, fees, sponsors, hotels, news, events and calls. Set `conference.submissionOpen` to `false` to close the submission form. Restart the server after adding or removing an event.
+All conference facts live in `content/site.json`. An empty string is shown on the site as **TBA**. This covers dates, venue, committee, keynotes, fees, sponsors, downloads, news and calls. Set `conference.submissionOpen` to `false` to close the submission form.
 
 ## Regenerating downloads
 
