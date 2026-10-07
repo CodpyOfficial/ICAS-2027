@@ -31,6 +31,7 @@
         <li><a href="/submission">{{icon "send"}} Submit a proposal</a></li>
         <li><a href="{{asset "files/ICAS-Call-for-Papers.pptx"}}" download>{{icon "download"}} Call for Papers (PPTX)</a></li>
         <li><a href="{{asset "files/ICAS-slide-template.pptx"}}" download>{{icon "monitor"}} Official slide template (PPTX)</a></li>
+        <li><a href="/downloads">{{icon "download"}} All downloads</a></li>
         <li><a href="/registration">{{icon "id-card"}} Registration</a></li>
         <li><a href="/faq">{{icon "help"}} FAQs</a></li>
         <li><a href="/contact">{{icon "mail"}} Contact the organizers</a></li>
@@ -192,6 +193,21 @@
 </div>
 {{end}}
 
+{{define "speaker-kit"}}
+{{- with downloadGroup "speaker-kit"}}
+<aside class="kit" aria-label="{{.Title}}">
+  <p class="kit-title">{{icon .Icon}} {{.Title}}</p>
+  {{- with .Description}}<p class="kit-note">{{.}}</p>{{end}}
+  <ul class="kit-list">
+    {{- range .Items}}
+    <li><a class="kit-item" href="{{.URL}}" download><span class="kit-icon">{{icon (orText .Icon "download")}}</span><span><strong>{{.Title}}</strong><small>{{.Format}}</small></span></a></li>
+    {{- end}}
+  </ul>
+  <a class="kit-more" href="/downloads">All downloads {{icon "arrow-right"}}</a>
+</aside>
+{{- end}}
+{{end}}
+
 {{define "download-item"}}
 {{- if .URL}}<a class="download" href="{{.URL}}" download>{{else}}<div class="download is-disabled">{{end}}
   <span class="download-icon">{{icon (orText .Icon "download")}}</span>
@@ -238,49 +254,6 @@
   {{- if .TAs}}<p><strong>Teaching assistants:</strong> {{join .TAs ", "}}</p>{{end}}
   {{- if not .Title}}<p class="muted mb-0">Title, abstract, schedule, laptop requirements and instructors will be published after the review.</p>{{end}}
 </section>
-{{end}}
-
-{{define "routes"}}
-{{- if .}}
-<div class="routes">
-  {{- range .}}
-  <section class="route">
-    <span class="route-label">{{.Label}}</span>
-    <div>
-      <h3>{{.Title}}</h3>
-      {{- with .Duration}}<p class="muted">{{icon "clock"}} {{.}}</p>{{end}}
-      {{- if .Steps}}<ol>{{range .Steps}}<li>{{.}}</li>{{end}}</ol>{{end}}
-    </div>
-  </section>
-  {{- end}}
-</div>
-{{- else}}
-<p class="muted">Step-by-step directions will be published once the venue is announced. <span class="badge badge-tba">TBA</span></p>
-{{- end}}
-{{end}}
-
-{{define "call-status"}}
-<div class="call-status">
-  {{callBadge .Status}}
-  <span>{{icon "calendar"}} Deadline: <strong>{{tba .Deadline}}</strong></span>
-</div>
-{{end}}
-
-{{define "call-submit"}}
-<div class="callout callout-accent">
-  {{icon "send"}}
-  <div>
-    {{- if eq .Status "open"}}
-    <p><strong>Submissions are open.</strong></p>
-    <a class="btn btn-accent btn-sm" href="{{.SubmitURL}}">Submit now</a>
-    {{- else if eq .Status "closed"}}
-    <p><strong>Submission is closed.</strong> Thank you to everyone who submitted.</p>
-    {{- else}}
-    <p><strong>The submission system for this call opens soon.</strong> Subscribe to be notified as soon as it opens.</p>
-    <a class="btn btn-primary btn-sm" href="/subscribe">Notify me</a>
-    {{- end}}
-  </div>
-</div>
 {{end}}
 
 {{define "form-alerts"}}

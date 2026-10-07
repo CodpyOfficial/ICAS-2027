@@ -1,0 +1,55 @@
+{{define "content"}}{{$c := .Site.Conference}}
+<div class="page-body">
+  <div class="container page-grid">
+    <article class="prose">
+      <p class="lead">Every file for {{$c.FullTitle}} in one place: the call for papers and the official slide template for speakers, the program and proceedings, and material to help spread the word.</p>
+      <ul class="jump-links" aria-label="Sections on this page">
+        {{- range .Site.Downloads}}
+        <li><a href="#{{.Key}}">{{icon .Icon}} {{.Title}}</a></li>
+        {{- end}}
+      </ul>
+
+      {{- range .Site.Downloads}}
+      <section id="{{.Key}}" class="download-group">
+        <h2>{{icon .Icon}} {{.Title}}</h2>
+        {{- with .Description}}<p class="muted">{{.}}</p>{{end}}
+        <ul class="download-list">
+          {{- range .Items}}
+          <li>{{template "download-item" .}}</li>
+          {{- end}}
+        </ul>
+      </section>
+      {{- end}}
+
+      <h2 id="logo-usage">Logo usage</h2>
+      <ul>
+        <li>Do not stretch, recolour or crop the emblem; keep clear space around it.</li>
+        <li>On dark backgrounds use the emblem as supplied — it carries its own border.</li>
+        <li>Please link to this website when you share {{$c.Acronym}} material online.</li>
+      </ul>
+      <p>Need another format or a press kit? <a href="/contact?topic=Media+%26+press">Contact us</a>.</p>
+
+      <h2 id="app">Conference web app</h2>
+      <div class="media-split">
+        <div>
+          <p>This website works as an app on your phone: add it to your home screen to reach the program and news in one tap during the conference.</p>
+          <ul>
+            <li><strong>iPhone / iPad (Safari):</strong> tap the Share button, then “Add to Home Screen”.</li>
+            <li><strong>Android (Chrome):</strong> open the browser menu, then “Install app” or “Add to Home screen”.</li>
+          </ul>
+        </div>
+        <img class="mascot" src="{{asset "img/icon-192.png"}}" alt="ICAS app icon" width="140" height="140">
+      </div>
+
+      <h2 id="after">After the conference</h2>
+      <div class="grid-2">
+        <div class="card"><h3>{{icon "award"}} Certificate of attendance</h3><p>Certificates will be available to registered participants after the conference.</p></div>
+        <div class="card"><h3>{{icon "camera"}} Photos</h3><p>A link to the conference photo gallery will be posted here.</p></div>
+        <div class="card"><h3>{{icon "file-text"}} Invoices &amp; receipts</h3><p>Contact the registration secretariat for registration fee invoices.</p></div>
+        <div class="card"><h3>{{icon "laptop"}} Workshop materials</h3><p>Links to the workshop repositories will be collected here.</p></div>
+      </div>
+    </article>
+    {{template "sidebar" .}}
+  </div>
+</div>
+{{end}}

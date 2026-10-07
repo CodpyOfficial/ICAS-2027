@@ -17,7 +17,7 @@
       </div>
 
       <h2>Sponsorship packages</h2>
-      <p class="muted">Indicative package structure. Prices and final benefits will be confirmed in the sponsorship prospectus.</p>
+      <p class="muted">Prices in New Taiwan dollars (NT$). Only the Diamond package includes an exhibition booth. Final benefits are confirmed in the sponsorship agreement.</p>
       <div class="table-wrap">
         <table class="table package-table">
           <thead>
@@ -29,7 +29,7 @@
           <tbody>
             <tr class="good-for"><th scope="row">Good for</th>{{range $sp.Packages}}<td>{{.GoodFor}}</td>{{end}}</tr>
             {{- range $i, $b := $sp.Benefits}}
-            {{- if newGroup $sp.Benefits $i}}
+            {{- if and $b.Group (newGroup $sp.Benefits $i)}}
             <tr class="group-row"><th scope="rowgroup" colspan="{{add (len $sp.Packages) 1}}">{{$b.Group}}</th></tr>
             {{- end}}
             <tr><th scope="row">{{$b.Label}}</th>{{range $b.Values}}<td>{{benefit .}}</td>{{end}}</tr>
@@ -69,7 +69,7 @@
 
       <div class="callout callout-accent">
         {{icon "briefcase"}}
-        <div><p><strong>Interested in exhibiting at {{$c.FullTitle}}?</strong> Tell us about your goals and we will help you choose the right package, or build a custom one.</p>
+        <div><p><strong>Interested in exhibiting at {{$c.FullTitle}}?</strong> The exhibition booth comes with the Diamond package. Tell us about your goals and we will help you choose the right package.</p>
         <a class="btn btn-accent btn-sm" href="/contact?topic=Sponsorship+%26+exhibition">Request the prospectus</a></div>
       </div>
     </article>

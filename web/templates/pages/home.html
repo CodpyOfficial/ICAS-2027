@@ -21,7 +21,7 @@
       </ul>
     </div>
     <div class="hero-visual">
-      <img src="{{asset "img/icas-emblem.svg"}}" alt="ICAS emblem: a robot arm, a humanoid robot, a self-driving car, a drone and a satellite against a rising sun" width="520" height="520">
+      <img src="{{asset "img/icas-emblem.svg"}}" alt="ICAS emblem: a robot arm, a humanoid robot, an autonomous mobile robot, a drone and a satellite against a rising sun" width="520" height="520">
     </div>
   </div>
   <svg class="hero-curve" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 70V38C260 2 520-6 760 18s460 46 680 14v38z" fill="#e8694b"/></svg>
@@ -144,12 +144,12 @@
         <ul class="track-points">
           <li>{{icon "check"}}<span>Presentations and laptop-based workshops (papers with workshop)</span></li>
           <li>{{icon "check"}}<span>Paper sessions (papers without workshop)</span></li>
-          <li>{{icon "check"}}<span>Keynote talks, special sessions and tutorials</span></li>
-          <li>{{icon "check"}}<span>Live demonstrations and industry exhibition</span></li>
+          <li>{{icon "check"}}<span>Two keynote talks at the end of the afternoon</span></li>
+          <li>{{icon "check"}}<span>Industry exhibition</span></li>
         </ul>
       </div>
       <div>
-        <p>The conference theme puts implementation first — autonomous robotics, vehicles, embedded computing, perception, simulation and real-world applications — and extends to control, planning, learning, multi-agent systems, human–autonomy teaming, safety, security and the ethics and policy questions autonomy raises.</p>
+        <p>The conference theme puts implementation first — autonomous robotics, vehicles, drones, embedded computing, perception, simulation and real-world applications — and extends to control, planning, learning, multi-agent systems, human–autonomy teaming, safety, security and the ethics and policy questions autonomy raises.</p>
         <p>All proposals undergo <strong>double-blind peer review</strong> for technical depth and originality, clarity and feasibility, engagement, and alignment with current industry and academic trends.</p>
         <div class="btn-row">
           <a class="btn btn-primary" href="/about">More about {{$c.Acronym}}</a>
@@ -168,6 +168,7 @@
       <p>All submissions must be in English. Proposals are evaluated in double-blind peer review.</p>
     </div>
     {{template "tracks" .}}
+    {{template "speaker-kit" .}}
   </div>
 </section>
 
@@ -188,9 +189,9 @@
     <div class="section-head">
       <span class="eyebrow">Program</span>
       <h2 id="keynotes-title">Keynote Speakers</h2>
-      <p>Plenary speakers will be announced soon.</p>
+      <p>Two plenary talks close the afternoon. The speakers will be announced soon.</p>
     </div>
-    <div class="grid-3">
+    <div class="grid-2">
       {{- range .Site.Keynotes}}
       <article class="card keynote">
         <span class="avatar">{{if .Photo}}<img src="{{.Photo}}" alt="" loading="lazy">{{else if .Name}}{{.Initials}}{{else}}{{icon "mic"}}{{end}}</span>
@@ -209,9 +210,9 @@
     <div class="section-head">
       <span class="eyebrow">Format</span>
       <h2 id="format-title">A day at {{$c.Acronym}}</h2>
-      <p>Presentations in the morning; workshops and paper sessions in parallel in the afternoon.</p>
+      <p>Presentations in the morning; workshops and paper sessions in parallel in the afternoon; two keynotes to close the day.</p>
     </div>
-    <div class="grid-3">
+    <div class="grid-4">
       <div class="card">
         <span class="track-icon">{{icon "mic"}}</span>
         <h3 class="mt-sm">Morning</h3>
@@ -226,6 +227,11 @@
         <span class="track-icon">{{icon "book"}}</span>
         <h3 class="mt-sm">Afternoon sessions</h3>
         <p>Papers without workshop are presented concurrently with the workshops — about 15 minutes per speaker.</p>
+      </div>
+      <div class="card">
+        <span class="track-icon">{{icon "star"}}</span>
+        <h3 class="mt-sm">Keynotes</h3>
+        <p>Two plenary keynotes by leaders in autonomous systems at the end of the afternoon.</p>
       </div>
     </div>
     <p class="center mt-lg"><a class="btn btn-primary" href="/program">Program at a glance</a></p>

@@ -5,7 +5,7 @@
       <p class="lead">The detailed schedule will be published after the review. The structure below follows the call for papers: presentations of papers with workshop in the morning, then workshops running in parallel with the sessions for papers without workshop in the afternoon.</p>
       <div class="legend" aria-label="Legend">
         <span><i class="lg-session"></i> Technical sessions</span>
-        <span><i class="lg-keynote"></i> Keynotes &amp; social</span>
+        <span><i class="lg-keynote"></i> Keynotes</span>
         <span><i class="lg-break"></i> Breaks</span>
       </div>
       {{- range .Site.Program}}
@@ -36,20 +36,13 @@
 
       <h2>Program details</h2>
       <ul class="link-cards">
-        <li><a class="link-card" href="/program/keynotes"><strong>Keynote Speakers {{icon "arrow-right"}}</strong><span>Plenary talks</span></a></li>
+        <li><a class="link-card" href="/program/keynotes"><strong>Keynote Speakers {{icon "arrow-right"}}</strong><span>Two plenary talks at the end of the afternoon</span></a></li>
         <li><a class="link-card" href="/program/workshops"><strong>Workshops {{icon "arrow-right"}}</strong><span>W1–W5, 90 minutes, 25 or 50 participants</span></a></li>
         <li><a class="link-card" href="/program/sessions"><strong>Paper Sessions {{icon "arrow-right"}}</strong><span>P1–P8, about 15 minutes each</span></a></li>
-        <li><a class="link-card" href="/program/tutorials"><strong>Tutorials {{icon "arrow-right"}}</strong><span>In-depth educational sessions</span></a></li>
-        <li><a class="link-card" href="/program/special-events"><strong>Special Events {{icon "arrow-right"}}</strong><span>Forums, competition, mentoring</span></a></li>
-        <li><a class="link-card" href="/program/social-events"><strong>Social Events {{icon "arrow-right"}}</strong><span>Receptions and dinner</span></a></li>
       </ul>
 
-      <h2>Downloads</h2>
-      <ul class="download-list">
-        {{- range .Site.ProgramDownloads}}
-        <li>{{template "download-item" .}}</li>
-        {{- end}}
-      </ul>
+      <h2>Program book &amp; proceedings</h2>
+      <p>The program book, the program at a glance and the proceedings will be published on the <a href="/downloads#program">Downloads</a> page.</p>
     </article>
     {{template "sidebar" .}}
   </div>

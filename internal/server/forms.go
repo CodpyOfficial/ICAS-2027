@@ -41,7 +41,6 @@ var contactTopics = []string{
 	"Paper submission",
 	"Registration",
 	"Sponsorship & exhibition",
-	"Visa invitation letter",
 	"Media & press",
 	"Other",
 }
@@ -316,16 +315,19 @@ func validateSubmission(f *formState, site *content.Site) Submission {
 	for _, t := range site.Topics {
 		valid = append(valid, t.Title)
 	}
-	valid = append(valid, "Other")
+	valid = append(valid, "Other") // shown as "Others"; the stored value stays "Other"
 	var topics []string
 	for _, t := range f.Multi["topics"] {
 		if oneOf(t, valid) && !oneOf(t, topics) {
 			topics = append(topics, t)
 		}
 	}
+	if v["other_topic"] != "" && !oneOf("Other", topics) {
+		topics = append(topics, "Other") // describing a topic is ticking Others
+	}
 	f.Multi["topics"] = topics
 	if oneOf("Other", topics) && v["other_topic"] == "" {
-		f.fail("other_topic", "Please describe the topic, or untick “Other”.")
+		f.fail("other_topic", "Please describe your topic, or untick “Others”.")
 	}
 	f.maxLen("other_topic", "Topic description", maxShortField)
 

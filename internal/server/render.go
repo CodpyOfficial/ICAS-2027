@@ -174,18 +174,15 @@ func (s *Server) funcs() template.FuncMap {
 		},
 		"slug":   content.Slug,
 		"pretty": prettyJSON,
-		"event": func(slug string) content.Event {
-			e, _ := s.site().Event(slug)
-			return e
-		},
-		"eventPath": eventPath,
-		"call": func(key string) content.Call {
-			for _, c := range s.site().Calls {
-				if c.Key == key {
-					return c
+		// downloadGroup returns the Downloads page section with the given key,
+		// or nil.
+		"downloadGroup": func(key string) *content.DownloadGroup {
+			for _, g := range s.site().Downloads {
+				if g.Key == key {
+					return &g
 				}
 			}
-			return content.Call{Key: key, Status: "soon"}
+			return nil
 		},
 		"skillLevels":   func() []string { return skillLevels },
 		"workshopSizes": func() []string { return workshopSizes },

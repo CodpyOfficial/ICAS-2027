@@ -196,6 +196,15 @@
     });
   });
 
+  // ---- submission form: describing an unlisted topic ticks "Others" ----
+  var otherTopic = document.getElementById("f-other_topic");
+  var otherBox = document.getElementById("f-topic-other");
+  if (otherTopic && otherBox) {
+    otherTopic.addEventListener("input", function () {
+      if (otherTopic.value.trim() !== "") otherBox.checked = true;
+    });
+  }
+
   // ---- submission form: show only the fields for the chosen track ----
   var form = $("#proposal-form");
   if (form) {

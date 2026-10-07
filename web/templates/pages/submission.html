@@ -40,6 +40,7 @@
           <p><a href="/call-for-papers/requirements">Full submission requirements</a></p>
         </div>
       </div>
+      {{template "speaker-kit" .}}
 
       {{- if not $c.SubmissionOpen}}
       <div class="alert alert-err" role="status">{{icon "alert"}}<div><p><strong>The submission system is currently closed.</strong> Please check the <a href="/important-dates">important dates</a>.</p></div></div>
@@ -54,7 +55,7 @@
           <legend>1. Session track</legend>
           {{$err := fieldErr $f "track"}}
           <div class="field{{if $err}} has-error{{end}}">
-            <span class="label" id="track-label">Which track are you submitting to? <span class="req" aria-hidden="true">*</span></span>
+            <span class="label" id="track-label">Which track are you submitting to? (choose one) <span class="req" aria-hidden="true">*</span></span>
             <div class="choice-cards" role="radiogroup" aria-labelledby="track-label">
               <label class="choice-card">
                 <input type="radio" name="track" value="with-workshop" required{{if checked $f "track" "with-workshop"}} checked{{end}}>
@@ -85,15 +86,19 @@
 
           <div class="field{{if fieldErr $f "other_topic"}} has-error{{end}}">
             <span class="label">Topic areas</span>
-            <span class="hint">Select all that apply. Papers without workshop are not strictly limited to the conference theme.</span>
+            <span class="hint">Select all that apply. If your topic is not listed, tick <strong>Others</strong> and describe it. Papers without workshop are not strictly limited to the conference theme.</span>
             <div class="checks">
               {{- range .Site.Topics}}
               <label class="check"><input type="checkbox" name="topics" value="{{.Title}}"{{if checked $f "topics" .Title}} checked{{end}}><span>{{.Title}}</span></label>
               {{- end}}
-              <label class="check"><input type="checkbox" name="topics" value="Other"{{if checked $f "topics" "Other"}} checked{{end}}><span>Other (describe below)</span></label>
             </div>
+            {{$oerr := fieldErr $f "other_topic"}}
+            <div class="others-row{{if $oerr}} has-error{{end}}">
+              <label class="check"><input type="checkbox" name="topics" value="Other" id="f-topic-other"{{if checked $f "topics" "Other"}} checked{{end}}><span><strong>Others</strong></span></label>
+              <input class="input" type="text" id="f-other_topic" name="other_topic" maxlength="200" value="{{field $f "other_topic"}}" placeholder="Describe your topic if it is not listed above" aria-label="Other topic"{{if $oerr}} aria-invalid="true" aria-describedby="f-other_topic-err"{{end}}>
+            </div>
+            {{- with $oerr}}<span class="field-error" id="f-other_topic-err">{{.}}</span>{{end}}
           </div>
-          {{template "fld" (dict "F" $f "Name" "other_topic" "Label" "Other topic" "Max" 200 "Hint" "Only if you ticked “Other”.")}}
 
           <div class="field{{if fieldErr $f "talk_outline"}} has-error{{end}}">
             <label for="f-talk_outline"><span data-track-text data-with-workshop="Breakdown of the 25-minute morning session" data-without-workshop="Breakdown of the 15-minute presentation structure" data-none="Presentation outline">Presentation outline</span> <span class="req" aria-hidden="true">*</span></label>

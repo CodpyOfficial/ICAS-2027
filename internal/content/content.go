@@ -18,35 +18,29 @@ import (
 
 // Site is the root of content/site.json.
 type Site struct {
-	Conference       Conference    `json:"conference"`
-	Contacts         []Contact     `json:"contacts"`
-	Secretariats     []Secretariat `json:"secretariats"`
-	Social           []SocialLink  `json:"social"`
-	ImportantDates   []KeyDate     `json:"importantDates"`
-	News             []NewsItem    `json:"news"`
-	Calls            []Call        `json:"calls"`
-	Tracks           []Track       `json:"tracks"`
-	Topics           []Topic       `json:"topics"`
-	Requirements     []Requirement `json:"submissionRequirements"`
-	ReviewCriteria   []Criterion   `json:"reviewCriteria"`
-	Committee        []PeopleGroup `json:"committee"`
-	ProgramCommittee []PeopleGroup `json:"programCommittee"`
-	Keynotes         []Speaker     `json:"keynotes"`
-	Program          []ProgramDay  `json:"program"`
-	Workshops        []Session     `json:"workshops"`
-	Talks            []Talk        `json:"talks"`
-	Tutorials        []Session     `json:"tutorials"`
-	Events           []Event       `json:"events"`
-	SocialEvents     []SocialEvent `json:"socialEvents"`
-	Registration     Registration  `json:"registration"`
-	Sponsorship      Sponsorship   `json:"sponsorship"`
-	Venue            Venue         `json:"venue"`
-	Hotels           []Hotel       `json:"hotels"`
-	Journals         []Journal     `json:"journals"`
-	FAQ              []FAQGroup    `json:"faq"`
-	ProgramDownloads []Download    `json:"programDownloads"`
-	Promo            []PromoGroup  `json:"promotionalItems"`
-	History          []Edition     `json:"history"`
+	Conference       Conference      `json:"conference"`
+	Contacts         []Contact       `json:"contacts"`
+	Secretariats     []Secretariat   `json:"secretariats"`
+	Social           []SocialLink    `json:"social"`
+	ImportantDates   []KeyDate       `json:"importantDates"`
+	News             []NewsItem      `json:"news"`
+	Calls            []Call          `json:"calls"`
+	Tracks           []Track         `json:"tracks"`
+	Topics           []Topic         `json:"topics"`
+	Requirements     []Requirement   `json:"submissionRequirements"`
+	ReviewCriteria   []Criterion     `json:"reviewCriteria"`
+	Committee        []PeopleGroup   `json:"committee"`
+	ProgramCommittee []PeopleGroup   `json:"programCommittee"`
+	Keynotes         []Speaker       `json:"keynotes"`
+	Program          []ProgramDay    `json:"program"`
+	Workshops        []Session       `json:"workshops"`
+	Talks            []Talk          `json:"talks"`
+	Registration     Registration    `json:"registration"`
+	Sponsorship      Sponsorship     `json:"sponsorship"`
+	Journals         []Journal       `json:"journals"`
+	FAQ              []FAQGroup      `json:"faq"`
+	Downloads        []DownloadGroup `json:"downloads"`
+	History          []Edition       `json:"history"`
 }
 
 // Conference holds the identity and headline facts of this edition.
@@ -252,7 +246,7 @@ type Cell struct {
 	Link   string `json:"link"`
 }
 
-// Session is a tutorial or the workshop of a paper with workshop.
+// Session is the workshop of a paper with workshop.
 type Session struct {
 	Code          string      `json:"code"`
 	Title         string      `json:"title"`
@@ -284,36 +278,6 @@ type AgendaRow struct {
 	Time    string `json:"time"`
 	Item    string `json:"item"`
 	Speaker string `json:"speaker"`
-}
-
-// Event is a co-located event (forum, competition, mentoring ...). Each one
-// gets its own page under /program/events/<slug>.
-type Event struct {
-	Slug            string      `json:"slug"`
-	Title           string      `json:"title"`
-	NavLabel        string      `json:"navLabel"`
-	Summary         string      `json:"summary"`
-	Icon            string      `json:"icon"`
-	Date            string      `json:"date"`
-	Time            string      `json:"time"`
-	Room            string      `json:"room"`
-	Overview        []string    `json:"overview"`
-	Highlights      []string    `json:"highlights"`
-	Agenda          []AgendaRow `json:"agenda"`
-	Speakers        []Speaker   `json:"speakers"`
-	Organizers      []Person    `json:"organizers"`
-	Participation   string      `json:"participation"`
-	RegistrationURL string      `json:"registrationURL"`
-}
-
-type SocialEvent struct {
-	Title       string `json:"title"`
-	Icon        string `json:"icon"`
-	Date        string `json:"date"`
-	Time        string `json:"time"`
-	Place       string `json:"place"`
-	Description string `json:"description"`
-	Ticket      string `json:"ticket"`
 }
 
 type Registration struct {
@@ -398,49 +362,6 @@ type Sponsor struct {
 	URL  string `json:"url"`
 }
 
-type Venue struct {
-	Name         string    `json:"name"`
-	Address      string    `json:"address"`
-	Website      string    `json:"website"`
-	Description  string    `json:"description"`
-	MapEmbedURL  string    `json:"mapEmbedURL"` // must be an https://www.openstreetmap.org/export/embed.html URL (CSP)
-	MapLinkURL   string    `json:"mapLinkURL"`
-	Photos       []Photo   `json:"photos"`
-	Facilities   []string  `json:"facilities"`
-	Landmarks    []string  `json:"landmarks"`
-	FromAirport  []Route   `json:"fromAirport"`
-	FromCity     []Route   `json:"fromCity"`
-	GettingThere []Section `json:"gettingThere"`
-	CityIntro    string    `json:"cityIntro"`
-	Attractions  []Section `json:"attractions"`
-	TourismURL   string    `json:"tourismURL"`
-	Visa         []Section `json:"visa"`
-}
-
-type Photo struct {
-	Src    string `json:"src"`
-	Alt    string `json:"alt"`
-	Credit string `json:"credit"`
-}
-
-type Route struct {
-	Label    string   `json:"label"`
-	Title    string   `json:"title"`
-	Duration string   `json:"duration"`
-	Steps    []string `json:"steps"`
-}
-
-type Hotel struct {
-	Name        string `json:"name"`
-	Badge       string `json:"badge"`
-	Partner     bool   `json:"partner"`
-	Address     string `json:"address"`
-	Distance    string `json:"distance"`
-	Rate        string `json:"rate"`
-	Description string `json:"description"`
-	URL         string `json:"url"`
-}
-
 type Journal struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
@@ -465,7 +386,10 @@ type Download struct {
 	Icon        string `json:"icon"`
 }
 
-type PromoGroup struct {
+// DownloadGroup is one section of the Downloads page. Key is its anchor on
+// that page and lets other pages show the group (e.g. the speaker kit).
+type DownloadGroup struct {
+	Key         string     `json:"key"`
 	Title       string     `json:"title"`
 	Icon        string     `json:"icon"`
 	Description string     `json:"description"`
@@ -490,16 +414,6 @@ func (s *Site) Track(key string) (Track, bool) {
 		}
 	}
 	return Track{}, false
-}
-
-// Event returns the co-located event with the given slug.
-func (s *Site) Event(slug string) (Event, bool) {
-	for _, e := range s.Events {
-		if e.Slug == slug {
-			return e, true
-		}
-	}
-	return Event{}, false
 }
 
 // TotalSlots sums the speaking slots of all tracks.
@@ -578,25 +492,34 @@ func (s *Site) validate() error {
 			}
 		}
 	}
+	calls := map[string]bool{}
 	for i, c := range s.Calls {
 		switch c.Status {
 		case "open", "soon", "closed":
 		default:
 			add("calls[%d].status must be open, soon or closed", i)
 		}
-	}
-	seen := map[string]bool{}
-	for i, e := range s.Events {
-		if !validSlug.MatchString(e.Slug) {
-			add("events[%d].slug %q must be lowercase words joined by hyphens", i, e.Slug)
+		if calls[c.Key] {
+			add("calls[%d].key %q is used twice", i, c.Key)
 		}
-		if seen[e.Slug] {
-			add("events[%d].slug %q is used twice", i, e.Slug)
-		}
-		seen[e.Slug] = true
+		calls[c.Key] = true
 	}
-	if u := s.Venue.MapEmbedURL; u != "" && !strings.HasPrefix(u, "https://www.openstreetmap.org/export/embed.html") {
-		add("venue.mapEmbedURL must be an OpenStreetMap embed URL (https://www.openstreetmap.org/export/embed.html?...)")
+	topics := map[string]bool{}
+	for i, t := range s.Topics {
+		if topics[t.Title] {
+			add("topics[%d].title %q is used twice", i, t.Title)
+		}
+		topics[t.Title] = true
+	}
+	groups := map[string]bool{}
+	for i, g := range s.Downloads {
+		if !validSlug.MatchString(g.Key) {
+			add("downloads[%d].key %q must be lowercase words joined by hyphens", i, g.Key)
+		}
+		if groups[g.Key] {
+			add("downloads[%d].key %q is used twice", i, g.Key)
+		}
+		groups[g.Key] = true
 	}
 	for i, b := range s.Sponsorship.Benefits {
 		if len(b.Values) != len(s.Sponsorship.Packages) {

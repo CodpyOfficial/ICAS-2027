@@ -79,10 +79,7 @@ func New(cfg Config, webFS fs.FS, loadSite func() (*content.Site, error)) (*Serv
 	if err := s.reload(); err != nil {
 		return nil, err
 	}
-	// Event pages and their menu entries come from the content file, so
-	// adding an event to site.json requires a restart (also in dev mode).
-	site := s.site()
-	s.pages, s.nav = sitePages(site), siteNav(site)
+	s.pages, s.nav = sitePages(), siteNav()
 	s.byPath = make(map[string]*Page, len(s.pages))
 	for _, p := range s.pages {
 		if _, dup := s.byPath[p.Path]; dup {
@@ -220,6 +217,10 @@ func (s *Server) handlePage(w http.ResponseWriter, r *http.Request) {
 	}
 	page, ok := s.byPath[p]
 	if !ok {
+		if to, moved := movedPages[p]; moved {
+			http.Redirect(w, r, to, http.StatusMovedPermanently)
+			return
+		}
 		s.notFound(w, r)
 		return
 	}

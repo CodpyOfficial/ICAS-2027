@@ -162,7 +162,7 @@ func storedPapers(t *testing.T, s *Server) []string {
 
 func TestEveryPageRenders(t *testing.T) {
 	s := newTestServer(t, nil)
-	if len(s.pages) < 45 {
+	if len(s.pages) < 30 {
 		t.Fatalf("only %d pages registered", len(s.pages))
 	}
 	for _, p := range s.pages {
@@ -347,6 +347,15 @@ func TestSubmissionFlow(t *testing.T) {
 		`enctype="multipart/form-data"`,
 		`type="file" id="f-paper" name="paper" accept="application/pdf,.pdf" required data-max-bytes="10485760"`,
 	} {
+		if !strings.Contains(page, want) {
+			t.Errorf("submission form lacks %s", want)
+		}
+	}
+
+	if n := strings.Count(page, `<h3><a href="/call-for-papers/with-workshop">`); n != 1 {
+		t.Errorf("submission page shows the paper with workshop call %d times, want once", n)
+	}
+	for _, want := range []string{"(choose one)", `value="Other" id="f-topic-other"`, "<strong>Others</strong>"} {
 		if !strings.Contains(page, want) {
 			t.Errorf("submission form lacks %s", want)
 		}
@@ -551,6 +560,35 @@ func TestSlowUploadOutlastsServerTimeouts(t *testing.T) {
 	resp.Body.Close()
 	if resp.StatusCode != http.StatusSeeOther {
 		t.Fatalf("slow upload = %d, want 303", resp.StatusCode)
+	}
+}
+
+func TestOtherTopic(t *testing.T) {
+	s := newTestServer(t, nil)
+	cookie, token := session(t, s, "/submission")
+
+	// Ticking Others needs a description.
+	form := validWithWorkshop()
+	form.Set(csrfFieldName, token)
+	form.Add("topics", "Other")
+	rec := postSubmission(t, s, form, "drones.pdf", samplePDF, cookie)
+	if rec.Code != http.StatusUnprocessableEntity || !strings.Contains(rec.Body.String(), template_escape("Please describe your topic, or untick “Others”.")) {
+		t.Fatalf("Others without a description: code %d", rec.Code)
+	}
+
+	// A description counts as ticking Others.
+	form.Del("topics")
+	form.Set("other_topic", "Underwater docking")
+	if rec := postSubmission(t, s, form, "drones.pdf", samplePDF, cookie); rec.Code != http.StatusSeeOther {
+		t.Fatalf("description without Others: code %d", rec.Code)
+	}
+	raw, _ := s.store.List("submissions")
+	subs, err := store.Decode[Submission](raw)
+	if err != nil || len(subs) != 1 {
+		t.Fatalf("stored %d submissions, err %v", len(subs), err)
+	}
+	if got := subs[0].Topics; len(got) != 1 || got[0] != "Other" || subs[0].OtherTopic != "Underwater docking" {
+		t.Errorf("topics = %v, other topic = %q", got, subs[0].OtherTopic)
 	}
 }
 
@@ -770,6 +808,73 @@ func TestAdminDisabledWithoutPassword(t *testing.T) {
 	}
 }
 
+func TestRemovedAndMovedPages(t *testing.T) {
+	s := newTestServer(t, nil)
+	for _, p := range []string{
+		"/venue", "/travel/city", "/travel/hotels", "/travel/getting-there", "/travel/visa", "/authors/travel-grants",
+		"/call-for-papers/special-sessions", "/call-for-papers/cross-community", "/call-for-papers/tutorials",
+		"/call-for-papers/demonstrations", "/call-for-papers/challenge",
+		"/program/tutorials", "/program/special-events", "/program/events/industry-forum", "/program/social-events",
+	} {
+		if rec := get(t, s, p); rec.Code != http.StatusNotFound {
+			t.Errorf("GET %s = %d, want 404", p, rec.Code)
+		}
+	}
+	for from, to := range movedPages {
+		rec := get(t, s, from)
+		if rec.Code != http.StatusMovedPermanently || rec.Header().Get("Location") != to {
+			t.Errorf("GET %s = %d -> %q, want 301 -> %s", from, rec.Code, rec.Header().Get("Location"), to)
+		}
+	}
+	var top []string
+	for _, item := range s.nav {
+		top = append(top, item.Label)
+	}
+	if got := strings.Join(top, ", "); got != "Home, About, Call for Papers, Authors, Program, Registration, Sponsors & Exhibitors, Downloads, Contact" {
+		t.Errorf("main menu = %s", got)
+	}
+}
+
+func TestSpeakerKitAndDownloads(t *testing.T) {
+	s := newTestServer(t, nil)
+	for _, p := range []string{"/", "/call-for-papers", "/call-for-papers/with-workshop", "/call-for-papers/without-workshop", "/submission", "/authors"} {
+		body := get(t, s, p).Body.String()
+		for _, file := range []string{"/static/files/ICAS-Call-for-Papers.pptx", "/static/files/ICAS-slide-template.pptx"} {
+			if !strings.Contains(body, `class="kit-item" href="`+file+`"`) {
+				t.Errorf("%s: speaker kit lacks %s", p, file)
+			}
+		}
+	}
+	body := get(t, s, "/downloads").Body.String()
+	for _, g := range s.site().Downloads {
+		if !strings.Contains(body, `id="`+g.Key+`"`) {
+			t.Errorf("downloads page has no section %q", g.Key)
+		}
+		for _, d := range g.Items {
+			if d.URL != "" && !strings.Contains(body, `href="`+d.URL+`"`) {
+				t.Errorf("downloads page does not link %s", d.URL)
+			}
+		}
+	}
+}
+
+func TestSponsorPackages(t *testing.T) {
+	s := newTestServer(t, nil)
+	body := get(t, s, "/sponsors").Body.String()
+	for _, want := range []string{"NT$5,000", "NT$10,000", "NT$20,000", "NT$30,000"} {
+		if !strings.Contains(body, want) {
+			t.Errorf("sponsor page lacks the %s package", want)
+		}
+	}
+	if strings.Contains(body, ">Student<") {
+		t.Error("sponsor page still offers a student package")
+	}
+	booth := s.site().Sponsorship.Benefits[len(s.site().Sponsorship.Benefits)-1]
+	if booth.Label != "Exhibition booth" || strings.Join(booth.Values, ",") != "no,no,no,yes" {
+		t.Errorf("exhibition booth row = %s %v, want it in the last package only", booth.Label, booth.Values)
+	}
+}
+
 func TestSitemapRobotsManifest(t *testing.T) {
 	s := newTestServer(t, nil)
 	body := get(t, s, "/sitemap.xml").Body.String()
@@ -791,12 +896,12 @@ func TestSitemapRobotsManifest(t *testing.T) {
 func TestMenuHighlightsOneSection(t *testing.T) {
 	s := newTestServer(t, nil)
 	cases := map[string]string{
-		"/travel/visa":                     "/venue",
-		"/sponsors":                        "/sponsors",
-		"/call-for-papers/cross-community": "/call-for-papers",
-		"/program/events/industry-forum":   "/program",
-		"/submission":                      "/authors",
-		"/committee/technical-program":     "/about",
+		"/sponsors":                     "/sponsors",
+		"/call-for-papers/requirements": "/call-for-papers",
+		"/program/keynotes":             "/program",
+		"/submission":                   "/authors",
+		"/committee/technical-program":  "/about",
+		"/downloads":                    "/downloads",
 	}
 	for path, want := range cases {
 		var active []string
@@ -813,8 +918,8 @@ func TestMenuHighlightsOneSection(t *testing.T) {
 
 func TestBreadcrumbs(t *testing.T) {
 	s := newTestServer(t, nil)
-	got := s.crumbsFor(s.byPath["/program/events/mentoring-program"])
-	want := []string{"Home", "Program at a Glance", "Special Events & Forums", "Mentoring Program"}
+	got := s.crumbsFor(s.byPath["/committee/technical-program"])
+	want := []string{"Home", "About ICAS", "Organizing Committee", "Technical Program Committee"}
 	if len(got) != len(want) {
 		t.Fatalf("crumbs = %+v", got)
 	}
